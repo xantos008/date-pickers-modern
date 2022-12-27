@@ -15,7 +15,7 @@ import {
   PickersCalendarHeaderSlotsComponentsProps,
   DayCalendarProps,
   ExportedUseViewsOptions,
-} from '@mui/x-date-pickers/internals';
+} from '../internals';
 import { DateRange, RangePositionProps, DayRangeValidationProps } from '../internal/models';
 import { DateRangeCalendarClasses } from './dateRangeCalendarClasses';
 import { DateRangePickerDay, DateRangePickerDayProps } from '../DateRangePickerDay';

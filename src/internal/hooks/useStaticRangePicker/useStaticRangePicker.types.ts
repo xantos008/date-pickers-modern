@@ -7,7 +7,7 @@ import {
   UsePickerParams,
   ExportedBaseToolbarProps,
   StaticOnlyPickerProps,
-} from '@mui/x-date-pickers/internals';
+} from '../../../internals';
 import { DateRange } from '../../models/range';
 
 export interface UseStaticRangePickerSlotsComponent

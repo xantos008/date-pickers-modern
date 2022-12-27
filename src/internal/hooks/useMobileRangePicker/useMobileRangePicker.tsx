@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { resolveComponentProps, useSlotProps } from '@mui/base/utils';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { LocalizationProvider } from '../../../LocalizationProvider';
 import {
   DateOrTimeView,
   usePicker,
@@ -10,7 +10,7 @@ import {
   InferError,
   PickersViewLayoutSlotsComponentsProps,
   ExportedBaseToolbarProps,
-} from '@mui/x-date-pickers/internals';
+} from '../../../internals';
 import {
   MobileRangePickerAdditionalViewProps,
   UseMobileRangePickerParams,

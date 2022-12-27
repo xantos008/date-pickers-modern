@@ -1,4 +1,4 @@
-import { UseFieldResponse } from '@mui/x-date-pickers/internals';
+import { UseFieldResponse } from '../../../internals';
 
 export interface UseMultiInputRangeFieldResponse<TChildProps extends {}> {
   startDate: UseFieldResponse<TChildProps> & { error: boolean; readOnly: boolean };

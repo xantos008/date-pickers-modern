@@ -10,7 +10,7 @@ import {
   useMaskedInput,
   onSpaceOrEnter,
   useLocaleText,
-} from '@mui/x-date-pickers/internals';
+} from '../internals';
 import { RangePositionProps, DateRange } from '../internal/models/range';
 import { DateRangeValidationError } from '../internal/hooks/validation/useDateRangeValidation';
 import {

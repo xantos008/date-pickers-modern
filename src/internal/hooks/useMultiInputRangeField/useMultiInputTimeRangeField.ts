@@ -3,7 +3,7 @@ import useEventCallback from '@mui/utils/useEventCallback';
 import {
   unstable_useTimeField as useTimeField,
   UseTimeFieldComponentProps,
-} from '@mui/x-date-pickers/TimeField';
+} from '../../../TimeField';
 import {
   TimeValidationError,
   useLocalizationContext,
@@ -11,7 +11,7 @@ import {
   useValidation,
   FieldChangeHandler,
   FieldChangeHandlerContext,
-} from '@mui/x-date-pickers/internals';
+} from '../../../internals';
 import { DateRange } from '../../models/range';
 import {
   TimeRangeValidationError,

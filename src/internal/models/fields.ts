@@ -3,7 +3,7 @@ import { SlotComponentProps } from '@mui/base/utils';
 import TextField, { TextFieldProps } from '@mui/material/TextField';
 import Stack, { StackProps } from '@mui/material/Stack';
 import Typography, { TypographyProps } from '@mui/material/Typography';
-import { BaseFieldProps, FieldSection } from '@mui/x-date-pickers/internals';
+import { BaseFieldProps, FieldSection } from '../../internals';
 
 export interface RangeFieldSection extends FieldSection {
   dateName: 'start' | 'end';

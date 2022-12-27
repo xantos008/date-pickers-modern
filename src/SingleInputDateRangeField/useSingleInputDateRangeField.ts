@@ -3,7 +3,7 @@ import {
   useDefaultDates,
   applyDefaultDate,
   useField,
-} from '@mui/x-date-pickers/internals';
+} from '../internals';
 import {
   UseSingleInputDateRangeFieldDefaultizedProps,
   UseSingleInputDateRangeFieldParams,

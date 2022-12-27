@@ -1,12 +1,12 @@
 import * as React from 'react';
-import { PickersInputLocaleText } from '@mui/x-date-pickers';
+import {PickersInputLocaleText} from "../../locales";
 import {
   DateOrTimeView,
   onSpaceOrEnter,
   useLocaleText,
   UsePickerResponse,
   WrapperVariant,
-} from '@mui/x-date-pickers/internals';
+} from '../../internals';
 import { DateRange, RangePosition } from '../models';
 
 interface UseRangePickerFieldParams<TDate, TView extends DateOrTimeView>

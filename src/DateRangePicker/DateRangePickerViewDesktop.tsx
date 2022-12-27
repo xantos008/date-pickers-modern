@@ -19,7 +19,7 @@ import {
   PickersArrowSwitcherSlotsComponentsProps,
   DayCalendarSlotsComponent,
   DayCalendarSlotsComponentsProps,
-} from '@mui/x-date-pickers/internals';
+} from '../internals';
 import { calculateRangePreview } from './date-range-manager';
 import { DateRange, RangePosition } from '../internal/models/range';
 import { DateRangePickerDay, DateRangePickerDayProps } from '../DateRangePickerDay';

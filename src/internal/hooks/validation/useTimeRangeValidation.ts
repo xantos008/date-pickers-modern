@@ -5,7 +5,7 @@ import {
   validateTime,
   BaseTimeValidationProps,
   ValidationProps,
-} from '@mui/x-date-pickers/internals';
+} from '../../../internals';
 import { isRangeValid } from '../../utils/date-utils';
 import { DateRange } from '../../models/range';
 import { rangeValueManager } from '../../utils/valueManagers';

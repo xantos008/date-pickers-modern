@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { alpha, styled, useThemeProps } from '@mui/material/styles';
 import { unstable_composeClasses as composeClasses } from '@mui/utils';
-import { useUtils } from '@mui/x-date-pickers/internals';
-import { PickersDay, PickersDayProps } from '@mui/x-date-pickers/PickersDay';
+import { useUtils } from '../internals';
+import { PickersDay, PickersDayProps } from '../PickersDay';
 import {
   DateRangePickerDayClasses,
   getDateRangePickerDayUtilityClass,

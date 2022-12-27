@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { LocalizationProvider } from '../../../LocalizationProvider';
 import {
   DateOrTimeView,
   usePicker,
@@ -9,7 +9,7 @@ import {
   DIALOG_WIDTH,
   PickersViewLayoutSlotsComponentsProps,
   ExportedBaseToolbarProps,
-} from '@mui/x-date-pickers/internals';
+} from '../../../internals';
 import {
   UseStaticRangePickerParams,
   UseStaticRangePickerProps,

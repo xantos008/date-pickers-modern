@@ -1,6 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { extractValidationProps, PickerViewRendererLookup } from '@mui/x-date-pickers/internals';
+import { extractValidationProps, PickerViewRendererLookup } from '../internals';
 import { resolveComponentProps } from '@mui/base/utils';
 import { rangeValueManager } from '../internal/utils/valueManagers';
 import { MobileNextDateRangePickerProps } from './MobileNextDateRangePicker.types';

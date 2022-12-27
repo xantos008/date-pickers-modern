@@ -14,7 +14,7 @@ import {
   ExportedBaseToolbarProps,
   DesktopOnlyPickerProps,
   UsePickerViewsProps,
-} from '@mui/x-date-pickers/internals';
+} from '../../../internals';
 import { DateRange, RangePositionProps } from '../../models';
 import { BaseMultiInputFieldProps } from '../../models/fields';
 

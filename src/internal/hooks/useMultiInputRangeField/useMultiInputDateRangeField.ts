@@ -3,14 +3,14 @@ import useEventCallback from '@mui/utils/useEventCallback';
 import {
   unstable_useDateField as useDateField,
   UseDateFieldComponentProps,
-} from '@mui/x-date-pickers/DateField';
+} from '../../../DateField';
 import {
   DateValidationError,
   useLocalizationContext,
   useValidation,
   FieldChangeHandler,
   FieldChangeHandlerContext,
-} from '@mui/x-date-pickers/internals';
+} from '../../../internals';
 import { useDefaultizedDateRangeFieldProps } from '../../../SingleInputDateRangeField/useSingleInputDateRangeField';
 import { UseMultiInputDateRangeFieldParams } from '../../../MultiInputDateRangeField/MultiInputDateRangeField.types';
 import { DateRange } from '../../models/range';

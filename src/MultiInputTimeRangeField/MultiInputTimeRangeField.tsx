@@ -5,7 +5,7 @@ import TextField from '@mui/material/TextField';
 import Typography, { TypographyProps } from '@mui/material/Typography';
 import { styled, useThemeProps } from '@mui/material/styles';
 import { useSlotProps } from '@mui/base/utils';
-import { FieldsTextFieldProps } from '@mui/x-date-pickers/internals';
+import { FieldsTextFieldProps } from '../internals';
 import { MultiInputTimeRangeFieldProps } from './MultiInputTimeRangeField.types';
 import { useMultiInputTimeRangeField } from '../internal/hooks/useMultiInputRangeField/useMultiInputTimeRangeField';
 
@@ -16,7 +16,7 @@ const MultiInputTimeRangeFieldRoot = styled(
   {
     name: 'MuiMultiInputTimeRangeField',
     slot: 'Root',
-    overridesResolver: (_props, styles) => styles.root,
+    overridesResolver: (props, styles) => styles.root,
   },
 )({});
 
@@ -25,7 +25,7 @@ const MultiInputTimeRangeFieldSeparator = styled(
   {
     name: 'MuiMultiInputTimeRangeField',
     slot: 'Separator',
-    overridesResolver: (_props, styles) => styles.separator,
+    overridesResolver: (props, styles) => styles.separator,
   },
 )({});
 

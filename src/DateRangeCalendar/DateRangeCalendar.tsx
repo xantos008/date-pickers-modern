@@ -25,7 +25,7 @@ import {
   WrapperVariantContext,
   PickerSelectionState,
   useNow,
-} from '@mui/x-date-pickers/internals';
+} from '../internals';
 import {
   dateRangeCalendarClasses,
   getDateRangeCalendarUtilityClass,

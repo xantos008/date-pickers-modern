@@ -1,4 +1,4 @@
-import { MakeOptional } from '@mui/x-date-pickers/internals';
+import { MakeOptional } from '../internals';
 import {
   StaticRangeOnlyPickerProps,
   UseStaticRangePickerSlotsComponent,

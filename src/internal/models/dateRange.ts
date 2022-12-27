@@ -3,7 +3,7 @@ import {
   DefaultizedProps,
   MakeOptional,
   UseFieldInternalProps,
-} from '@mui/x-date-pickers/internals';
+} from '../../internals';
 import { DateRange } from './range';
 import type { DateRangeValidationError } from '../hooks/validation/useDateRangeValidation';
 

@@ -3,7 +3,7 @@ import useEventCallback from '@mui/utils/useEventCallback';
 import {
   unstable_useDateTimeField as useDateTimeField,
   UseDateTimeFieldComponentProps,
-} from '@mui/x-date-pickers/DateTimeField';
+} from '../../../DateTimeField';
 import {
   applyDefaultDate,
   DateTimeValidationError,
@@ -13,7 +13,7 @@ import {
   useValidation,
   FieldChangeHandler,
   FieldChangeHandlerContext,
-} from '@mui/x-date-pickers/internals';
+} from '../../../internals';
 import { DateRange } from '../../models/range';
 import type {
   UseMultiInputDateTimeRangeFieldDefaultizedProps,

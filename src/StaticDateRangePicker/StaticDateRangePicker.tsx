@@ -7,7 +7,7 @@ import {
   PickersStaticWrapperSlotsComponent,
   PickersStaticWrapperSlotsComponentsProps,
   DateInputSlotsComponent,
-} from '@mui/x-date-pickers/internals';
+} from '../internals';
 import { useDateRangeValidation } from '../internal/hooks/validation/useDateRangeValidation';
 import { DateRangePickerView } from '../DateRangePicker/DateRangePickerView';
 import { rangeValueManager } from '../internal/utils/valueManagers';

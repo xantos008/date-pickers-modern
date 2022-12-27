@@ -10,7 +10,7 @@ import {
   BaseToolbarProps,
   useLocaleText,
   ExportedBaseToolbarProps,
-} from '@mui/x-date-pickers/internals';
+} from '../internals';
 import { DateRange, RangePositionProps } from '../internal/models';
 import {
   DateRangePickerToolbarClasses,

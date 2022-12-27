@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { LocalizedComponent, PickersInputLocaleText } from '@mui/x-date-pickers';
+import { LocalizedComponent, PickersInputLocaleText } from "../locales";
 import {
   BasePickerProps,
   useDefaultDates,
@@ -8,7 +8,7 @@ import {
   DefaultizedProps,
   applyDefaultDate,
   BaseDateValidationProps,
-} from '@mui/x-date-pickers/internals';
+} from '../internals';
 import { useThemeProps } from '@mui/material/styles';
 import {
   DateRangePickerViewSlotsComponent,

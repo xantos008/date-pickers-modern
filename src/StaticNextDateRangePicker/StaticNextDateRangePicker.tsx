@@ -1,6 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { PickerViewRendererLookup } from '@mui/x-date-pickers/internals';
+import { PickerViewRendererLookup } from '../internals';
 import { useStaticRangePicker } from '../internal/hooks/useStaticRangePicker';
 import { StaticNextDateRangePickerProps } from './StaticNextDateRangePicker.types';
 import { useNextDateRangePickerDefaultizedProps } from '../NextDateRangePicker/shared';

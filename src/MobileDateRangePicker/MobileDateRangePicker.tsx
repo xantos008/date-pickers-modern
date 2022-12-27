@@ -9,7 +9,7 @@ import {
   MobileWrapperSlotsComponent,
   MobileWrapperSlotsComponentsProps,
   DateInputSlotsComponent,
-} from '@mui/x-date-pickers/internals';
+} from '../internals';
 import { useDateRangeValidation } from '../internal/hooks/validation/useDateRangeValidation';
 import { DateRangePickerView } from '../DateRangePicker/DateRangePickerView';
 import { DateRangePickerInput } from '../DateRangePicker/DateRangePickerInput';

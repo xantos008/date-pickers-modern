@@ -1,4 +1,4 @@
-import { MuiPickersAdapter } from '@mui/x-date-pickers/internals';
+import { MuiPickersAdapter } from '../../internals';
 import { DateRange, NonEmptyDateRange } from '../models/range';
 
 export const isRangeValid = <TDate>(

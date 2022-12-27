@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useThemeProps } from '@mui/material/styles';
-import { LocalizedComponent, PickersInputLocaleText } from '@mui/x-date-pickers';
+import { LocalizedComponent, PickersInputLocaleText } from "../locales";
 import {
   DefaultizedProps,
   useDefaultDates,
@@ -9,7 +9,7 @@ import {
   BaseDateValidationProps,
   BaseNextPickerInputProps,
   PickerViewRendererLookup,
-} from '@mui/x-date-pickers/internals';
+} from '../internals';
 import { DateRangeValidationError } from '../internal/hooks/validation/useDateRangeValidation';
 import { DateRange } from '../internal/models';
 import {

@@ -12,7 +12,7 @@ import {
   DayValidationProps,
   DayCalendarSlotsComponent,
   DayCalendarSlotsComponentsProps,
-} from '@mui/x-date-pickers/internals';
+} from '../internals';
 import { doNothing } from '../internal/utils/utils';
 import { DateRange } from '../internal/models/range';
 import { DateRangePickerDay, DateRangePickerDayProps } from '../DateRangePickerDay';

@@ -6,7 +6,7 @@ import {
   addPositionPropertiesToSections,
   createDateStrForInputFromSections,
   getSectionOrder,
-} from '@mui/x-date-pickers/internals';
+} from '../../internals';
 import { DateRange, RangePosition } from '../models';
 import { splitDateRangeSections, removeLastSeparator } from './date-fields-utils';
 import type { DateRangeValidationError } from '../hooks/validation/useDateRangeValidation';

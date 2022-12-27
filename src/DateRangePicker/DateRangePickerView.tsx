@@ -13,7 +13,7 @@ import {
   DayValidationProps,
   ExportedBaseToolbarProps,
   ExportedUseViewsOptions,
-} from '@mui/x-date-pickers/internals';
+} from '../internals';
 import { DateRange, RangePositionProps } from '../internal/models/range';
 import { DayRangeValidationProps } from '../internal/models/dateRange';
 import { isRangeValid } from '../internal/utils/date-utils';
