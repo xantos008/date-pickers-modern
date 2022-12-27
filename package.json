@@ -1,6 +1,6 @@
 {
   "name": "date-pickers-modern",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "A react date range picker implementation using @mui.",
   "files": "dist",
   "author": "xantos008",
@@ -50,6 +50,7 @@
     "@types/node": "^18.11.18",
     "clsx": "^1.2.1",
     "date-fns-jalali": "^2.13.0-0",
+    "luxon": "^3.1.1",
     "moment-jalaali": "^0.9.6",
     "prop-types": "^15.8.1",
     "react-transition-group": "^4.4.5",
@@ -58,26 +59,8 @@
     "rollup-plugin-typescript2": "^0.34.1"
   },
   "peerDependencies": {
-    "date-fns": "^2.25.0",
-    "dayjs": "^1.10.7",
-    "luxon": "^3.0.2",
-    "moment": "^2.29.1",
     "react": "^17.0.2 || ^18.0.0",
     "react-dom": "^17.0.2 || ^18.0.0"
-  },
-  "peerDependenciesMeta": {
-    "date-fns": {
-      "optional": true
-    },
-    "dayjs": {
-      "optional": true
-    },
-    "luxon": {
-      "optional": true
-    },
-    "moment": {
-      "optional": true
-    }
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^15.0.1",
@@ -86,7 +69,6 @@
     "@types/moment-jalaali": "^0.7.5",
     "date-fns": "^2.29.3",
     "dayjs": "^1.11.7",
-    "luxon": "^3.1.1",
     "moment": "^2.29.4"
   },
   "engines": {

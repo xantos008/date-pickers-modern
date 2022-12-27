@@ -1,4 +1,3 @@
-/* eslint-disable class-methods-use-this */
 import { DateTime } from 'luxon';
 import BaseAdapterLuxon from '@date-io/luxon';
 import { MuiFormatTokenMap, MuiPickersAdapter } from '../internals/models';
