@@ -2,13 +2,15 @@ import * as React from 'react';
 import { resolveComponentProps, useSlotProps } from '@mui/base/utils';
 import { LocalizationProvider } from '../../../LocalizationProvider';
 import {
+  PickersLayout,
+  PickersLayoutSlotsComponentsProps,
+} from '../../../PickersLayout';
+import {
   DateOrTimeView,
   usePicker,
   WrapperVariantContext,
-  PickersViewLayout,
   PickersModalDialog,
   InferError,
-  PickersViewLayoutSlotsComponentsProps,
   ExportedBaseToolbarProps,
 } from '../../../internals';
 import {
@@ -17,7 +19,11 @@ import {
   UseMobileRangePickerProps,
 } from './useMobileRangePicker.types';
 import { useRangePickerInputProps } from '../useRangePickerInputProps';
-import { DateRange, RangePosition, BaseMultiInputFieldProps } from '../../models';
+import { getReleaseInfo } from '../../utils/releaseInfo';
+import { DateRange, RangePosition } from '../../models/range';
+import { BaseMultiInputFieldProps } from '../../models/fields';
+
+const releaseInfo = getReleaseInfo();
 
 export const useMobileRangePicker = <
   TDate,
@@ -155,7 +161,7 @@ export const useMobileRangePicker = <
     },
   };
 
-  const componentsPropsForLayout: PickersViewLayoutSlotsComponentsProps<DateRange<TDate>, TView> = {
+  const componentsPropsForLayout: PickersLayoutSlotsComponentsProps<DateRange<TDate>, TView> = {
     ...componentsProps,
     toolbar: {
       ...componentsProps?.toolbar,
@@ -163,6 +169,7 @@ export const useMobileRangePicker = <
       onRangePositionChange: setRangePosition,
     } as ExportedBaseToolbarProps,
   };
+  const Layout = components?.Layout ?? PickersLayout;
 
   const renderPicker = () => (
     <LocalizationProvider localeText={localeText}>
@@ -185,13 +192,14 @@ export const useMobileRangePicker = <
             actionBar: undefined,
           }}
         >
-          <PickersViewLayout
+          <Layout
             {...layoutProps}
+            {...componentsProps?.layout}
             components={components}
             componentsProps={componentsPropsForLayout}
           >
             {renderCurrentView()}
-          </PickersViewLayout>
+          </Layout>
         </PickersModalDialog>
       </WrapperVariantContext.Provider>
     </LocalizationProvider>

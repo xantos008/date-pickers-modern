@@ -58,13 +58,14 @@ const resolveButtonElement = (element: Element | null): HTMLButtonElement | null
     }
     return null;
   }
-  return element as HTMLButtonElement | null;
+  return element;
 };
 
 const resolveElementFromTouch = (
   event: React.TouchEvent<HTMLButtonElement>,
   ignoreTouchTarget?: boolean,
 ) => {
+  // don't parse multi-touch result
   if (event.changedTouches?.length === 1 && event.touches.length <= 1) {
     const element = document.elementFromPoint(
       event.changedTouches[0].clientX,

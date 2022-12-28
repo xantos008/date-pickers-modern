@@ -13,6 +13,7 @@ import {
 import { DateRangePickerView } from '../DateRangePicker/DateRangePickerView';
 import { DateRangePickerInput } from '../DateRangePicker/DateRangePickerInput';
 import { useDateRangeValidation } from '../internal/hooks/validation/useDateRangeValidation';
+import { getReleaseInfo } from '../internal/utils/releaseInfo';
 import { rangeValueManager } from '../internal/utils/valueManagers';
 import {
   BaseDateRangePickerProps,
@@ -20,6 +21,8 @@ import {
   BaseDateRangePickerSlotsComponent,
   BaseDateRangePickerSlotsComponentsProps,
 } from '../DateRangePicker/shared';
+
+const releaseInfo = getReleaseInfo();
 
 const KeyboardDateInputComponent = DateRangePickerInput as unknown as React.FC<DateInputPropsLike>;
 

@@ -2,6 +2,7 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import { useThemeProps } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import { getReleaseInfo } from '../internal/utils/releaseInfo';
 import {
   DesktopDateRangePicker,
   DesktopDateRangePickerProps,
@@ -14,6 +15,8 @@ import {
   MobileDateRangePickerSlotsComponent,
   MobileDateRangePickerSlotsComponentsProps,
 } from '../MobileDateRangePicker';
+
+const releaseInfo = getReleaseInfo();
 
 export interface DateRangePickerSlotsComponent<TDate>
   extends MobileDateRangePickerSlotsComponent<TDate>,

@@ -28,7 +28,10 @@ import {
   DateRangePickerViewDesktop,
   ExportedDateRangePickerViewDesktopProps,
 } from './DateRangePickerViewDesktop';
+import { getReleaseInfo } from '../internal/utils/releaseInfo';
 import { DateRangePickerToolbarProps } from './DateRangePickerToolbar';
+
+const releaseInfo = getReleaseInfo();
 
 export interface DateRangePickerViewSlotsComponent<TDate>
   extends DateRangePickerViewMobileSlotsComponent<TDate> {

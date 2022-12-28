@@ -1,6 +1,6 @@
 import { ComponentsProps, ComponentsOverrides, ComponentsVariants } from '@mui/material/styles';
 
-export interface PickersProComponents<Theme = unknown> {
+export interface PickerComponents<Theme = unknown> {
   MuiCalendarOrClockPicker?: {
     defaultProps?: ComponentsProps['MuiCalendarOrClockPicker'];
     styleOverrides?: ComponentsOverrides<Theme>['MuiCalendarOrClockPicker'];
@@ -191,10 +191,10 @@ export interface PickersProComponents<Theme = unknown> {
     styleOverrides?: ComponentsOverrides<Theme>['MuiPickersToolbarText'];
     variants?: ComponentsVariants['MuiPickersToolbarText'];
   };
-  MuiPickersViewLayout?: {
-    defaultProps?: ComponentsProps['MuiPickersViewLayout'];
-    styleOverrides?: ComponentsOverrides<Theme>['MuiPickersViewLayout'];
-    variants?: ComponentsVariants['MuiPickersViewLayout'];
+  MuiPickersLayout?: {
+    defaultProps?: ComponentsProps['MuiPickersLayout'];
+    styleOverrides?: ComponentsOverrides<Theme>['MuiPickersLayout'];
+    variants?: ComponentsVariants['MuiPickersLayout'];
   };
   MuiPickersYear?: {
     defaultProps?: ComponentsProps['MuiPickersYear'];
@@ -246,6 +246,9 @@ export interface PickersProComponents<Theme = unknown> {
     styleOverrides?: ComponentsOverrides<Theme>['MuiYearCalendar'];
     variants?: ComponentsVariants['MuiYearCalendar'];
   };
+}
+
+export interface PickersProComponents<Theme = unknown> {
   MuiDateRangeCalendar?: {
     defaultProps?: ComponentsProps['MuiDateRangeCalendar'];
     styleOverrides?: ComponentsOverrides<Theme>['MuiDateRangeCalendar'];
@@ -324,5 +327,5 @@ export interface PickersProComponents<Theme = unknown> {
 }
 
 declare module '@mui/material/styles' {
-  interface Components<Theme = unknown> extends PickersProComponents<Theme> {}
+  interface Components<Theme = unknown> extends PickerComponents<Theme>, PickersProComponents<Theme> {}
 }

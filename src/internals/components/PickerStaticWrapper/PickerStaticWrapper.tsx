@@ -89,7 +89,7 @@ const PickerStaticWrapperContent = styled('div', {
   minWidth: DIALOG_WIDTH,
   display: 'flex',
   flexDirection: 'column',
-  backgroundColor: (theme.vars || theme).palette.background.paper,
+  backgroundColor: ((theme as any).vars || theme).palette.background.paper,
 }));
 
 // TODO v6: Drop with the legacy pickers

@@ -10,6 +10,7 @@ import {
 } from '../internals';
 import { useDateRangeValidation } from '../internal/hooks/validation/useDateRangeValidation';
 import { DateRangePickerView } from '../DateRangePicker/DateRangePickerView';
+import { getReleaseInfo } from '../internal/utils/releaseInfo';
 import { rangeValueManager } from '../internal/utils/valueManagers';
 import {
   useDateRangePickerDefaultizedProps,
@@ -18,6 +19,8 @@ import {
   BaseDateRangePickerSlotsComponentsProps,
 } from '../DateRangePicker/shared';
 import { RangePosition } from '../internal/models/range';
+
+const releaseInfo = getReleaseInfo();
 
 export interface StaticDateRangePickerSlotsComponent<TDate>
   extends BaseDateRangePickerSlotsComponent<TDate>,

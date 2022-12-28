@@ -78,11 +78,11 @@ const DateTimePickerTabsRoot = styled(Tabs, {
   slot: 'Root',
   overridesResolver: (_, styles) => styles.root,
 })<{ ownerState: OwnerState }>(({ ownerState, theme }) => ({
-  boxShadow: `0 -1px 0 0 inset ${(theme.vars || theme).palette.divider}`,
+  boxShadow: `0 -1px 0 0 inset ${((theme as any).vars || theme).palette.divider}`,
   ...(ownerState.wrapperVariant === 'desktop' && {
     // TODO v6: Drop `order` with the legacy pickers
     order: 1,
-    boxShadow: `0 1px 0 0 inset ${(theme.vars || theme).palette.divider}`,
+    boxShadow: `0 1px 0 0 inset ${((theme as any).vars || theme).palette.divider}`,
     [`& .${tabsClasses.indicator}`]: {
       bottom: 'auto',
       top: 0,

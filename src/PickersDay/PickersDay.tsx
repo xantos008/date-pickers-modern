@@ -111,50 +111,50 @@ const styleArg = ({ theme, ownerState }: { theme: Theme; ownerState: OwnerState 
   borderRadius: '50%',
   padding: 0,
   // background required here to prevent collides with the other days when animating with transition group
-  backgroundColor: (theme.vars || theme).palette.background.paper,
-  color: (theme.vars || theme).palette.text.primary,
+  backgroundColor: ((theme as any).vars || theme).palette.background.paper,
+  color: ((theme as any).vars || theme).palette.text.primary,
   '@media (pointer: fine)': {
     '&:hover': {
-      backgroundColor: theme.vars
-        ? `rgba(${theme.vars.palette.action.activeChannel} / ${theme.vars.palette.action.hoverOpacity})`
+      backgroundColor: (theme as any).vars
+        ? `rgba(${(theme as any).vars.palette.action.activeChannel} / ${(theme as any).vars.palette.action.hoverOpacity})`
         : alpha(theme.palette.action.active, theme.palette.action.hoverOpacity),
     },
   },
   '&:focus': {
-    backgroundColor: theme.vars
-      ? `rgba(${theme.vars.palette.action.activeChannel} / ${theme.vars.palette.action.hoverOpacity})`
+    backgroundColor: (theme as any).vars
+      ? `rgba(${(theme as any).vars.palette.action.activeChannel} / ${(theme as any).vars.palette.action.hoverOpacity})`
       : alpha(theme.palette.action.active, theme.palette.action.hoverOpacity),
     [`&.${pickersDayClasses.selected}`]: {
       willChange: 'background-color',
-      backgroundColor: (theme.vars || theme).palette.primary.dark,
+      backgroundColor: ((theme as any).vars || theme).palette.primary.dark,
     },
   },
   [`&.${pickersDayClasses.selected}`]: {
-    color: (theme.vars || theme).palette.primary.contrastText,
-    backgroundColor: (theme.vars || theme).palette.primary.main,
+    color: ((theme as any).vars || theme).palette.primary.contrastText,
+    backgroundColor: ((theme as any).vars || theme).palette.primary.main,
     fontWeight: theme.typography.fontWeightMedium,
     transition: theme.transitions.create('background-color', {
       duration: theme.transitions.duration.short,
     }),
     '&:hover': {
       willChange: 'background-color',
-      backgroundColor: (theme.vars || theme).palette.primary.dark,
+      backgroundColor: ((theme as any).vars || theme).palette.primary.dark,
     },
   },
   [`&.${pickersDayClasses.disabled}`]: {
-    color: (theme.vars || theme).palette.text.disabled,
+    color: ((theme as any).vars || theme).palette.text.disabled,
   },
   ...(!ownerState.disableMargin && {
     margin: `0 ${DAY_MARGIN}px`,
   }),
   ...(ownerState.outsideCurrentMonth &&
     ownerState.showDaysOutsideCurrentMonth && {
-      color: (theme.vars || theme).palette.text.secondary,
+      color: ((theme as any).vars || theme).palette.text.secondary,
     }),
   ...(!ownerState.disableHighlightToday &&
     ownerState.today && {
       [`&:not(.${pickersDayClasses.selected})`]: {
-        border: `1px solid ${(theme.vars || theme).palette.text.secondary}`,
+        border: `1px solid ${((theme as any).vars || theme).palette.text.secondary}`,
       },
     }),
 });

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import moment from 'moment';
+import moment, { Moment } from 'moment';
 import { DatePicker } from './DatePicker';
 import { expectType } from '@mui/types';
 
@@ -17,6 +17,19 @@ import { expectType } from '@mui/types';
   onChange={(date) => date?.getDate()}
   renderInput={() => <input />}
 />;
+
+// Inference from the state
+function InferTest() {
+  const [value, setValue] = React.useState<Moment | null>(moment());
+
+  return (
+    <DatePicker
+      value={value}
+      onChange={(newValue) => setValue(newValue)}
+      renderInput={() => <input />}
+    />
+  );
+}
 
 // Allows inferring from side props
 <DatePicker

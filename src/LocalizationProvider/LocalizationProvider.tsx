@@ -22,6 +22,10 @@ export type MuiPickersAdapterContextNullableValue<TDate> = {
 export const MuiPickersAdapterContext =
   React.createContext<MuiPickersAdapterContextNullableValue<any> | null>(null);
 
+if (process.env.NODE_ENV !== 'production') {
+  MuiPickersAdapterContext.displayName = 'MuiPickersAdapterContext';
+}
+
 export interface LocalizationProviderProps<TDate> {
   children?: React.ReactNode;
   /** DateIO adapter class function */
@@ -93,8 +97,8 @@ export function LocalizationProvider<TDate>(inProps: LocalizationProviderProps<T
     if (!adapter.isMUIAdapter) {
       throw new Error(
         [
-          'MUI: The date adapter should be imported from `date-pickers-modern`, not from `@date-io`',
-          "For example, `import { AdapterDayjs } from 'date-pickers-modern/dist/AdapterDayjs'` instead of `import AdapterDayjs from '@date-io/dayjs'`",
+          'The date adapter should be imported from `date-pickers-modern`, not from `@date-io`',
+          "For example, `import { AdapterDayjs } from 'date-pickers-modern'` instead of `import AdapterDayjs from '@date-io/dayjs'`",
         ].join(`\n`),
       );
     }

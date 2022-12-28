@@ -1,19 +1,3 @@
-import { DateRangePickerProps } from '../DateRangePicker';
-import { DateRangePickerInputProps } from '../DateRangePicker/DateRangePickerInput';
-import { DateRangePickerToolbarProps } from '../DateRangePicker/DateRangePickerToolbar';
-import { DateRangePickerViewDesktopProps } from '../DateRangePicker/DateRangePickerViewDesktop';
-import { DateRangePickerDayProps } from '../DateRangePickerDay';
-import { MultiInputDateRangeFieldProps } from '../MultiInputDateRangeField';
-import { SingleInputDateRangeFieldProps } from '../SingleInputDateRangeField';
-import { DesktopDateRangePickerProps } from '../DesktopDateRangePicker';
-import { MobileDateRangePickerProps } from '../MobileDateRangePicker';
-import { StaticDateRangePickerProps } from '../StaticDateRangePicker';
-import { DateRangeCalendarProps } from '../DateRangeCalendar';
-
-import { NextDateRangePickerProps } from '../NextDateRangePicker';
-import { DesktopNextDateRangePickerProps } from '../DesktopNextDateRangePicker';
-import { MobileNextDateRangePickerProps } from '../MobileNextDateRangePicker';
-import { StaticNextDateRangePickerProps } from '../StaticNextDateRangePicker';
 import {
   DateCalendarProps,
   ExportedSlideTransitionProps,
@@ -42,6 +26,7 @@ import { ExportedPickersYearProps, YearCalendarProps } from '../YearCalendar';
 import { DateFieldProps } from '../DateField';
 import { LocalizationProviderProps } from '../LocalizationProvider';
 import { DesktopDatePickerProps } from '../DesktopDatePicker';
+import { PickersLayoutProps } from '../PickersLayout';
 import {
   CalendarOrClockPickerProps,
   DayCalendarProps,
@@ -54,7 +39,6 @@ import {
   ExportedPickersToolbarTextProps,
 } from '../internals';
 import { DateOrTimeView } from '../internals/models';
-import { PickersViewLayoutProps } from '../internals/components/PickersViewLayout';
 
 import { NextDatePickerProps } from '../NextDatePicker';
 import { DesktopNextDatePickerProps } from '../DesktopNextDatePicker';
@@ -71,7 +55,24 @@ import { DesktopNextTimePickerProps } from '../DesktopNextTimePicker';
 import { MobileNextTimePickerProps } from '../MobileNextTimePicker';
 import { StaticNextTimePickerProps } from '../StaticNextTimePicker';
 
-export interface PickersProComponentsPropsList {
+import { DateRangePickerProps } from '../DateRangePicker';
+import { DateRangePickerInputProps } from '../DateRangePicker/DateRangePickerInput';
+import { DateRangePickerToolbarProps } from '../DateRangePicker/DateRangePickerToolbar';
+import { DateRangePickerViewDesktopProps } from '../DateRangePicker/DateRangePickerViewDesktop';
+import { DateRangePickerDayProps } from '../DateRangePickerDay';
+import { MultiInputDateRangeFieldProps } from '../MultiInputDateRangeField/MultiInputDateRangeField.types';
+import { SingleInputDateRangeFieldProps } from '../SingleInputDateRangeField/SingleInputDateRangeField.types';
+import { DesktopDateRangePickerProps } from '../DesktopDateRangePicker';
+import { MobileDateRangePickerProps } from '../MobileDateRangePicker';
+import { StaticDateRangePickerProps } from '../StaticDateRangePicker';
+import { DateRangeCalendarProps } from '../DateRangeCalendar';
+
+import { NextDateRangePickerProps } from '../NextDateRangePicker';
+import { DesktopNextDateRangePickerProps } from '../DesktopNextDateRangePicker';
+import { MobileNextDateRangePickerProps } from '../MobileNextDateRangePicker';
+import { StaticNextDateRangePickerProps } from '../StaticNextDateRangePicker';
+
+export interface PickersComponentsPropsList {
   MuiCalendarOrClockPicker: CalendarOrClockPickerProps<unknown, DateOrTimeView>;
   MuiClock: ClockProps<unknown>;
   MuiClockNumber: ClockNumberProps;
@@ -110,10 +111,10 @@ export interface PickersProComponentsPropsList {
   MuiPickersPopper: PickerPopperProps;
   MuiPickersSlideTransition: ExportedSlideTransitionProps;
   MuiPickerStaticWrapper: PickerStaticWrapperProps<unknown>;
-  MuiPickersToolbar: PickersToolbarProps<unknown, any>;
+  MuiPickersToolbar: PickersToolbarProps<unknown, DateOrTimeView>;
   MuiPickersToolbarButton: PickersToolbarButtonProps;
   MuiPickersToolbarText: ExportedPickersToolbarTextProps;
-  MuiPickersViewLayout: PickersViewLayoutProps<unknown, DateOrTimeView>;
+  MuiPickersLayout: PickersLayoutProps<unknown, DateOrTimeView>;
   MuiPickersYear: ExportedPickersYearProps;
   MuiStaticDatePicker: StaticDatePickerProps<unknown>;
   MuiStaticDateTimePicker: StaticDateTimePickerProps<unknown>;
@@ -125,6 +126,9 @@ export interface PickersProComponentsPropsList {
   MuiTimePicker: TimePickerProps<unknown>;
   MuiTimePickerToolbar: TimePickerToolbarProps<unknown>;
   MuiYearCalendar: YearCalendarProps<unknown>;
+}
+
+export interface PickersProComponentsPropsList {
   MuiDateRangeCalendar: DateRangeCalendarProps<unknown>;
   MuiDateRangePicker: DateRangePickerProps<unknown>;
   MuiDateRangePickerDay: DateRangePickerDayProps<unknown>;
@@ -135,15 +139,17 @@ export interface PickersProComponentsPropsList {
   MuiDesktopNextDateRangePicker: DesktopNextDateRangePickerProps<unknown>;
   MuiMobileDateRangePicker: MobileDateRangePickerProps<unknown>;
   MuiMobileNextDateRangePicker: MobileNextDateRangePickerProps<unknown>;
-  MuiMultiInputDateRangeField: MultiInputDateRangeFieldProps<unknown>;
+  // @ts-ignore
+  MuiMultiInputDateRangeField: MultiInputDateRangeFieldProps<unknown, unknown>;
   MuiNextDateRangePicker: NextDateRangePickerProps<unknown>;
-  MuiSingleInputDateRangeField: SingleInputDateRangeFieldProps<unknown>;
+  // @ts-ignore
+  MuiSingleInputDateRangeField: SingleInputDateRangeFieldProps<unknown, unknown>;
   MuiStaticDateRangePicker: StaticDateRangePickerProps<unknown>;
   MuiStaticNextDateRangePicker: StaticNextDateRangePickerProps<unknown>;
 }
 
 declare module '@mui/material/styles' {
-  interface ComponentsPropsList extends PickersProComponentsPropsList {}
+  interface ComponentsPropsList extends PickersComponentsPropsList, PickersProComponentsPropsList {}
 }
 
 // disable automatic export

@@ -26,6 +26,7 @@ import {
   PickerSelectionState,
   useNow,
 } from '../internals';
+import { getReleaseInfo } from '../internal/utils/releaseInfo';
 import {
   dateRangeCalendarClasses,
   getDateRangeCalendarUtilityClass,
@@ -48,6 +49,8 @@ import { DateRangePickerDay, dateRangePickerDayClasses as dayClasses } from '../
 import { rangeValueManager } from '../internal/utils/valueManagers';
 import { useDragRange } from './useDragRange';
 
+const releaseInfo = getReleaseInfo();
+
 const DateRangeCalendarRoot = styled('div', {
   name: 'MuiDateRangeCalendar',
   slot: 'Root',
@@ -63,7 +66,7 @@ const DateRangeCalendarMonthContainer = styled('div', {
   overridesResolver: (_, styles) => styles.monthContainer,
 })(({ theme }) => ({
   '&:not(:last-of-type)': {
-    borderRight: `2px solid ${(theme.vars || theme).palette.divider}`,
+    borderRight: `2px solid ${((theme as any).vars || theme).palette.divider}`,
   },
 }));
 
@@ -93,7 +96,7 @@ const DayCalendarForRange = styled(DayCalendar)(({ theme }) => ({
   [`&:not(.${dateRangeCalendarClasses.dayDragging}) .${dayClasses.dayOutsideRangeInterval}`]: {
     '@media (pointer: fine)': {
       '&:hover': {
-        border: `1px solid ${(theme.vars || theme).palette.grey[500]}`,
+        border: `1px solid ${((theme as any).vars || theme).palette.grey[500]}`,
       },
     },
   },
@@ -207,7 +210,7 @@ const DateRangeCalendar = React.forwardRef(function DateRangeCalendar<TDate>(
   const handleSelectedDayChange = useEventCallback(
     (
       newDate: TDate | null,
-      _selectionState: PickerSelectionState | undefined,
+      selectionState: PickerSelectionState | undefined,
       allowRangeFlip: boolean = false,
     ) => {
       const { nextSelection, newRange } = calculateRangeChange({
@@ -386,7 +389,7 @@ const DateRangeCalendar = React.forwardRef(function DateRangeCalendar<TDate>(
   });
 
   const handleDayMouseEnter = useEventCallback(
-    (_event: React.MouseEvent<HTMLDivElement>, newPreviewRequest: TDate) => {
+    (event: React.MouseEvent<HTMLDivElement>, newPreviewRequest: TDate) => {
       if (!isWithinRange(utils, newPreviewRequest, valueDayRange)) {
         setRangePreviewDay(newPreviewRequest);
       } else {

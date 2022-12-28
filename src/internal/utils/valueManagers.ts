@@ -7,7 +7,7 @@ import {
   createDateStrForInputFromSections,
   getSectionOrder,
 } from '../../internals';
-import { DateRange, RangePosition } from '../models';
+import { DateRange, RangePosition } from '../models/range';
 import { splitDateRangeSections, removeLastSeparator } from './date-fields-utils';
 import type { DateRangeValidationError } from '../hooks/validation/useDateRangeValidation';
 import type { TimeRangeValidationError } from '../hooks/validation/useTimeRangeValidation';

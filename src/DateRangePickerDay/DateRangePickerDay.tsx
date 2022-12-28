@@ -10,7 +10,9 @@ import {
   getDateRangePickerDayUtilityClass,
   dateRangePickerDayClasses,
 } from './dateRangePickerDayClasses';
-import type {} from '@mui/material/themeCssVarsAugmentation';
+import { getReleaseInfo } from '../internal/utils/releaseInfo';
+
+const releaseInfo = getReleaseInfo();
 
 export interface DateRangePickerDayProps<TDate>
   extends Omit<PickersDayProps<TDate>, 'classes' | 'onBlur' | 'onFocus' | 'onKeyDown'> {
@@ -120,18 +122,18 @@ const DateRangePickerDayRoot = styled('div', {
 })<{ ownerState: OwnerState }>(({ theme, ownerState }) => ({
   [`&:first-of-type .${dateRangePickerDayClasses.rangeIntervalDayPreview}`]: {
     ...startBorderStyle,
-    borderLeftColor: (theme.vars || theme).palette.divider,
+    borderLeftColor: ((theme as any).vars || theme).palette.divider,
   },
   [`&:last-of-type .${dateRangePickerDayClasses.rangeIntervalDayPreview}`]: {
     ...endBorderStyle,
-    borderRightColor: (theme.vars || theme).palette.divider,
+    borderRightColor: ((theme as any).vars || theme).palette.divider,
   },
   ...(ownerState.isHighlighting &&
     !ownerState.outsideCurrentMonth && {
       borderRadius: 0,
-      color: (theme.vars || theme).palette.primary.contrastText,
-      backgroundColor: theme.vars
-        ? `rgba(${theme.vars.palette.primary.lightChannel} / 0.6)`
+      color: ((theme as any).vars || theme).palette.primary.contrastText,
+      backgroundColor: (theme as any).vars
+        ? `rgba(${(theme as any).vars.palette.primary.lightChannel} / 0.6)`
         : alpha(theme.palette.primary.light, 0.6),
       '&:first-of-type': startBorderStyle,
       '&:last-of-type': endBorderStyle,
@@ -175,15 +177,15 @@ const DateRangePickerDayRangeIntervalPreview = styled('div', {
   ...(ownerState.isPreviewing &&
     !ownerState.outsideCurrentMonth && {
       borderRadius: 0,
-      border: `2px dashed ${(theme.vars || theme).palette.divider}`,
+      border: `2px dashed ${((theme as any).vars || theme).palette.divider}`,
       borderLeftColor: 'transparent',
       borderRightColor: 'transparent',
       ...((ownerState.isStartOfPreviewing || ownerState.isStartOfMonth) && {
-        borderLeftColor: (theme.vars || theme).palette.divider,
+        borderLeftColor: ((theme as any).vars || theme).palette.divider,
         ...startBorderStyle,
       }),
       ...((ownerState.isEndOfPreviewing || ownerState.isEndOfMonth) && {
-        borderRightColor: (theme.vars || theme).palette.divider,
+        borderRightColor: ((theme as any).vars || theme).palette.divider,
         ...endBorderStyle,
       }),
     }),

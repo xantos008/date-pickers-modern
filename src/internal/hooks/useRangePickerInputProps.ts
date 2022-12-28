@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {PickersInputLocaleText} from "../../locales";
+import { PickersInputLocaleText } from "../../locales";
 import {
   DateOrTimeView,
   onSpaceOrEnter,
