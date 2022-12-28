@@ -493,7 +493,7 @@ const DateRangeCalendar = React.forwardRef(function DateRangeCalendar<TDate>(
         >
           {calendars === 1 ? (
             <PickersCalendarHeader
-              views={['day']}
+              views={['day', 'month', 'year']}
               view={'day'}
               currentMonth={calendarState.currentMonth}
               onMonthChange={(newMonth, direction) => handleChangeMonth({ newMonth, direction })}
