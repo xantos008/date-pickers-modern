@@ -479,6 +479,8 @@ const DateRangeCalendar = React.forwardRef(function DateRangeCalendar<TDate>(
     return visibleMonths.find((month) => utils.isSameMonth(month, now)) ?? visibleMonths[0];
   }, [utils, value, visibleMonths, autoFocus, now]);
 
+  console.log('I NEED TO SEE CALENDARS', calendars);
+
   return (
     <DateRangeCalendarRoot
       ref={ref}
@@ -493,7 +495,7 @@ const DateRangeCalendar = React.forwardRef(function DateRangeCalendar<TDate>(
         >
           {calendars === 1 ? (
             <PickersCalendarHeader
-              views={['day', 'month', 'year']}
+              views={['year', 'month', 'day']}
               view={'day'}
               currentMonth={calendarState.currentMonth}
               onMonthChange={(newMonth, direction) => handleChangeMonth({ newMonth, direction })}
