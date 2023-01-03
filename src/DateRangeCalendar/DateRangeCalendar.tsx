@@ -294,7 +294,7 @@ const DateRangeCalendar = React.forwardRef(function DateRangeCalendar<TDate>(
     defaultCalendarMonth,
     disableFuture,
     disablePast,
-    disableSwitchToMonthOnDayFocus: true,
+    disableSwitchToMonthOnDayFocus: false,
     maxDate,
     minDate,
     onMonthChange,
