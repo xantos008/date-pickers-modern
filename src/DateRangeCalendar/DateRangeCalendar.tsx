@@ -24,7 +24,7 @@ import {
   useUtils,
   WrapperVariantContext,
   PickerSelectionState,
-  useNow,
+  useNow, DateView,
 } from '../internals';
 import { getReleaseInfo } from '../internal/utils/releaseInfo';
 import {
@@ -48,6 +48,7 @@ import { DateRange } from '../internal/models';
 import { DateRangePickerDay, dateRangePickerDayClasses as dayClasses } from '../DateRangePickerDay';
 import { rangeValueManager } from '../internal/utils/valueManagers';
 import { useDragRange } from './useDragRange';
+import {useState} from "react";
 
 const releaseInfo = getReleaseInfo();
 
@@ -479,7 +480,9 @@ const DateRangeCalendar = React.forwardRef(function DateRangeCalendar<TDate>(
     return visibleMonths.find((month) => utils.isSameMonth(month, now)) ?? visibleMonths[0];
   }, [utils, value, visibleMonths, autoFocus, now]);
 
-  console.log('I NEED TO SEE CALENDARS', calendars);
+  const [currentView, setCurrentView] = useState<DateView>('day')
+
+  console.log('I NEED TO SEE CALENDARS NOW', calendars);
 
   return (
     <DateRangeCalendarRoot
@@ -496,7 +499,10 @@ const DateRangeCalendar = React.forwardRef(function DateRangeCalendar<TDate>(
           {calendars === 1 ? (
             <PickersCalendarHeader
               views={['year', 'month', 'day']}
-              view={'day'}
+              view={currentView}
+              onViewChange={(newView) => {
+                setCurrentView(newView);
+              }}
               currentMonth={calendarState.currentMonth}
               onMonthChange={(newMonth, direction) => handleChangeMonth({ newMonth, direction })}
               minDate={minDateWithDisabled}
