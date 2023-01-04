@@ -1,6 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { extractValidationProps, PickerViewRendererLookup } from '../internals';
+import {DateView, extractValidationProps, PickerViewRendererLookup} from '../internals';
 import { resolveComponentProps } from '@mui/base/utils';
 import { rangeValueManager } from '../internal/utils/valueManagers';
 import { MobileNextDateRangePickerProps } from './MobileNextDateRangePicker.types';
@@ -25,8 +25,10 @@ const MobileNextDateRangePicker = React.forwardRef(function MobileNextDateRangeP
     MobileNextDateRangePickerProps<TDate>
   >(inProps, 'MuiMobileNextDateRangePicker');
 
-  const viewRenderers: PickerViewRendererLookup<DateRange<TDate>, 'day', any, {}> = {
+  const viewRenderers: PickerViewRendererLookup<DateRange<TDate>, DateView, any, {}> = {
     day: renderDateRangeViewCalendar,
+    month: renderDateRangeViewCalendar,
+    year: renderDateRangeViewCalendar,
     ...defaultizedProps.viewRenderers,
   };
 
@@ -34,8 +36,6 @@ const MobileNextDateRangePicker = React.forwardRef(function MobileNextDateRangeP
     ...defaultizedProps,
     viewRenderers,
     calendars: defaultizedProps.calendars ?? 1,
-    views: ['day'] as const,
-    openTo: 'day' as const,
     showToolbar: defaultizedProps.showToolbar ?? true,
     components: {
       Field: MultiInputDateRangeField,
@@ -53,7 +53,7 @@ const MobileNextDateRangePicker = React.forwardRef(function MobileNextDateRangeP
     },
   };
 
-  const { renderPicker } = useMobileRangePicker<TDate, 'day', typeof props>({
+  const { renderPicker } = useMobileRangePicker<TDate, DateView, typeof props>({
     props,
     valueManager: rangeValueManager,
     validator: validateDateRange,

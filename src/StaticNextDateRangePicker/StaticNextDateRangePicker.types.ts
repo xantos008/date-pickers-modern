@@ -1,4 +1,4 @@
-import { MakeOptional } from '../internals';
+import {DateView, MakeOptional} from '../internals';
 import {
   StaticRangeOnlyPickerProps,
   UseStaticRangePickerSlotsComponent,
@@ -12,11 +12,11 @@ import {
 
 export interface StaticNextDateRangePickerSlotsComponent<TDate>
   extends BaseNextDateRangePickerSlotsComponent<TDate>,
-    UseStaticRangePickerSlotsComponent<TDate, 'day'> {}
+    UseStaticRangePickerSlotsComponent<TDate, DateView> {}
 
 export interface StaticNextDateRangePickerSlotsComponentsProps<TDate>
   extends BaseNextDateRangePickerSlotsComponentsProps<TDate>,
-    UseStaticRangePickerSlotsComponentsProps<TDate, 'day'> {}
+    UseStaticRangePickerSlotsComponentsProps<TDate, DateView> {}
 
 export interface StaticNextDateRangePickerProps<TDate>
   extends BaseNextDateRangePickerProps<TDate>,

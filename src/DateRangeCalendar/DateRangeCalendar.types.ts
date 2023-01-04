@@ -14,7 +14,7 @@ import {
   PickersCalendarHeaderSlotsComponent,
   PickersCalendarHeaderSlotsComponentsProps,
   DayCalendarProps,
-  ExportedUseViewsOptions,
+  ExportedUseViewsOptions, DateView,
 } from '../internals';
 import { DateRange, RangePositionProps, DayRangeValidationProps } from '../internal/models';
 import { DateRangeCalendarClasses } from './dateRangeCalendarClasses';
@@ -50,7 +50,8 @@ export interface ExportedDateRangeCalendarProps<TDate>
     BaseDateValidationProps<TDate>,
     DayRangeValidationProps<TDate>,
     // TODO: Add the other props of `ExportedUseViewOptions` once `DateRangeCalendar` handles several views
-    Pick<ExportedUseViewsOptions<'day'>, 'autoFocus'> {
+    Pick<ExportedUseViewsOptions<DateView>, 'autoFocus' | 'view' | 'views' | 'openTo' | 'onViewChange' | 'focusedView' | 'onFocusedViewChange'> {
+  views: readonly DateView[];
   /**
    * If `true`, after selecting `start` date calendar will not automatically switch to the month of `end` date.
    * @default false
@@ -75,6 +76,12 @@ export interface ExportedDateRangeCalendarProps<TDate>
    * @default typeof navigator !== 'undefined' && /(android)/i.test(navigator.userAgent)
    */
   reduceAnimations?: boolean;
+  /**
+   * Callback firing on year change @DateIOType.
+   * @template TDate
+   * @param {TDate} year The new year.
+   */
+  onYearChange?: (year: TDate) => void;
   /**
    * Callback firing on month change @DateIOType.
    * @template TDate

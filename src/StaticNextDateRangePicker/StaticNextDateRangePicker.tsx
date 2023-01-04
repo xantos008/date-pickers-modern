@@ -1,6 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { PickerViewRendererLookup } from '../internals';
+import {DateView, PickerViewRendererLookup} from '../internals';
 import { useStaticRangePicker } from '../internal/hooks/useStaticRangePicker';
 import { StaticNextDateRangePickerProps } from './StaticNextDateRangePicker.types';
 import { useNextDateRangePickerDefaultizedProps } from '../NextDateRangePicker/shared';
@@ -24,8 +24,10 @@ const StaticNextDateRangePicker = React.forwardRef(function StaticNextDateRangeP
 
   const displayStaticWrapperAs = defaultizedProps.displayStaticWrapperAs ?? 'mobile';
 
-  const viewRenderers: PickerViewRendererLookup<DateRange<TDate>, 'day', any, {}> = {
+  const viewRenderers: PickerViewRendererLookup<DateRange<TDate>, DateView, any, {}> = {
     day: renderDateRangeViewCalendar,
+    month: renderDateRangeViewCalendar,
+    year: renderDateRangeViewCalendar,
     ...defaultizedProps.viewRenderers,
   };
 
@@ -34,13 +36,11 @@ const StaticNextDateRangePicker = React.forwardRef(function StaticNextDateRangeP
     ...defaultizedProps,
     viewRenderers,
     displayStaticWrapperAs,
-    views: ['day'] as const,
-    openTo: 'day' as const,
     calendars: defaultizedProps.calendars ?? (displayStaticWrapperAs === 'mobile' ? 1 : 2),
     showToolbar: defaultizedProps.showToolbar ?? displayStaticWrapperAs === 'mobile',
   };
 
-  const { renderPicker } = useStaticRangePicker<TDate, 'day', typeof props>({
+  const { renderPicker } = useStaticRangePicker<TDate, DateView, typeof props>({
     props,
     valueManager: rangeValueManager,
     validator: validateDateRange,

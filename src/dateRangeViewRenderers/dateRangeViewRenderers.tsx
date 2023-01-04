@@ -1,12 +1,18 @@
 import * as React from 'react';
-import { DateOrTimeView } from '../internals';
+import {DateOrTimeView, DateView} from '../internals';
 import { DateRangeCalendar, DateRangeCalendarProps } from '../DateRangeCalendar';
 
+const isDatePickerView = (view: unknown): view is DateView =>
+    view === 'year' || view === 'month' || view === 'day';
+
 export interface DateRangeViewRendererProps<TDate, TView extends DateOrTimeView>
-  extends DateRangeCalendarProps<TDate> {
+  extends Omit<DateRangeCalendarProps<TDate>,
+      'views' | 'openTo' | 'view' | 'onViewChange' | 'focusedView'
+      > {
   view: TView;
   onViewChange?: (view: TView) => void;
   views: readonly TView[];
+  focusedView: TView | null;
 }
 
 /**
@@ -14,6 +20,9 @@ export interface DateRangeViewRendererProps<TDate, TView extends DateOrTimeView>
  * because otherwise some unwanted props would be passed to the HTML element.
  */
 export const renderDateRangeViewCalendar = <TDate extends unknown>({
+  views,
+  view,
+  focusedView,
   value,
   defaultValue,
   onChange,
@@ -47,6 +56,9 @@ export const renderDateRangeViewCalendar = <TDate extends unknown>({
   displayWeekNumber,
 }: DateRangeViewRendererProps<TDate, any>) => (
   <DateRangeCalendar
+    view={view as DateView}
+    views={views.filter(isDatePickerView)}
+    focusedView={focusedView as DateView | null}
     value={value}
     defaultValue={defaultValue}
     onChange={onChange}

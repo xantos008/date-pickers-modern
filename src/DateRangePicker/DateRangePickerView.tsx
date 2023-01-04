@@ -12,7 +12,7 @@ import {
   BaseDateValidationProps,
   DayValidationProps,
   ExportedBaseToolbarProps,
-  ExportedUseViewsOptions,
+  ExportedUseViewsOptions, DateView,
 } from '../internals';
 import { DateRange, RangePositionProps } from '../internal/models/range';
 import { DayRangeValidationProps } from '../internal/models/dateRange';
@@ -89,7 +89,7 @@ interface DateRangePickerViewProps<TDate>
     ExportedDateRangePickerViewProps<TDate>,
     PickerStatePickerProps<DateRange<TDate>>,
     Required<BaseDateValidationProps<TDate>>,
-    Pick<ExportedUseViewsOptions<'day'>, 'onFocusedViewChange'> {
+    Pick<ExportedUseViewsOptions<DateView>, 'onFocusedViewChange'> {
   calendars: 1 | 2 | 3;
   open: boolean;
   DateInputProps: DateRangePickerInputProps<TDate>;

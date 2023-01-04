@@ -1,4 +1,4 @@
-import { MakeOptional } from '../internals';
+import {DateView, MakeOptional} from '../internals';
 import {
   UseMobileRangePickerSlotsComponent,
   UseMobileRangePickerSlotsComponentsProps,
@@ -12,11 +12,11 @@ import {
 
 export interface MobileNextDateRangePickerSlotsComponent<TDate>
   extends BaseNextDateRangePickerSlotsComponent<TDate>,
-    MakeOptional<UseMobileRangePickerSlotsComponent<TDate, 'day'>, 'Field'> {}
+    MakeOptional<UseMobileRangePickerSlotsComponent<TDate, DateView>, 'Field'> {}
 
 export interface MobileNextDateRangePickerSlotsComponentsProps<TDate>
   extends BaseNextDateRangePickerSlotsComponentsProps<TDate>,
-    UseMobileRangePickerSlotsComponentsProps<TDate, 'day'> {}
+    UseMobileRangePickerSlotsComponentsProps<TDate, DateView> {}
 
 export interface MobileNextDateRangePickerProps<TDate>
   extends BaseNextDateRangePickerProps<TDate>,

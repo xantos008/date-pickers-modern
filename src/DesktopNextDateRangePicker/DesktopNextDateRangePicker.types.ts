@@ -1,4 +1,4 @@
-import { MakeOptional } from '../internals';
+import {DateView, MakeOptional} from '../internals';
 import {
   UseDesktopRangePickerSlotsComponent,
   UseDesktopRangePickerSlotsComponentsProps,
@@ -12,11 +12,11 @@ import {
 
 export interface DesktopNextDateRangePickerSlotsComponent<TDate>
   extends BaseNextDateRangePickerSlotsComponent<TDate>,
-    MakeOptional<UseDesktopRangePickerSlotsComponent<TDate, 'day'>, 'Field'> {}
+    MakeOptional<UseDesktopRangePickerSlotsComponent<TDate, DateView>, 'Field'> {}
 
 export interface DesktopNextDateRangePickerSlotsComponentsProps<TDate>
   extends BaseNextDateRangePickerSlotsComponentsProps<TDate>,
-    UseDesktopRangePickerSlotsComponentsProps<TDate, 'day'> {}
+    UseDesktopRangePickerSlotsComponentsProps<TDate, DateView> {}
 
 export interface DesktopNextDateRangePickerProps<TDate>
   extends BaseNextDateRangePickerProps<TDate>,

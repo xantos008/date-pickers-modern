@@ -8,7 +8,7 @@ import {
   applyDefaultDate,
   BaseDateValidationProps,
   BaseNextPickerInputProps,
-  PickerViewRendererLookup,
+  PickerViewRendererLookup, DateView,
 } from '../internals';
 import { DateRangeValidationError } from '../internal/hooks/validation/useDateRangeValidation';
 import { DateRange } from '../internal/models';
@@ -23,6 +23,7 @@ import {
   ExportedDateRangePickerToolbarProps,
 } from '../DateRangePicker/DateRangePickerToolbar';
 import { DateRangeViewRendererProps } from '../dateRangeViewRenderers';
+import {applyDefaultViewProps} from "../internals/utils/views";
 
 export interface BaseNextDateRangePickerSlotsComponent<TDate>
   extends DateRangeCalendarSlotsComponent<TDate> {
@@ -61,7 +62,7 @@ export interface BaseNextDateRangePickerProps<TDate>
    * If `undefined`, internally defined view will be the used.
    */
   viewRenderers?: Partial<
-    PickerViewRendererLookup<DateRange<TDate>, 'day', DateRangeViewRendererProps<TDate, 'day'>, {}>
+    PickerViewRendererLookup<DateRange<TDate>, DateView, DateRangeViewRendererProps<TDate, DateView>, {}>
   >;
 }
 
@@ -95,6 +96,12 @@ export function useNextDateRangePickerDefaultizedProps<
   return {
     ...themeProps,
     localeText,
+    ...applyDefaultViewProps({
+      views: themeProps.views,
+      openTo: themeProps.openTo,
+      defaultViews: ['year', 'day'],
+      defaultOpenTo: 'day',
+    }),
     disableFuture: themeProps.disableFuture ?? false,
     disablePast: themeProps.disablePast ?? false,
     minDate: applyDefaultDate(utils, themeProps.minDate, defaultDates.minDate),
