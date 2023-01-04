@@ -1,8 +1,10 @@
 {
   "name": "date-pickers-modern",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "A react date range picker implementation using @mui.",
-  "files": ["."],
+  "files": [
+    "dist/*"
+  ],
   "author": "xantos008",
   "license": "MIT",
   "main": "dist/index.js",
