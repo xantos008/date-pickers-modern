@@ -34,6 +34,8 @@ const StaticNextDateRangePicker = React.forwardRef(function StaticNextDateRangeP
   // Props with the default values specific to the static variant
   const props = {
     ...defaultizedProps,
+    view: defaultizedProps?.view ? defaultizedProps.view : 'day' as DateView,
+    views: defaultizedProps?.views ? defaultizedProps.views : ['year', 'day'] as DateView[],
     viewRenderers,
     displayStaticWrapperAs,
     calendars: defaultizedProps.calendars ?? (displayStaticWrapperAs === 'mobile' ? 1 : 2),

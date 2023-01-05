@@ -34,6 +34,8 @@ const MobileNextDateRangePicker = React.forwardRef(function MobileNextDateRangeP
 
   const props = {
     ...defaultizedProps,
+    view: defaultizedProps?.view ? defaultizedProps.view : 'day' as DateView,
+    views: defaultizedProps?.views ? defaultizedProps.views : ['year', 'day'] as DateView[],
     viewRenderers,
     calendars: defaultizedProps.calendars ?? 1,
     showToolbar: defaultizedProps.showToolbar ?? true,

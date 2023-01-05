@@ -19,6 +19,7 @@ import {
 import { DateRange, RangePositionProps, DayRangeValidationProps } from '../internal/models';
 import { DateRangeCalendarClasses } from './dateRangeCalendarClasses';
 import { DateRangePickerDay, DateRangePickerDayProps } from '../DateRangePickerDay';
+import {DateCalendarProps} from "../DateCalendar";
 
 export type DateRangePosition = 'start' | 'end';
 
@@ -49,9 +50,7 @@ export interface ExportedDateRangeCalendarProps<TDate>
   extends ExportedDayCalendarProps<TDate>,
     BaseDateValidationProps<TDate>,
     DayRangeValidationProps<TDate>,
-    // TODO: Add the other props of `ExportedUseViewOptions` once `DateRangeCalendar` handles several views
-    Pick<ExportedUseViewsOptions<DateView>, 'autoFocus' | 'view' | 'views' | 'openTo' | 'onViewChange' | 'focusedView' | 'onFocusedViewChange'> {
-  views: readonly DateView[];
+    ExportedUseViewsOptions<DateView> {
   /**
    * If `true`, after selecting `start` date calendar will not automatically switch to the month of `end` date.
    * @default false
@@ -144,6 +143,5 @@ export interface DateRangeCalendarOwnerState<TDate> extends DateRangeCalendarPro
 }
 
 export type DateRangeCalendarDefaultizedProps<TDate> = DefaultizedProps<
-  DateRangeCalendarProps<TDate>,
-  'reduceAnimations' | 'calendars' | 'disableDragEditing' | keyof BaseDateValidationProps<TDate>
+  DateRangeCalendarProps<TDate>, | 'views' | 'openTo' | 'renderLoading' | 'reduceAnimations' | 'calendars' | 'disableDragEditing' | keyof BaseDateValidationProps<TDate>
 >;

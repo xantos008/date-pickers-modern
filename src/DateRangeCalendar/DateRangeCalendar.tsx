@@ -26,7 +26,6 @@ import {
   PickerSelectionState,
   useNow, DateView,
 } from '../internals';
-import { getReleaseInfo } from '../internal/utils/releaseInfo';
 import {
   dateRangeCalendarClasses,
   getDateRangeCalendarUtilityClass,
@@ -48,13 +47,10 @@ import { DateRange } from '../internal/models';
 import { DateRangePickerDay, dateRangePickerDayClasses as dayClasses } from '../DateRangePickerDay';
 import { rangeValueManager } from '../internal/utils/valueManagers';
 import { useDragRange } from './useDragRange';
-import {useState} from "react";
 import {useViews} from "../internals/hooks/useViews";
 import {YearCalendar} from "../YearCalendar";
 import {MonthCalendar} from "../MonthCalendar";
 import {findClosestEnabledDate} from "../internals/utils/date-utils";
-
-const releaseInfo = getReleaseInfo();
 
 const DateRangeCalendarRoot = styled('div', {
   name: 'MuiDateRangeCalendar',
@@ -203,6 +199,12 @@ const DateRangeCalendar = React.forwardRef(function DateRangeCalendar<TDate>(
     ...other
   } = props;
 
+  const [currentView, setCurrentView] = useControlled<DateView>({
+    name: 'DateRangeCalendar',
+    controlled: inView,
+    default: inView || 'day'
+  });
+
   const [value, setValue] = useControlled<DateRange<TDate>>({
     controlled: valueProp,
     default: defaultValue ?? rangeValueManager.emptyValue,
@@ -229,7 +231,7 @@ const DateRangeCalendar = React.forwardRef(function DateRangeCalendar<TDate>(
       selectionState: PickerSelectionState | undefined,
       allowRangeFlip: boolean = false,
     ) => {
-      const isSameRangePosition = inView !== 'day';
+      const isSameRangePosition = currentView !== 'day';
       const forcedRangePosition = isSameRangePosition ? rangePosition : null;
       const { nextSelection, newRange } = calculateRangeChange({
         newDate,
@@ -566,7 +568,7 @@ const DateRangeCalendar = React.forwardRef(function DateRangeCalendar<TDate>(
     changeFocusedDay(closestEnabledDate, true);
   });
 
-  console.log('So lets see the views', view, inView);
+  console.log('So lets see the views', view, inView, currentView, views);
   console.log('Lets see how values are changing', value);
   console.log('shouldSwitchToMoth', shouldSwitchToMoth);
 
@@ -587,7 +589,10 @@ const DateRangeCalendar = React.forwardRef(function DateRangeCalendar<TDate>(
               views={views}
               view={view}
               currentMonth={calendarState.currentMonth}
-              onViewChange={setView}
+              onViewChange={(newView) => {
+                setView(newView);
+                setCurrentView(newView);
+              }}
               onMonthChange={(newMonth, direction) => handleChangeMonth({ newMonth, direction })}
               minDate={minDateWithDisabled}
               maxDate={maxDateWithDisabled}

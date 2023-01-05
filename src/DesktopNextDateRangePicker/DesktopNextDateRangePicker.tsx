@@ -33,6 +33,8 @@ const DesktopNextDateRangePicker = React.forwardRef(function DesktopNextDateRang
 
   const props = {
     ...defaultizedProps,
+    view: defaultizedProps?.view ? defaultizedProps.view : 'day' as DateView,
+    views: defaultizedProps?.views ? defaultizedProps.views : ['year', 'day'] as DateView[],
     viewRenderers,
     calendars: defaultizedProps.calendars ?? 2,
     showToolbar: defaultizedProps.showToolbar ?? false,
