@@ -103,6 +103,7 @@ export interface ExportedDateRangeCalendarProps<TDate>
 export interface DateRangeCalendarProps<TDate>
   extends ExportedDateRangeCalendarProps<TDate>,
     Partial<RangePositionProps> {
+  views?: DateView[];
   /**
    * The selected value.
    * Used when the component is controlled.

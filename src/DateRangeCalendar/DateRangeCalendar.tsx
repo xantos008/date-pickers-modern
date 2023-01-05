@@ -115,12 +115,12 @@ function useDateRangeCalendarDefaultizedProps<TDate>(
   });
 
   return {
-    ...themeProps,
-    renderLoading:
-      themeProps.renderLoading ?? (() => <span data-mui-test="loading-progress">...</span>),
-    openTo: 'day',
-    views: ['year', 'day'],
+    openTo: props.openTo ?? 'day',
+    views: props.views ?? ['year', 'day'],
     reduceAnimations: themeProps.reduceAnimations ?? defaultReduceAnimations,
+    renderLoading:
+        themeProps.renderLoading ?? (() => <span data-mui-test="loading-progress">...</span>),
+    ...themeProps,
     loading: props.loading ?? false,
     disablePast: props.disablePast ?? false,
     disableFuture: props.disableFuture ?? false,
@@ -568,7 +568,7 @@ const DateRangeCalendar = React.forwardRef(function DateRangeCalendar<TDate>(
     changeFocusedDay(closestEnabledDate, true);
   });
 
-  console.log('So lets see the views', view, inView, currentView, views);
+  console.log('So lets see the views', view, inView, currentView, views, props.views);
   console.log('Lets see how values are changing', value);
   console.log('shouldSwitchToMoth', shouldSwitchToMoth);
 
