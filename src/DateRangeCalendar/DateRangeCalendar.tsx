@@ -500,7 +500,6 @@ const DateRangeCalendar = React.forwardRef(function DateRangeCalendar<TDate>(
     return visibleMonths.find((month) => utils.isSameMonth(month, now)) ?? visibleMonths[0];
   }, [utils, value, visibleMonths, autoFocus, now]);
 
-  const shouldSwitchToMoth = views.includes('month');
   const { view, setView, focusedView, setFocusedView, goToNextView, setValueAndGoToNextView } =
       useViews({
         view: inView,
@@ -512,6 +511,10 @@ const DateRangeCalendar = React.forwardRef(function DateRangeCalendar<TDate>(
         focusedView: inFocusedView,
         onFocusedViewChange,
       });
+
+  React.useEffect(() => {
+    setCurrentView(view)
+  }, [view]);
 
   const hasFocus = focusedView !== null;
 
@@ -568,9 +571,7 @@ const DateRangeCalendar = React.forwardRef(function DateRangeCalendar<TDate>(
     changeFocusedDay(closestEnabledDate, true);
   });
 
-  console.log('So lets see the views', view, inView, currentView, views, props.views);
-  console.log('Lets see how values are changing', value);
-  console.log('shouldSwitchToMoth', shouldSwitchToMoth);
+  console.log('So lets see the views', view, inView, currentView);
 
   return (
     <DateRangeCalendarRoot
