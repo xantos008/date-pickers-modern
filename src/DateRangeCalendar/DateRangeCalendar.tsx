@@ -229,16 +229,18 @@ const DateRangeCalendar = React.forwardRef(function DateRangeCalendar<TDate>(
       selectionState: PickerSelectionState | undefined,
       allowRangeFlip: boolean = false,
     ) => {
+      const isSameRangePosition = inView !== 'day';
+      const forcedRangePosition = isSameRangePosition ? rangePosition : null;
       const { nextSelection, newRange } = calculateRangeChange({
         newDate,
         utils,
         range: value,
-        rangePosition,
+        rangePosition: forcedRangePosition ? forcedRangePosition : rangePosition,
         allowRangeFlip,
       });
 
-      setRangePosition(nextSelection);
-      onRangePositionChange?.(nextSelection);
+      setRangePosition(forcedRangePosition ? forcedRangePosition : nextSelection);
+      onRangePositionChange?.(forcedRangePosition ? forcedRangePosition : nextSelection);
 
       const isFullRangeSelected = rangePosition === 'end' && isRangeValid(utils, newRange);
 
@@ -496,15 +498,7 @@ const DateRangeCalendar = React.forwardRef(function DateRangeCalendar<TDate>(
     return visibleMonths.find((month) => utils.isSameMonth(month, now)) ?? visibleMonths[0];
   }, [utils, value, visibleMonths, autoFocus, now]);
 
-  // const [currentView, setCurrentView] = useState<DateView>('day');
-
-  // const handleValueChange = useEventCallback(
-  //     (newValue: TDate | null, selectionState?: PickerSelectionState) => {
-  //       setValue(newValue);
-  //       onChange?.(newValue, selectionState);
-  //     },
-  // );
-
+  const shouldSwitchToMoth = views.includes('month');
   const { view, setView, focusedView, setFocusedView, goToNextView, setValueAndGoToNextView } =
       useViews({
         view: inView,
@@ -518,6 +512,7 @@ const DateRangeCalendar = React.forwardRef(function DateRangeCalendar<TDate>(
       });
 
   const hasFocus = focusedView !== null;
+
   const handleDateMonthChange = useEventCallback((newDate: TDate) => {
     const startOfMonth = utils.startOfMonth(newDate);
     const endOfMonth = utils.endOfMonth(newDate);
@@ -544,7 +539,6 @@ const DateRangeCalendar = React.forwardRef(function DateRangeCalendar<TDate>(
 
     changeFocusedDay(closestEnabledDate, true);
   });
-
   const handleDateYearChange = useEventCallback((newDate: TDate) => {
     const startOfYear = utils.startOfYear(newDate);
     const endOfYear = utils.endOfYear(newDate);
@@ -572,7 +566,8 @@ const DateRangeCalendar = React.forwardRef(function DateRangeCalendar<TDate>(
     changeFocusedDay(closestEnabledDate, true);
   });
 
-  console.log('I NEED TO SEE CALENDARS NOW', calendars);
+  console.log('So lets see the views', view, inView);
+  console.log('Lets see how values are changing', value);
 
   return (
     <DateRangeCalendarRoot
