@@ -571,9 +571,6 @@ const DateRangeCalendar = React.forwardRef(function DateRangeCalendar<TDate>(
     changeFocusedDay(closestEnabledDate, true);
   });
 
-  console.log('Almost finished now lets show correct view in year and month pickers', calendarState.focusedDay, calendarState);
-  console.log('rangePosition', rangePosition);
-
   return (
     <DateRangeCalendarRoot
       ref={ref}
@@ -626,7 +623,6 @@ const DateRangeCalendar = React.forwardRef(function DateRangeCalendar<TDate>(
               <YearCalendar<TDate>
                   {...baseDateValidationProps}
                   {...commonViewProps}
-                  // value={calendarState.focusedDay}
                   value={rangePosition === 'start' ? value[0] : value[1]}
                   onChange={handleDateYearChange}
                   shouldDisableYear={shouldDisableYear}
@@ -641,7 +637,6 @@ const DateRangeCalendar = React.forwardRef(function DateRangeCalendar<TDate>(
                   {...commonViewProps}
                   hasFocus={hasFocus}
                   className={className}
-                  // value={calendarState.focusedDay}
                   value={rangePosition === 'start' ? value[0] : value[1]}
                   onChange={handleDateMonthChange}
                   shouldDisableMonth={shouldDisableMonth}
