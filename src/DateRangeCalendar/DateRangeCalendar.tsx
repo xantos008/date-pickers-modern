@@ -568,6 +568,7 @@ const DateRangeCalendar = React.forwardRef(function DateRangeCalendar<TDate>(
 
   console.log('So lets see the views', view, inView);
   console.log('Lets see how values are changing', value);
+  console.log('shouldSwitchToMoth', shouldSwitchToMoth);
 
   return (
     <DateRangeCalendarRoot
