@@ -122,6 +122,7 @@ export interface DateRangePickerViewDesktopProps<TDate>
    */
   onMonthChange?: (month: TDate) => void | Promise<void>;
   onFocusedViewChangedIn?: (view: DateView, hasFocus: boolean) => void;
+  setCurrentView: (newValue: (DateView | ((prevValue: DateView) => DateView))) => void;
 
   rangePosition: RangePosition;
   classes?: Partial<DateRangePickerViewDesktopClasses>;
@@ -200,6 +201,7 @@ export function DateRangePickerViewDesktop<TDate>(inProps: DateRangePickerViewDe
     changeFocusedDay,
     onMonthChange,
     onFocusedViewChangedIn,
+    setCurrentView,
 
     calendars,
     changeMonth,
@@ -226,12 +228,6 @@ export function DateRangePickerViewDesktop<TDate>(inProps: DateRangePickerViewDe
   const defaultDates = useDefaultDates<TDate>();
   const minDate = minDateProp ?? defaultDates.minDate;
   const maxDate = maxDateProp ?? defaultDates.maxDate;
-
-  const [currentView, setCurrentView] = useControlled<DateView>({
-    name: 'DateRangeCalendar',
-    controlled: inView,
-    default: inView || 'day'
-  });
 
   // When disabled, limit the view to the selected date
   const minDateWithDisabled = (disabled && value[0]) || minDate;
@@ -327,7 +323,6 @@ export function DateRangePickerViewDesktop<TDate>(inProps: DateRangePickerViewDe
     readOnly,
     disabled,
   };
-
 
   const { view, setView, focusedView, setFocusedView, goToNextView, setValueAndGoToNextView } =
       useViews({

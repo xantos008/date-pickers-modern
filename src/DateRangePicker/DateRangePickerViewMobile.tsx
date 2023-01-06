@@ -11,13 +11,15 @@ import {
   PickersCalendarHeaderSlotsComponentsProps,
   DayValidationProps,
   DayCalendarSlotsComponent,
-  DayCalendarSlotsComponentsProps,
+  DayCalendarSlotsComponentsProps, DateView, ExportedUseViewsOptions,
 } from '../internals';
 import { doNothing } from '../internal/utils/utils';
 import { DateRange } from '../internal/models/range';
 import { DateRangePickerDay, DateRangePickerDayProps } from '../DateRangePickerDay';
 
 import { isWithinRange, isStartOfRange, isEndOfRange } from '../internal/utils/date-utils';
+import {SlideDirection} from "../DateCalendar/PickersSlideTransition";
+import { DateRangeCalendar } from '../DateRangeCalendar';
 
 export interface DateRangePickerViewMobileSlotsComponent<TDate>
   extends PickersCalendarHeaderSlotsComponent,
@@ -36,13 +38,19 @@ export interface DateRangePickerViewMobileSlotsComponentsProps<TDate>
   day?: SlotComponentProps<typeof DateRangePickerDay, {}, DayCalendarProps<TDate> & { day: TDate }>;
 }
 
+interface ChangeMonthPayload<TDate> {
+  direction: SlideDirection;
+  newMonth: TDate;
+}
+
 interface DesktopDateRangeCalendarProps<TDate>
   extends Omit<
       DayCalendarProps<TDate>,
       'selectedDays' | 'onFocusedDayChange' | 'classes' | 'components' | 'componentsProps'
     >,
     DayValidationProps<TDate>,
-    ExportedCalendarHeaderProps<TDate> {
+    ExportedCalendarHeaderProps<TDate>,
+    Pick<ExportedUseViewsOptions<DateView>, 'view' | 'views' | 'openTo' | 'onViewChange' | 'focusedView' > {
   /**
    * Overrideable components.
    * @default {}
@@ -54,16 +62,56 @@ interface DesktopDateRangeCalendarProps<TDate>
    */
   componentsProps?: DateRangePickerViewMobileSlotsComponentsProps<TDate>;
   value: DateRange<TDate>;
-  changeMonth: (date: TDate) => void;
+  changeMonth: (date: TDate) => void;onYearChange?: (date: TDate) => void;
+  isDateDisabled?:  (day: (TDate | null)) => boolean;
+  handleChangeMonth?: (payload: ChangeMonthPayload<TDate>) => void;
+  views: DateView[];
+  /**
+   * If `true`, today's date is rendering without highlighting with circle.
+   * @default false
+   */
+  disableHighlightToday?: boolean;
+  /**
+   * Make picker read only.
+   * @default false
+   */
+  readOnly?: boolean;
+  changeFocusedDay: (newFocusedDate: (TDate | null), withoutMonthSwitchingAnimation?: (boolean | undefined)) => void;
+  /**
+   * Callback firing on month change @DateIOType.
+   * @template TDate
+   * @param {TDate} month The new month.
+   * @returns {void|Promise} -
+   */
+  onMonthChange?: (month: TDate) => void | Promise<void>;
+  onFocusedViewChangedIn?: (view: DateView, hasFocus: boolean) => void;
+  setCurrentView: (newValue: (DateView | ((prevValue: DateView) => DateView))) => void;
 }
-
-const onlyDayView = ['day'] as const;
 
 /**
  * @ignore - internal component.
  */
 export function DateRangePickerViewMobile<TDate>(props: DesktopDateRangeCalendarProps<TDate>) {
   const {
+    view: inView,
+    views,
+    onFocusedViewChange,
+    onYearChange,
+    onViewChange,
+    reduceAnimations,
+    openTo,
+    autoFocus,
+    focusedView: inFocusedView,
+    isDateDisabled,
+    handleChangeMonth,
+    disableHighlightToday,
+    shouldDisableMonth,
+    shouldDisableYear,
+    changeFocusedDay,
+    onMonthChange,
+    onFocusedViewChangedIn,
+    setCurrentView,
+
     changeMonth,
     components,
     componentsProps,
@@ -78,73 +126,41 @@ export function DateRangePickerViewMobile<TDate>(props: DesktopDateRangeCalendar
     ...other
   } = props;
 
-  const utils = useUtils<TDate>();
-  const defaultDates = useDefaultDates<TDate>();
-  const minDate = minDateProp ?? defaultDates.minDate;
-  const maxDate = maxDateProp ?? defaultDates.maxDate;
-
-  // When disable, limit the view to the selected range
-  const [start, end] = value;
-  const minDateWithDisabled = (disabled && start) || minDate;
-  const maxDateWithDisabled = (disabled && end) || maxDate;
-
-  const componentsForDayCalendar = {
-    Day: DateRangePickerDay,
-    ...components,
-  } as DayCalendarSlotsComponent<TDate>;
-
-  // Range going for the start of the start day to the end of the end day.
-  // This makes sure that `isWithinRange` works with any time in the start and end day.
-  const valueDayRange = React.useMemo<DateRange<TDate>>(
-    () => [
-      value[0] == null || !utils.isValid(value[0]) ? value[0] : utils.startOfDay(value[0]),
-      value[1] == null || !utils.isValid(value[1]) ? value[1] : utils.endOfDay(value[1]),
-    ],
-    [value, utils],
-  );
-
-  const componentsPropsForDayCalendar = {
-    ...componentsProps,
-    day: (dayOwnerState) => {
-      const { day } = dayOwnerState;
-
-      return {
-        isPreviewing: false,
-        isStartOfPreviewing: false,
-        isEndOfPreviewing: false,
-        isHighlighting: isWithinRange(utils, day, valueDayRange),
-        isStartOfHighlighting: isStartOfRange(utils, day, valueDayRange),
-        isEndOfHighlighting: isEndOfRange(utils, day, valueDayRange),
-        ...(resolveComponentProps(componentsProps?.day, dayOwnerState) ?? {}),
-      };
-    },
-  } as DayCalendarSlotsComponentsProps<TDate>;
-
   return (
     <React.Fragment>
-      <PickersCalendarHeader
-        components={components}
-        componentsProps={componentsProps}
-        maxDate={maxDateWithDisabled}
-        minDate={minDateWithDisabled}
-        onMonthChange={changeMonth as any}
-        view="day"
-        views={onlyDayView}
-        disabled={disabled}
-        {...other}
+      <DateRangeCalendar
+          {...props}
+          calendars={1}
+          onFocusedViewChange={props.onFocusedViewChangedIn}
+          onViewChange={setCurrentView}
+          components={components}
+          componentsProps={componentsProps}
+          views={views}
+          autoFocus={autoFocus}
       />
-      <DayCalendar<TDate>
-        {...other}
-        minDate={minDate}
-        maxDate={maxDate}
-        disabled={disabled}
-        readOnly={readOnly}
-        selectedDays={value}
-        onSelectedDaysChange={onSelectedDaysChange}
-        onFocusedDayChange={doNothing}
-        components={componentsForDayCalendar}
-        componentsProps={componentsPropsForDayCalendar}
-      />
+      {/*<PickersCalendarHeader*/}
+      {/*  components={components}*/}
+      {/*  componentsProps={componentsProps}*/}
+      {/*  maxDate={maxDateWithDisabled}*/}
+      {/*  minDate={minDateWithDisabled}*/}
+      {/*  onMonthChange={changeMonth as any}*/}
+      {/*  view={view}*/}
+      {/*  views={views}*/}
+      {/*  disabled={disabled}*/}
+      {/*  {...other}*/}
+      {/*/>*/}
+      {/*<DayCalendar<TDate>*/}
+      {/*  {...other}*/}
+      {/*  minDate={minDate}*/}
+      {/*  maxDate={maxDate}*/}
+      {/*  disabled={disabled}*/}
+      {/*  readOnly={readOnly}*/}
+      {/*  selectedDays={value}*/}
+      {/*  onSelectedDaysChange={onSelectedDaysChange}*/}
+      {/*  onFocusedDayChange={doNothing}*/}
+      {/*  components={componentsForDayCalendar}*/}
+      {/*  componentsProps={componentsPropsForDayCalendar}*/}
+      {/*/>*/}
     </React.Fragment>
   );
 }

@@ -12,7 +12,7 @@ import {
   BaseDateValidationProps,
   DayValidationProps,
   ExportedBaseToolbarProps,
-  ExportedUseViewsOptions, DateView,
+  ExportedUseViewsOptions, DateView, PickerSelectionState,
 } from '../internals';
 import { DateRange, RangePositionProps } from '../internal/models/range';
 import { DayRangeValidationProps } from '../internal/models/dateRange';
@@ -29,6 +29,8 @@ import {
   ExportedDateRangePickerViewDesktopProps,
 } from './DateRangePickerViewDesktop';
 import { DateRangePickerToolbarProps } from './DateRangePickerToolbar';
+import useEventCallback from "@mui/utils/useEventCallback";
+import useControlled from "@mui/utils/useControlled";
 
 export interface DateRangePickerViewSlotsComponent<TDate>
   extends DateRangePickerViewMobileSlotsComponent<TDate> {
@@ -150,6 +152,12 @@ function DateRangePickerViewRaw<TDate>(props: DateRangePickerViewProps<TDate>) {
   const wrappedShouldDisableDate =
     shouldDisableDate && ((dayToTest: TDate) => shouldDisableDate?.(dayToTest, rangePosition));
 
+  const [currentView, setCurrentView] = useControlled<DateView>({
+    name: 'DateRangePickerView',
+    controlled: inView,
+    default: inView || 'day'
+  });
+
   const [start, end] = value;
   const {
     calendarState,
@@ -210,14 +218,16 @@ function DateRangePickerViewRaw<TDate>(props: DateRangePickerViewProps<TDate>) {
     DayCalendarProps<TDate>['onSelectedDaysChange']
   >(
     (newDate) => {
+      const isSameRangePosition = currentView !== 'day';
+      const forcedRangePosition = isSameRangePosition ? rangePosition : null;
       const { nextSelection, newRange } = calculateRangeChange({
         newDate,
         utils,
         range: value,
-        rangePosition,
+        rangePosition: forcedRangePosition ? forcedRangePosition : rangePosition,
       });
 
-      onRangePositionChange(nextSelection);
+      onRangePositionChange(forcedRangePosition ? forcedRangePosition : nextSelection);
 
       const isFullRangeSelected = rangePosition === 'end' && isRangeValid(utils, newRange);
 
@@ -243,6 +253,7 @@ function DateRangePickerViewRaw<TDate>(props: DateRangePickerViewProps<TDate>) {
       handleChangeMonth,
       changeFocusedDay,
       onSelectedDaysChange: handleSelectedDayChange,
+      setCurrentView,
       reduceAnimations,
       disableHighlightToday,
       onMonthSwitchingAnimationEnd,
