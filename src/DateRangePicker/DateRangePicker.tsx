@@ -2,7 +2,6 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import { useThemeProps } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { getReleaseInfo } from '../internal/utils/releaseInfo';
 import {
   DesktopDateRangePicker,
   DesktopDateRangePickerProps,
@@ -15,8 +14,7 @@ import {
   MobileDateRangePickerSlotsComponent,
   MobileDateRangePickerSlotsComponentsProps,
 } from '../MobileDateRangePicker';
-
-const releaseInfo = getReleaseInfo();
+import {DateView, ExportedUseViewsOptions} from "../internals";
 
 export interface DateRangePickerSlotsComponent<TDate>
   extends MobileDateRangePickerSlotsComponent<TDate>,
@@ -28,7 +26,9 @@ export interface DateRangePickerSlotsComponentsProps<TDate>
 
 export interface DateRangePickerProps<TDate>
   extends Omit<DesktopDateRangePickerProps<TDate>, 'components' | 'componentsProps'>,
-    Omit<MobileDateRangePickerProps<TDate>, 'components' | 'componentsProps'> {
+    Omit<MobileDateRangePickerProps<TDate>, 'components' | 'componentsProps'>,
+      ExportedUseViewsOptions<DateView> {
+  views: DateView[];
   /**
    * CSS media query when `Mobile` mode will be changed to `Desktop`.
    * @default '@media (pointer: fine)'
@@ -366,4 +366,20 @@ DateRangePicker.propTypes = {
    * The value of the picker.
    */
   value: PropTypes.arrayOf(PropTypes.any).isRequired,
+  /**
+   * The visible view.
+   * Used when the component view is controlled.
+   * Must be a valid option from `views` list.
+   */
+  view: PropTypes.oneOf(['day', 'month', 'year']),
+  /**
+   * Available views.
+   */
+  views: PropTypes.arrayOf(PropTypes.oneOf(['day', 'month', 'year']).isRequired),
+  /**
+   * The default visible view.
+   * Used when the component view is not controlled.
+   * Must be a valid option from `views` list.
+   */
+  openTo: PropTypes.oneOf(['day', 'month', 'year']),
 } as any;

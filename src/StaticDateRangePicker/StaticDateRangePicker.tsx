@@ -6,11 +6,10 @@ import {
   StaticPickerProps,
   PickersStaticWrapperSlotsComponent,
   PickersStaticWrapperSlotsComponentsProps,
-  DateInputSlotsComponent,
+  DateInputSlotsComponent, ExportedUseViewsOptions, DateView,
 } from '../internals';
 import { useDateRangeValidation } from '../internal/hooks/validation/useDateRangeValidation';
 import { DateRangePickerView } from '../DateRangePicker/DateRangePickerView';
-import { getReleaseInfo } from '../internal/utils/releaseInfo';
 import { rangeValueManager } from '../internal/utils/valueManagers';
 import {
   useDateRangePickerDefaultizedProps,
@@ -19,8 +18,6 @@ import {
   BaseDateRangePickerSlotsComponentsProps,
 } from '../DateRangePicker/shared';
 import { RangePosition } from '../internal/models/range';
-
-const releaseInfo = getReleaseInfo();
 
 export interface StaticDateRangePickerSlotsComponent<TDate>
   extends BaseDateRangePickerSlotsComponent<TDate>,
@@ -32,7 +29,9 @@ export interface StaticDateRangePickersSlotsComponentsProps<TDate>
     PickersStaticWrapperSlotsComponentsProps {}
 
 export interface StaticDateRangePickerProps<TDate>
-  extends StaticPickerProps<TDate, BaseDateRangePickerProps<TDate>> {
+  extends StaticPickerProps<TDate, BaseDateRangePickerProps<TDate>>,
+      ExportedUseViewsOptions<DateView> {
+  views: DateView[];
   /**
    * Overrideable components.
    * @default {}
@@ -394,4 +393,20 @@ StaticDateRangePicker.propTypes = {
    * The value of the picker.
    */
   value: PropTypes.arrayOf(PropTypes.any).isRequired,
+  /**
+   * The visible view.
+   * Used when the component view is controlled.
+   * Must be a valid option from `views` list.
+   */
+  view: PropTypes.oneOf(['day', 'month', 'year']),
+  /**
+   * Available views.
+   */
+  views: PropTypes.arrayOf(PropTypes.oneOf(['day', 'month', 'year']).isRequired),
+  /**
+   * The default visible view.
+   * Used when the component view is not controlled.
+   * Must be a valid option from `views` list.
+   */
+  openTo: PropTypes.oneOf(['day', 'month', 'year']),
 } as any;

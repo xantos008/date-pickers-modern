@@ -103,6 +103,8 @@ export function useDateRangePickerDefaultizedProps<
     disableFuture: false,
     disablePast: false,
     calendars: 2,
+    openTo: props.openTo ?? 'day',
+    views: props.views ?? ['year', 'day'],
     inputFormat: utils.formats.keyboardDate,
     ...themeProps,
     minDate: applyDefaultDate(utils, themeProps.minDate, defaultDates.minDate),

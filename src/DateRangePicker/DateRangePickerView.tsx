@@ -28,10 +28,7 @@ import {
   DateRangePickerViewDesktop,
   ExportedDateRangePickerViewDesktopProps,
 } from './DateRangePickerViewDesktop';
-import { getReleaseInfo } from '../internal/utils/releaseInfo';
 import { DateRangePickerToolbarProps } from './DateRangePickerToolbar';
-
-const releaseInfo = getReleaseInfo();
 
 export interface DateRangePickerViewSlotsComponent<TDate>
   extends DateRangePickerViewMobileSlotsComponent<TDate> {
@@ -58,7 +55,8 @@ export interface ExportedDateRangePickerViewProps<TDate>
       | 'onYearChange'
       | keyof BaseDateValidationProps<TDate>
       | keyof DayValidationProps<TDate>
-    > {
+    > ,
+      ExportedUseViewsOptions<DateView> {
   /**
    * Overrideable components.
    * @default {}
@@ -88,11 +86,17 @@ interface DateRangePickerViewProps<TDate>
   extends RangePositionProps,
     ExportedDateRangePickerViewProps<TDate>,
     PickerStatePickerProps<DateRange<TDate>>,
-    Required<BaseDateValidationProps<TDate>>,
-    Pick<ExportedUseViewsOptions<DateView>, 'onFocusedViewChange'> {
+    Required<BaseDateValidationProps<TDate>> {
   calendars: 1 | 2 | 3;
   open: boolean;
   DateInputProps: DateRangePickerInputProps<TDate>;
+  onYearChange?: (year: TDate) => void;
+  /**
+   * Make picker read only.
+   * @default false
+   */
+  readOnly?: boolean;
+  views: DateView[];
 }
 
 type DateRangePickerViewComponent = (<TDate>(
@@ -104,6 +108,15 @@ type DateRangePickerViewComponent = (<TDate>(
  */
 function DateRangePickerViewRaw<TDate>(props: DateRangePickerViewProps<TDate>) {
   const {
+    onYearChange,
+    views,
+    view: inView,
+    openTo,
+    focusedView,
+    readOnly,
+    shouldDisableMonth,
+    shouldDisableYear,
+
     calendars,
     className,
     value,
@@ -138,8 +151,14 @@ function DateRangePickerViewRaw<TDate>(props: DateRangePickerViewProps<TDate>) {
     shouldDisableDate && ((dayToTest: TDate) => shouldDisableDate?.(dayToTest, rangePosition));
 
   const [start, end] = value;
-  const { changeMonth, calendarState, onMonthSwitchingAnimationEnd, changeFocusedDay } =
-    useCalendarState<TDate>({
+  const {
+    calendarState,
+    changeFocusedDay,
+    changeMonth,
+    handleChangeMonth,
+    onMonthSwitchingAnimationEnd,
+    isDateDisabled
+  } = useCalendarState<TDate>({
       value: start || end,
       defaultCalendarMonth,
       disableFuture,
@@ -217,6 +236,11 @@ function DateRangePickerViewRaw<TDate>(props: DateRangePickerViewProps<TDate>) {
   const renderView = () => {
     const sharedCalendarProps = {
       value,
+      onMonthChange,
+      views,
+      onYearChange,
+      isDateDisabled,
+      handleChangeMonth,
       changeFocusedDay,
       onSelectedDaysChange: handleSelectedDayChange,
       reduceAnimations,

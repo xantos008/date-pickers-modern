@@ -8,12 +8,11 @@ import {
   DateInputPropsLike,
   MobileWrapperSlotsComponent,
   MobileWrapperSlotsComponentsProps,
-  DateInputSlotsComponent,
+  DateInputSlotsComponent, ExportedUseViewsOptions, DateView,
 } from '../internals';
 import { useDateRangeValidation } from '../internal/hooks/validation/useDateRangeValidation';
 import { DateRangePickerView } from '../DateRangePicker/DateRangePickerView';
 import { DateRangePickerInput } from '../DateRangePicker/DateRangePickerInput';
-import { getReleaseInfo } from '../internal/utils/releaseInfo';
 import { rangeValueManager } from '../internal/utils/valueManagers';
 import {
   BaseDateRangePickerProps,
@@ -22,8 +21,6 @@ import {
   BaseDateRangePickerSlotsComponentsProps,
 } from '../DateRangePicker/shared';
 import { RangePosition } from '../internal/models/range';
-
-const releaseInfo = getReleaseInfo();
 
 const PureDateInputComponent = DateRangePickerInput as unknown as React.FC<DateInputPropsLike>;
 
@@ -38,7 +35,23 @@ export interface MobileDateRangePickerSlotsComponentsProps<TDate>
 
 export interface MobileDateRangePickerProps<TDate>
   extends BaseDateRangePickerProps<TDate>,
-    MobileWrapperProps {
+    MobileWrapperProps,
+    ExportedUseViewsOptions<DateView> {
+  views: DateView[];
+  /**
+   * Disable specific month.
+   * @template TDate
+   * @param {TDate} month The month to test.
+   * @returns {boolean} If `true` the month will be disabled.
+   */
+  shouldDisableMonth?: (month: TDate) => boolean;
+  /**
+   * Disable specific year.
+   * @template TDate
+   * @param {TDate} year The year to test.
+   * @returns {boolean} If `true` the year will be disabled.
+   */
+  shouldDisableYear?: (year: TDate) => boolean;
   /**
    * Overrideable components.
    * @default {}
@@ -413,4 +426,20 @@ MobileDateRangePicker.propTypes = {
    * The value of the picker.
    */
   value: PropTypes.arrayOf(PropTypes.any).isRequired,
+  /**
+   * The visible view.
+   * Used when the component view is controlled.
+   * Must be a valid option from `views` list.
+   */
+  view: PropTypes.oneOf(['day', 'month', 'year']),
+  /**
+   * Available views.
+   */
+  views: PropTypes.arrayOf(PropTypes.oneOf(['day', 'month', 'year']).isRequired),
+  /**
+   * The default visible view.
+   * Used when the component view is not controlled.
+   * Must be a valid option from `views` list.
+   */
+  openTo: PropTypes.oneOf(['day', 'month', 'year']),
 } as any;

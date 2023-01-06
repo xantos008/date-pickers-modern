@@ -10,9 +10,6 @@ import {
   getDateRangePickerDayUtilityClass,
   dateRangePickerDayClasses,
 } from './dateRangePickerDayClasses';
-import { getReleaseInfo } from '../internal/utils/releaseInfo';
-
-const releaseInfo = getReleaseInfo();
 
 export interface DateRangePickerDayProps<TDate>
   extends Omit<PickersDayProps<TDate>, 'classes' | 'onBlur' | 'onFocus' | 'onKeyDown'> {

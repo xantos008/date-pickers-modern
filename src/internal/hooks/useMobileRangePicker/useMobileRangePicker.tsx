@@ -19,11 +19,8 @@ import {
   UseMobileRangePickerProps,
 } from './useMobileRangePicker.types';
 import { useRangePickerInputProps } from '../useRangePickerInputProps';
-import { getReleaseInfo } from '../../utils/releaseInfo';
 import { DateRange, RangePosition } from '../../models/range';
 import { BaseMultiInputFieldProps } from '../../models/fields';
-
-const releaseInfo = getReleaseInfo();
 
 export const useMobileRangePicker = <
   TDate,
