@@ -2,13 +2,8 @@ import * as React from 'react';
 import { styled, alpha, useThemeProps } from '@mui/material/styles';
 import {
   unstable_composeClasses as composeClasses,
-  unstable_capitalize as capitalize,
   unstable_useEnhancedEffect as useEnhancedEffect,
 } from '@mui/utils';
-import {
-  WrapperVariant,
-  WrapperVariantContext,
-} from '../internals/components/wrappers/WrapperVariantContext';
 import {
   getPickersMonthUtilityClass,
   pickersMonthClasses,
@@ -19,8 +14,9 @@ export interface ExportedPickersMonthProps {
   classes?: Partial<PickersMonthClasses>;
 }
 
-interface PickersMonthProps extends ExportedPickersMonthProps {
+export interface PickersMonthProps extends ExportedPickersMonthProps {
   'aria-current'?: React.AriaAttributes['aria-current'];
+  'aria-label'?: React.AriaAttributes['aria-label'];
   autoFocus: boolean;
   children: React.ReactNode;
   disabled?: boolean;
@@ -31,17 +27,14 @@ interface PickersMonthProps extends ExportedPickersMonthProps {
   selected?: boolean;
   value: number;
   tabIndex: number;
+  monthsPerRow: 3 | 4;
 }
 
-interface PickersMonthOwnerState extends PickersMonthProps {
-  wrapperVariant: WrapperVariant;
-}
-
-const useUtilityClasses = (ownerState: PickersMonthOwnerState) => {
-  const { wrapperVariant, disabled, selected, classes } = ownerState;
+const useUtilityClasses = (ownerState: PickersMonthProps) => {
+  const { disabled, selected, classes } = ownerState;
 
   const slots = {
-    root: ['root', wrapperVariant && `mode${capitalize(wrapperVariant)}`],
+    root: ['root'],
     monthButton: ['monthButton', disabled && 'disabled', selected && 'selected'],
   };
 
@@ -51,19 +44,15 @@ const useUtilityClasses = (ownerState: PickersMonthOwnerState) => {
 const PickersMonthRoot = styled('div', {
   name: 'MuiPickersMonth',
   slot: 'Root',
-  overridesResolver: (_, styles) => [
-    styles.root,
-    { [`&.${pickersMonthClasses.modeDesktop}`]: styles.modeDesktop },
-    { [`&.${pickersMonthClasses.modeMobile}`]: styles.modeMobile },
-  ],
+  overridesResolver: (_, styles) => [styles.root],
 })<{
-  ownerState: PickersMonthOwnerState;
-}>({
-  flexBasis: '33.3%',
+  ownerState: PickersMonthProps;
+}>(({ ownerState }) => ({
+  flexBasis: ownerState.monthsPerRow === 3 ? '33.3%' : '25%',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-});
+}));
 
 const PickersMonthButton = styled('button', {
   name: 'MuiPickersMonth',
@@ -74,7 +63,7 @@ const PickersMonthButton = styled('button', {
     { [`&.${pickersMonthClasses.selected}`]: styles.selected },
   ],
 })<{
-  ownerState: PickersMonthOwnerState;
+  ownerState: PickersMonthProps;
 }>(({ theme }) => ({
   color: 'unset',
   backgroundColor: 'transparent',
@@ -87,13 +76,13 @@ const PickersMonthButton = styled('button', {
   borderRadius: 18,
   cursor: 'pointer',
   '&:focus': {
-    backgroundColor: (theme as any).vars
-      ? `rgba(${(theme as any).vars.palette.action.activeChannel} / ${(theme as any).vars.palette.action.hoverOpacity})`
+    backgroundColor: theme.vars
+      ? `rgba(${theme.vars.palette.action.activeChannel} / ${theme.vars.palette.action.hoverOpacity})`
       : alpha(theme.palette.action.active, theme.palette.action.hoverOpacity),
   },
   '&:hover': {
-    backgroundColor: (theme as any).vars
-      ? `rgba(${(theme as any).vars.palette.action.activeChannel} / ${(theme as any).vars.palette.action.hoverOpacity})`
+    backgroundColor: theme.vars
+      ? `rgba(${theme.vars.palette.action.activeChannel} / ${theme.vars.palette.action.hoverOpacity})`
       : alpha(theme.palette.action.active, theme.palette.action.hoverOpacity),
   },
   '&:disabled': {
@@ -101,13 +90,13 @@ const PickersMonthButton = styled('button', {
     pointerEvents: 'none',
   },
   [`&.${pickersMonthClasses.disabled}`]: {
-    color: ((theme as any).vars || theme).palette.text.secondary,
+    color: (theme.vars || theme).palette.text.secondary,
   },
   [`&.${pickersMonthClasses.selected}`]: {
-    color: ((theme as any).vars || theme).palette.primary.contrastText,
-    backgroundColor: ((theme as any).vars || theme).palette.primary.main,
+    color: (theme.vars || theme).palette.primary.contrastText,
+    backgroundColor: (theme.vars || theme).palette.primary.main,
     '&:focus, &:hover': {
-      backgroundColor: ((theme as any).vars || theme).palette.primary.dark,
+      backgroundColor: (theme.vars || theme).palette.primary.dark,
     },
   },
 }));
@@ -115,7 +104,7 @@ const PickersMonthButton = styled('button', {
 /**
  * @ignore - do not document.
  */
-const PickersMonth = React.memo(function PickersMonth(inProps: PickersMonthProps) {
+export const PickersMonth = React.memo(function PickersMonth(inProps: PickersMonthProps) {
   const props = useThemeProps({
     props: inProps,
     name: 'MuiPickersMonth',
@@ -132,46 +121,41 @@ const PickersMonth = React.memo(function PickersMonth(inProps: PickersMonthProps
     onFocus,
     onBlur,
     'aria-current': ariaCurrent,
+    'aria-label': ariaLabel,
+    // We don't want to forward this prop to the root element
+    monthsPerRow,
     ...other
   } = props;
 
-  const wrapperVariant = React.useContext(WrapperVariantContext);
-
   const ref = React.useRef<HTMLButtonElement>(null);
+  const classes = useUtilityClasses(props);
+
   useEnhancedEffect(() => {
     if (autoFocus) {
       ref.current?.focus();
     }
   }, [autoFocus]);
 
-  const ownerState = { ...props, wrapperVariant };
-
-  const classes = useUtilityClasses(ownerState);
-
   return (
-    <PickersMonthRoot
-      data-mui-test="month"
-      className={classes.root}
-      ownerState={ownerState}
-      {...other}
-    >
+    <PickersMonthRoot data-mui-test="month" className={classes.root} ownerState={props} {...other}>
       <PickersMonthButton
         ref={ref}
         disabled={disabled}
         type="button"
+        role="radio"
         tabIndex={disabled ? -1 : tabIndex}
         aria-current={ariaCurrent}
+        aria-checked={selected}
+        aria-label={ariaLabel}
         onClick={(event) => onClick(event, value)}
         onKeyDown={(event) => onKeyDown(event, value)}
         onFocus={(event) => onFocus(event, value)}
         onBlur={(event) => onBlur(event, value)}
         className={classes.monthButton}
-        ownerState={ownerState}
+        ownerState={props}
       >
         {children}
       </PickersMonthButton>
     </PickersMonthRoot>
   );
 });
-
-export { PickersMonth };

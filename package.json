@@ -1,15 +1,12 @@
 {
   "name": "date-pickers-modern",
-  "version": "2.2.1",
+  "version": "4.0.0",
   "description": "A react date range picker implementation using @mui.",
-  "files": [
-    "dist/*"
-  ],
   "author": "xantos008",
-  "license": "MIT",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
   "jsnext:main": "dist/index.es.js",
+  "license": "Unlicense",
   "bugs": {
     "url": "https://github.com/xantos008/date-pickers-modern"
   },
@@ -25,56 +22,101 @@
     "daterangepicker"
   ],
   "scripts": {
-    "build": "rollup --bundleConfigAsCjs -c",
-    "build-watch": "rollup --bundleConfigAsCjs -c -w"
+    "compile": "rm -rf build && tsc && cp package.json build && cp README.md build && cp LICENSE build",
+    "clean": "rm -rf dist",
+    "build:simple": "npm run clean && rollup -c --bundleConfigAsCjs",
+    "build": "npm run clean && rollup -c --bundleConfigAsCjs && npm run postbuild",
+    "postbuild": "cp package.json dist && cp README.md dist && cp LICENSE dist && node ./scripts/runUpdatePackageJson.js",
+    "publish": "npm run compile && npm run build && npm run pack && npm publish date-pickers-modern-4.4.0.tgz",
+    "pack": "npm pack ./build/"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/xantos008/date-pickers-modern.git"
   },
   "dependencies": {
-    "@babel/runtime": "^7.20.6",
-    "@date-io/date-fns": "^2.16.0",
-    "@date-io/date-fns-jalali": "^2.16.0",
-    "@date-io/dayjs": "^2.16.0",
-    "@date-io/hijri": "^2.16.1",
-    "@date-io/jalaali": "^2.16.1",
-    "@date-io/luxon": "^2.16.1",
-    "@date-io/moment": "^2.16.1",
-    "@emotion/react": "^11.10.5",
-    "@emotion/styled": "^11.10.5",
-    "@mui/icons-material": "^5.11.0",
-    "@mui/material": "^5.11.2",
-    "@mui/system": "^5.11.2",
-    "@mui/utils": "^5.11.2",
-    "@rollup/plugin-babel": "^6.0.3",
-    "@rollup/plugin-commonjs": "^24.0.0",
-    "@types/node": "^18.11.18",
-    "clsx": "^1.2.1",
-    "date-fns-jalali": "^2.13.0-0",
-    "luxon": "^3.1.1",
-    "moment-hijri": "^2.1.2",
-    "moment-jalaali": "^0.9.6",
+    "@babel/runtime": "^7.23.1",
+    "@emotion/styled": "^11.8.1",
+    "@mui/base": "^5.0.0-beta.17",
+    "@mui/utils": "^5.14.11",
+    "@types/format-util": "^1.0.2",
+    "@types/react": "^17.0.67",
+    "@types/react-transition-group": "^4.4.7",
+    "clsx": "^2.0.0",
     "prop-types": "^15.8.1",
     "react-transition-group": "^4.4.5",
-    "rifm": "^0.12.1",
-    "rollup-plugin-peer-deps-external": "^2.2.4",
-    "rollup-plugin-typescript2": "^0.34.1"
+    "react": "^17.0.2",
+    "semver": "^7.5.4"
   },
   "peerDependencies": {
-    "react": "^17.0.2 || ^18.0.0",
-    "react-dom": "^17.0.2 || ^18.0.0"
+    "@emotion/react": "^11.9.0",
+    "@emotion/styled": "^11.8.1",
+    "@mui/material": "^5.8.6",
+    "@mui/system": "^5.8.0",
+    "date-fns": "^2.25.0",
+    "date-fns-jalali": "^2.13.0-0",
+    "dayjs": "^1.10.7",
+    "luxon": "^3.0.2",
+    "moment": "^2.29.4",
+    "moment-hijri": "^2.1.2",
+    "moment-jalaali": "^0.7.4 || ^0.8.0 || ^0.9.0 || ^0.10.0",
+    "react": "^17.0.0 || ^18.0.0",
+    "react-dom": "^17.0.0 || ^18.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@emotion/react": {
+      "optional": true
+    },
+    "@emotion/styled": {
+      "optional": true
+    },
+    "date-fns": {
+      "optional": true
+    },
+    "date-fns-jalali": {
+      "optional": true
+    },
+    "dayjs": {
+      "optional": true
+    },
+    "luxon": {
+      "optional": true
+    },
+    "moment": {
+      "optional": true
+    },
+    "moment-hijri": {
+      "optional": true
+    },
+    "moment-jalaali": {
+      "optional": true
+    }
   },
   "devDependencies": {
-    "@rollup/plugin-node-resolve": "^15.0.1",
+    "@babel/plugin-transform-runtime": "^7.22.15",
+    "@rollup/plugin-babel": "^6.0.3",
+    "@rollup/plugin-commonjs": "^25.0.4",
+    "@rollup/plugin-node-resolve": "^15.2.1",
     "@rollup/plugin-url": "^8.0.1",
-    "@types/luxon": "^3.1.0",
-    "@types/moment-jalaali": "^0.7.5",
-    "date-fns": "^2.29.3",
-    "dayjs": "^1.11.7",
-    "moment": "^2.29.4"
+    "@types/luxon": "^3.3.2",
+    "@types/moment-jalaali": "^0.7.7",
+    "@types/node": "^18.14.2",
+    "date-fns": "^2.30.0",
+    "date-fns-jalali": "^2.13.0-0",
+    "dayjs": "^1.11.10",
+    "luxon": "^3.4.3",
+    "moment": "^2.29.4",
+    "moment-hijri": "^2.1.2",
+    "moment-jalaali": "^0.10.0",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-typescript2": "^0.35.0",
+    "tslib": "^2.6.2",
+    "typescript": "^5.2.2"
+  },
+  "resolutions": {
+    "csstype": "3.0.10"
   },
   "engines": {
-    "node": ">=14.0.0"
+    "node": ">=18.0.0"
   }
 }

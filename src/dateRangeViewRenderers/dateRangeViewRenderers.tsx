@@ -1,18 +1,12 @@
 import * as React from 'react';
-import {DateOrTimeView, DateView} from '../internals';
+import { DateOrTimeViewWithMeridiem } from '../internals/models';
 import { DateRangeCalendar, DateRangeCalendarProps } from '../DateRangeCalendar';
 
-const isDatePickerView = (view: unknown): view is DateView =>
-    view === 'year' || view === 'month' || view === 'day';
-
-export interface DateRangeViewRendererProps<TDate, TView extends DateOrTimeView>
-  extends Omit<DateRangeCalendarProps<TDate>,
-      'views' | 'openTo' | 'view' | 'onViewChange' | 'focusedView'
-      > {
+export interface DateRangeViewRendererProps<TDate, TView extends DateOrTimeViewWithMeridiem>
+  extends DateRangeCalendarProps<TDate> {
   view: TView;
   onViewChange?: (view: TView) => void;
   views: readonly TView[];
-  focusedView: TView | null;
 }
 
 /**
@@ -20,11 +14,9 @@ export interface DateRangeViewRendererProps<TDate, TView extends DateOrTimeView>
  * because otherwise some unwanted props would be passed to the HTML element.
  */
 export const renderDateRangeViewCalendar = <TDate extends unknown>({
-  views,
-  view,
-  focusedView,
   value,
   defaultValue,
+  referenceDate,
   onChange,
   className,
   classes,
@@ -37,10 +29,14 @@ export const renderDateRangeViewCalendar = <TDate extends unknown>({
   onMonthChange,
   defaultCalendarMonth,
   rangePosition,
+  defaultRangePosition,
   onRangePositionChange,
   calendars,
+  currentMonthCalendarPosition,
   components,
   componentsProps,
+  slots,
+  slotProps,
   loading,
   renderLoading,
   disableHighlightToday,
@@ -54,13 +50,12 @@ export const renderDateRangeViewCalendar = <TDate extends unknown>({
   fixedWeekNumber,
   disableDragEditing,
   displayWeekNumber,
+  timezone,
 }: DateRangeViewRendererProps<TDate, any>) => (
   <DateRangeCalendar
-    view={view as DateView}
-    views={views.filter(isDatePickerView)}
-    focusedView={focusedView as DateView | null}
     value={value}
     defaultValue={defaultValue}
+    referenceDate={referenceDate}
     onChange={onChange}
     className={className}
     classes={classes}
@@ -73,10 +68,14 @@ export const renderDateRangeViewCalendar = <TDate extends unknown>({
     onMonthChange={onMonthChange}
     defaultCalendarMonth={defaultCalendarMonth}
     rangePosition={rangePosition}
+    defaultRangePosition={defaultRangePosition}
     onRangePositionChange={onRangePositionChange}
     calendars={calendars}
+    currentMonthCalendarPosition={currentMonthCalendarPosition}
     components={components}
     componentsProps={componentsProps}
+    slots={slots}
+    slotProps={slotProps}
     loading={loading}
     renderLoading={renderLoading}
     disableHighlightToday={disableHighlightToday}
@@ -90,5 +89,6 @@ export const renderDateRangeViewCalendar = <TDate extends unknown>({
     fixedWeekNumber={fixedWeekNumber}
     disableDragEditing={disableDragEditing}
     displayWeekNumber={displayWeekNumber}
+    timezone={timezone}
   />
 );
