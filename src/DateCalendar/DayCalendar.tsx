@@ -155,7 +155,7 @@ const PickersCalendarWeekDayLabel = styled(Typography, {
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  color: (theme.vars || theme).palette.text.secondary,
+  color: ((theme as any).vars || theme).palette.text.secondary,
 }));
 
 const PickersCalendarWeekNumberLabel = styled(Typography, {

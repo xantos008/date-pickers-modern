@@ -73,9 +73,9 @@ const DateTimePickerTabsRoot = styled(Tabs, {
   slot: 'Root',
   overridesResolver: (_, styles) => styles.root,
 })<{ ownerState: DateTimePickerTabsProps }>(({ theme }) => ({
-  boxShadow: `0 -1px 0 0 inset ${(theme.vars || theme).palette.divider}`,
+  boxShadow: `0 -1px 0 0 inset ${((theme as any).vars || theme).palette.divider}`,
   '&:last-child': {
-    boxShadow: `0 1px 0 0 inset ${(theme.vars || theme).palette.divider}`,
+    boxShadow: `0 1px 0 0 inset ${((theme as any).vars || theme).palette.divider}`,
     [`& .${tabsClasses.indicator}`]: {
       bottom: 'auto',
       top: 0,

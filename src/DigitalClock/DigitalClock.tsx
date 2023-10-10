@@ -63,20 +63,20 @@ const DigitalClockItem = styled(MenuItem, {
     marginTop: 4,
   },
   '&:hover': {
-    backgroundColor: theme.vars
-      ? `rgba(${theme.vars.palette.primary.mainChannel} / ${theme.vars.palette.action.hoverOpacity})`
+    backgroundColor: (theme as any).vars
+      ? `rgba(${(theme as any).vars.palette.primary.mainChannel} / ${(theme as any).vars.palette.action.hoverOpacity})`
       : alpha(theme.palette.primary.main, theme.palette.action.hoverOpacity),
   },
   '&.Mui-selected': {
-    backgroundColor: (theme.vars || theme).palette.primary.main,
-    color: (theme.vars || theme).palette.primary.contrastText,
+    backgroundColor: ((theme as any).vars || theme).palette.primary.main,
+    color: ((theme as any).vars || theme).palette.primary.contrastText,
     '&:focus-visible, &:hover': {
-      backgroundColor: (theme.vars || theme).palette.primary.dark,
+      backgroundColor: ((theme as any).vars || theme).palette.primary.dark,
     },
   },
   '&.Mui-focusVisible': {
-    backgroundColor: theme.vars
-      ? `rgba(${theme.vars.palette.primary.mainChannel} / ${theme.vars.palette.action.focusOpacity})`
+    backgroundColor: (theme as any).vars
+      ? `rgba(${(theme as any).vars.palette.primary.mainChannel} / ${(theme as any).vars.palette.action.focusOpacity})`
       : alpha(theme.palette.primary.main, theme.palette.action.focusOpacity),
   },
 }));

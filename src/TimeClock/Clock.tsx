@@ -133,7 +133,7 @@ const ClockPin = styled('div', {
   width: 6,
   height: 6,
   borderRadius: '50%',
-  backgroundColor: (theme.vars || theme).palette.primary.main,
+  backgroundColor: ((theme as any).vars || theme).palette.primary.main,
   position: 'absolute',
   top: '50%',
   left: '50%',
@@ -153,10 +153,10 @@ const ClockAmButton = styled(IconButton, {
   paddingRight: 4,
   width: CLOCK_HOUR_WIDTH,
   ...(ownerState.meridiemMode === 'am' && {
-    backgroundColor: (theme.vars || theme).palette.primary.main,
-    color: (theme.vars || theme).palette.primary.contrastText,
+    backgroundColor: ((theme as any).vars || theme).palette.primary.main,
+    color: ((theme as any).vars || theme).palette.primary.contrastText,
     '&:hover': {
-      backgroundColor: (theme.vars || theme).palette.primary.light,
+      backgroundColor: ((theme as any).vars || theme).palette.primary.light,
     },
   }),
 }));
@@ -174,10 +174,10 @@ const ClockPmButton = styled(IconButton, {
   paddingRight: 4,
   width: CLOCK_HOUR_WIDTH,
   ...(ownerState.meridiemMode === 'pm' && {
-    backgroundColor: (theme.vars || theme).palette.primary.main,
-    color: (theme.vars || theme).palette.primary.contrastText,
+    backgroundColor: ((theme as any).vars || theme).palette.primary.main,
+    color: ((theme as any).vars || theme).palette.primary.contrastText,
     '&:hover': {
-      backgroundColor: (theme.vars || theme).palette.primary.light,
+      backgroundColor: ((theme as any).vars || theme).palette.primary.light,
     },
   }),
 }));

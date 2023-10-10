@@ -41,7 +41,7 @@ const MultiSectionDigitalClockRoot = styled(PickerViewRoot, {
   display: 'flex',
   flexDirection: 'row',
   width: '100%',
-  borderBottom: `1px solid ${(theme.vars || theme).palette.divider}`,
+  borderBottom: `1px solid ${((theme as any).vars || theme).palette.divider}`,
 }));
 
 type MultiSectionDigitalClockComponent = (<TDate>(
