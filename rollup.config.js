@@ -1,3 +1,4 @@
+import json from '@rollup/plugin-json';
 import typescript from 'rollup-plugin-typescript2';
 import babel from '@rollup/plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
@@ -29,6 +30,7 @@ export default {
     ],
     external: [/@babel\/runtime/],
     plugins: [
+        json(),
         external(),
         url({ exclude: ['**/*.svg'] }),
         babel({
