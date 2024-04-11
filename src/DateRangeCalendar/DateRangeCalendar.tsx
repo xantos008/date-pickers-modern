@@ -35,6 +35,7 @@ import {
   DateRangeCalendarOwnerState,
 } from './DateRangeCalendar.types';
 import {
+  findClosestEnabledDate,
   isEndOfRange,
   isRangeValid,
   isStartOfRange,
@@ -51,6 +52,8 @@ import {
   PickersRangeCalendarHeader,
   PickersRangeCalendarHeaderProps,
 } from '../PickersRangeCalendarHeader';
+import {YearCalendar} from "../YearCalendar";
+import {MonthCalendar} from "../MonthCalendar";
 
 const DateRangeCalendarRoot = styled('div', {
   name: 'MuiDateRangeCalendar',
@@ -174,8 +177,11 @@ const DateRangeCalendar = React.forwardRef(function DateRangeCalendar<
     minDate,
     maxDate,
     shouldDisableDate,
+    shouldDisableMonth,
+    shouldDisableYear,
     reduceAnimations,
     onMonthChange,
+    onYearChange,
     rangePosition: rangePositionProp,
     defaultRangePosition: inDefaultRangePosition,
     onRangePositionChange: inOnRangePositionChange,
@@ -201,6 +207,10 @@ const DateRangeCalendar = React.forwardRef(function DateRangeCalendar<
     view: inView,
     openTo,
     onViewChange,
+    focusedView: inFocusedView,
+    onFocusedViewChange,
+    yearsPerRow,
+    monthsPerRow,
     ...other
   } = props;
 
@@ -217,17 +227,20 @@ const DateRangeCalendar = React.forwardRef(function DateRangeCalendar<
     valueManager: rangeValueManager,
   });
 
-  const { setValueAndGoToNextView, view } = useViews({
+  const { view, setView, focusedView, setFocusedView, goToNextView, setValueAndGoToNextView } = useViews({
     view: inView,
     views,
     openTo,
     onChange: handleValueChange,
     onViewChange,
     autoFocus,
+    focusedView: inFocusedView,
+    onFocusedViewChange,
   });
 
   const utils = useUtils<TDate>();
   const now = useNow<TDate>(timezone);
+  const hasFocus = focusedView !== null;
 
   const { rangePosition, onRangePositionChange } = useRangePosition({
     rangePosition: rangePositionProp,
@@ -329,6 +342,7 @@ const DateRangeCalendar = React.forwardRef(function DateRangeCalendar<
     changeMonth,
     handleChangeMonth,
     onMonthSwitchingAnimationEnd,
+    isDateDisabled
   } = useCalendarState<TDate>({
     value: value[0] || value[1],
     referenceDate,
@@ -352,10 +366,11 @@ const DateRangeCalendar = React.forwardRef(function DateRangeCalendar<
     externalSlotProps: slotProps?.calendarHeader,
     additionalProps: {
       calendars,
-      views: ['day'],
-      view: 'day',
+      views: views,
+      view: view,
       currentMonth: calendarState.currentMonth,
       onMonthChange: (newMonth, direction) => handleChangeMonth({ newMonth, direction }),
+      onViewChange: setView,
       minDate,
       maxDate,
       disabled,
@@ -367,6 +382,64 @@ const DateRangeCalendar = React.forwardRef(function DateRangeCalendar<
       slotProps,
     },
     ownerState: props,
+  });
+
+  const handleDateMonthChange = useEventCallback((newDate: TDate) => {
+    const startOfMonth = utils.startOfMonth(newDate);
+    const endOfMonth = utils.endOfMonth(newDate);
+
+    const closestEnabledDate = isDateDisabled(newDate)
+        ? findClosestEnabledDate({
+          utils,
+          date: newDate,
+          minDate: utils.isBefore(minDate, startOfMonth) ? startOfMonth : minDate,
+          maxDate: utils.isAfter(maxDate, endOfMonth) ? endOfMonth : maxDate,
+          disablePast,
+          disableFuture,
+          isDateDisabled,
+          timezone,
+        })
+        : newDate;
+
+    if (closestEnabledDate) {
+      goToNextView();
+      // setValueAndGoToNextView(closestEnabledDate, 'finish');
+      onMonthChange?.(startOfMonth);
+    } else {
+      goToNextView();
+      changeMonth(startOfMonth);
+    }
+
+    changeFocusedDay(closestEnabledDate, true);
+  });
+
+  const handleDateYearChange = useEventCallback((newDate: TDate) => {
+    const startOfYear = utils.startOfYear(newDate);
+    const endOfYear = utils.endOfYear(newDate);
+
+    const closestEnabledDate = isDateDisabled(newDate)
+        ? findClosestEnabledDate({
+          utils,
+          date: newDate,
+          minDate: utils.isBefore(minDate, startOfYear) ? startOfYear : minDate,
+          maxDate: utils.isAfter(maxDate, endOfYear) ? endOfYear : maxDate,
+          disablePast,
+          disableFuture,
+          isDateDisabled,
+          timezone,
+        })
+        : newDate;
+
+    if (closestEnabledDate) {
+      goToNextView();
+      // setValueAndGoToNextView(closestEnabledDate, 'finish');
+      onYearChange?.(closestEnabledDate);
+    } else {
+      goToNextView();
+      changeMonth(startOfYear);
+    }
+
+    changeFocusedDay(closestEnabledDate, true);
   });
 
   const prevValue = React.useRef<DateRange<TDate> | null>(null);
@@ -416,6 +489,8 @@ const DateRangeCalendar = React.forwardRef(function DateRangeCalendar<
     readOnly,
     disabled,
   };
+
+  const prevOpenViewRef = React.useRef(view);
 
   const [rangePreviewDay, setRangePreviewDay] = React.useState<TDate | null>(null);
 
@@ -513,6 +588,19 @@ const DateRangeCalendar = React.forwardRef(function DateRangeCalendar<
     return Array.from({ length: calendars }).map((_, index) => utils.addMonths(firstMonth, index));
   }, [utils, calendarState.currentMonth, calendars, currentMonthCalendarPosition]);
 
+  React.useEffect(() => {
+    // If the view change and the focus was on the previous view
+    // Then we update the focus.
+    if (prevOpenViewRef.current === view) {
+      return;
+    }
+
+    if (focusedView === prevOpenViewRef.current) {
+      setFocusedView(view, true);
+    }
+    prevOpenViewRef.current = view;
+  }, [focusedView, setFocusedView, view]);
+
   const focusedMonth = React.useMemo(() => {
     if (!autoFocus) {
       return null;
@@ -548,30 +636,62 @@ const DateRangeCalendar = React.forwardRef(function DateRangeCalendar<
         return (
           <DateRangeCalendarMonthContainer key={monthIndex} className={classes.monthContainer}>
             <CalendarHeader<TDate> {...calendarHeaderProps} month={month} monthIndex={monthIndex} />
-            <DayCalendarForRange<TDate>
-              className={classes.dayCalendar}
-              {...calendarState}
-              {...baseDateValidationProps}
-              {...commonViewProps}
-              onMonthSwitchingAnimationEnd={onMonthSwitchingAnimationEnd}
-              onFocusedDayChange={changeFocusedDay}
-              reduceAnimations={reduceAnimations}
-              selectedDays={value}
-              onSelectedDaysChange={handleSelectedDayChange}
-              currentMonth={month}
-              TransitionProps={CalendarTransitionProps}
-              shouldDisableDate={wrappedShouldDisableDate}
-              showDaysOutsideCurrentMonth={calendars === 1 && showDaysOutsideCurrentMonth}
-              dayOfWeekFormatter={dayOfWeekFormatter}
-              loading={loading}
-              renderLoading={renderLoading}
-              slots={slotsForDayCalendar}
-              slotProps={slotPropsForDayCalendar}
-              autoFocus={month === focusedMonth}
-              fixedWeekNumber={fixedWeekNumber}
-              displayWeekNumber={displayWeekNumber}
-              timezone={timezone}
-            />
+
+            {view === 'year' && (
+                <YearCalendar<TDate>
+                    {...baseDateValidationProps}
+                    {...commonViewProps}
+                    value={rangePosition === 'start' ? value[0] : value[1]}
+                    onChange={handleDateYearChange}
+                    shouldDisableYear={shouldDisableYear}
+                    hasFocus={hasFocus}
+                    onFocusedViewChange={(isViewFocused) => setFocusedView('year', isViewFocused)}
+                    yearsPerRow={yearsPerRow}
+                    referenceDate={referenceDate}
+                />
+            )}
+
+            {view === 'month' && (
+                <MonthCalendar<TDate>
+                    {...baseDateValidationProps}
+                    {...commonViewProps}
+                    hasFocus={hasFocus}
+                    className={className}
+                    value={rangePosition === 'start' ? value[0] : value[1]}
+                    onChange={handleDateMonthChange}
+                    shouldDisableMonth={shouldDisableMonth}
+                    onFocusedViewChange={(isViewFocused) => setFocusedView('month', isViewFocused)}
+                    monthsPerRow={monthsPerRow}
+                    referenceDate={referenceDate}
+                />
+            )}
+
+            {view !== 'year' && view !== 'month' && (
+                <DayCalendarForRange<TDate>
+                    className={classes.dayCalendar}
+                    {...calendarState}
+                    {...baseDateValidationProps}
+                    {...commonViewProps}
+                    onMonthSwitchingAnimationEnd={onMonthSwitchingAnimationEnd}
+                    onFocusedDayChange={changeFocusedDay}
+                    reduceAnimations={reduceAnimations}
+                    selectedDays={value}
+                    onSelectedDaysChange={handleSelectedDayChange}
+                    currentMonth={month}
+                    TransitionProps={CalendarTransitionProps}
+                    shouldDisableDate={wrappedShouldDisableDate}
+                    showDaysOutsideCurrentMonth={calendars === 1 && showDaysOutsideCurrentMonth}
+                    dayOfWeekFormatter={dayOfWeekFormatter}
+                    loading={loading}
+                    renderLoading={renderLoading}
+                    slots={slotsForDayCalendar}
+                    slotProps={slotPropsForDayCalendar}
+                    autoFocus={month === focusedMonth}
+                    fixedWeekNumber={fixedWeekNumber}
+                    displayWeekNumber={displayWeekNumber}
+                    timezone={timezone}
+                />
+            )}
           </DateRangeCalendarMonthContainer>
         );
       })}
@@ -674,7 +794,7 @@ DateRangeCalendar.propTypes = {
   /**
    * Controlled focused view.
    */
-  focusedView: PropTypes.oneOf(['day']),
+  focusedView: PropTypes.oneOf(['day', 'month', 'year']),
   /**
    * If `true`, calls `renderLoading` instead of rendering the day calendar.
    * Can be used to preload information and show it in calendar.
@@ -711,6 +831,12 @@ DateRangeCalendar.propTypes = {
    * @param {TDate} month The new month.
    */
   onMonthChange: PropTypes.func,
+  /**
+   * Callback fired on year change.
+   * @template TDate
+   * @param {TDate} year The new year.
+   */
+  onYearChange: PropTypes.func,
   /**
    * Callback fired when the range position changes.
    * @param {RangePosition} rangePosition The new range position.
@@ -766,6 +892,20 @@ DateRangeCalendar.propTypes = {
    */
   shouldDisableDate: PropTypes.func,
   /**
+   * Disable specific month.
+   * @template TDate
+   * @param {TDate} month The month to test.
+   * @returns {boolean} If `true` the month will be disabled.
+   */
+  shouldDisableMonth: PropTypes.func,
+  /**
+   * Disable specific year.
+   * @template TDate
+   * @param {TDate} year The year to test.
+   * @returns {boolean} If `true` the year will be disabled.
+   */
+  shouldDisableYear: PropTypes.func,
+  /**
    * If `true`, days outside the current month are rendered:
    *
    * - if `fixedWeekNumber` is defined, renders days to have the weeks requested.
@@ -812,11 +952,11 @@ DateRangeCalendar.propTypes = {
    * Used when the component view is controlled.
    * Must be a valid option from `views` list.
    */
-  view: PropTypes.oneOf(['day']),
+  view: PropTypes.oneOf(['day', 'month', 'year']),
   /**
    * Available views.
    */
-  views: PropTypes.arrayOf(PropTypes.oneOf(['day'])),
+  views: PropTypes.arrayOf(PropTypes.oneOf(['day', 'month', 'year'])),
 } as any;
 
 export { DateRangeCalendar };

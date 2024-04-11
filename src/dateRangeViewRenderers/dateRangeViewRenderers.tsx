@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { DateOrTimeViewWithMeridiem } from '../internals';
-import { PickerValidDate } from '../models';
+import {DateView, PickerValidDate} from '../models';
 import { DateRangeCalendar, DateRangeCalendarProps } from '../DateRangeCalendar';
 
 export interface DateRangeViewRendererProps<
@@ -53,7 +53,9 @@ export const renderDateRangeViewCalendar = <TDate extends PickerValidDate>({
   views,
   view,
   onViewChange,
-}: DateRangeViewRendererProps<TDate, 'day'>) => (
+  focusedView,
+  onFocusedViewChange
+}: DateRangeViewRendererProps<TDate, DateView>) => (
   <DateRangeCalendar
     value={value}
     defaultValue={defaultValue}
@@ -93,5 +95,7 @@ export const renderDateRangeViewCalendar = <TDate extends PickerValidDate>({
     view={view}
     views={views}
     onViewChange={onViewChange}
+    focusedView={focusedView}
+    onFocusedViewChange={onFocusedViewChange}
   />
 );

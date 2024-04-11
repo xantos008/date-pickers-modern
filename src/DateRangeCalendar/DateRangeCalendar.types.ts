@@ -2,7 +2,7 @@ import * as React from 'react';
 import { SxProps } from '@mui/system';
 import { SlotComponentProps } from '@mui/base/utils';
 import { Theme } from '@mui/material/styles';
-import { PickerValidDate, TimezoneProps } from '../models';
+import {DateView, PickerValidDate, TimezoneProps} from '../models';
 import {
   PickersCalendarHeader,
   PickersCalendarHeaderSlots,
@@ -17,7 +17,7 @@ import {
   PickersArrowSwitcherSlots,
   PickersArrowSwitcherSlotProps,
   DayCalendarProps,
-  ExportedUseViewsOptions,
+  ExportedUseViewsOptions, YearValidationProps, MonthValidationProps,
 } from '../internals';
 import { DayRangeValidationProps } from '../internals/models';
 import { DateRange } from '../models';
@@ -25,6 +25,8 @@ import { DateRangeCalendarClasses } from './dateRangeCalendarClasses';
 import { DateRangePickerDay, DateRangePickerDayProps } from '../DateRangePickerDay';
 import { UseRangePositionProps } from '../internals/hooks/useRangePosition';
 import { PickersRangeCalendarHeaderProps } from '../PickersRangeCalendarHeader';
+import {ExportedMonthCalendarProps} from "../MonthCalendar/MonthCalendar.types";
+import {ExportedYearCalendarProps} from "../YearCalendar/YearCalendar.types";
 
 export type DateRangePosition = 'start' | 'end';
 
@@ -64,8 +66,12 @@ export interface DateRangeCalendarSlotProps<TDate extends PickerValidDate>
 
 export interface ExportedDateRangeCalendarProps<TDate extends PickerValidDate>
   extends ExportedDayCalendarProps<TDate>,
+    ExportedMonthCalendarProps,
+    ExportedYearCalendarProps,
     BaseDateValidationProps<TDate>,
     DayRangeValidationProps<TDate>,
+    YearValidationProps<TDate>,
+    MonthValidationProps<TDate>,
     TimezoneProps {
   /**
    * If `true`, after selecting `start` date calendar will not automatically switch to the month of `end` date.
@@ -88,6 +94,12 @@ export interface ExportedDateRangeCalendarProps<TDate extends PickerValidDate>
    */
   reduceAnimations?: boolean;
   /**
+   * Callback fired on year change.
+   * @template TDate
+   * @param {TDate} year The new year.
+   */
+  onYearChange?: (year: TDate) => void;
+  /**
    * Callback fired on month change.
    * @template TDate
    * @param {TDate} month The new month.
@@ -108,7 +120,7 @@ export interface ExportedDateRangeCalendarProps<TDate extends PickerValidDate>
 export interface DateRangeCalendarProps<TDate extends PickerValidDate>
   extends ExportedDateRangeCalendarProps<TDate>,
     UseRangePositionProps,
-    ExportedUseViewsOptions<'day'> {
+    ExportedUseViewsOptions<DateView> {
   /**
    * The selected value.
    * Used when the component is controlled.

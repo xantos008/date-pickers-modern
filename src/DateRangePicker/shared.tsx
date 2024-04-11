@@ -10,7 +10,7 @@ import {
   BasePickerInputProps,
   PickerViewRendererLookup,
 } from '../internals';
-import { PickerValidDate } from '../models';
+import {DateView, PickerValidDate} from '../models';
 import { DateRangeValidationError, DateRange } from '../models';
 import {
   DateRangeCalendarSlots,
@@ -40,7 +40,7 @@ export interface BaseDateRangePickerSlotProps<TDate extends PickerValidDate>
 
 export interface BaseDateRangePickerProps<TDate extends PickerValidDate>
   extends Omit<
-      BasePickerInputProps<DateRange<TDate>, TDate, 'day', DateRangeValidationError>,
+      BasePickerInputProps<DateRange<TDate>, TDate, DateView, DateRangeValidationError>,
       'view' | 'views' | 'openTo' | 'onViewChange' | 'orientation'
     >,
     ExportedDateRangeCalendarProps<TDate>,
@@ -61,7 +61,7 @@ export interface BaseDateRangePickerProps<TDate extends PickerValidDate>
    * If `undefined`, internally defined view will be the used.
    */
   viewRenderers?: Partial<
-    PickerViewRendererLookup<DateRange<TDate>, 'day', DateRangeViewRendererProps<TDate, 'day'>, {}>
+    PickerViewRendererLookup<DateRange<TDate>, DateView, DateRangeViewRendererProps<TDate, DateView>, {}>
   >;
 }
 
