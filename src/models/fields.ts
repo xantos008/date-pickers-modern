@@ -1,6 +1,20 @@
 import * as React from 'react';
+import { SlotComponentProps } from '@mui/base/utils';
+import { TextFieldProps } from '@mui/material/TextField';
+import { SxProps } from '@mui/material/styles';
 import type { BaseFieldProps } from '../internals/models/fields';
+import type {
+  ExportedUseClearableFieldProps,
+  UseClearableFieldResponse,
+  UseClearableFieldSlotProps,
+  UseClearableFieldSlots,
+} from '../hooks/useClearableField';
+import { ExportedPickersSectionListProps, PickersSectionListRef } from '../PickersSectionList';
+import type { UseFieldResponse } from '../internals/hooks/useField';
+import type { PickersTextFieldProps } from '../PickersTextField';
+import { PickerValidDate } from './pickers';
 
+// Update PickersComponentAgnosticLocaleText -> viewNames when adding new entries
 export type FieldSectionType =
   | 'year'
   | 'month'
@@ -9,7 +23,8 @@ export type FieldSectionType =
   | 'hours'
   | 'minutes'
   | 'seconds'
-  | 'meridiem';
+  | 'meridiem'
+  | 'empty';
 
 export type FieldSectionContentType = 'digit' | 'digit-with-letter' | 'letter';
 
@@ -47,12 +62,6 @@ export interface FieldSection {
   /**
    * If `true`, the value of this section is supposed to have leading zeroes when parsed by the date library.
    * For example, the value `1` should be rendered as "01" instead of "1".
-   * @deprecated Will be removed in v7, use `hasLeadingZerosInFormat` instead.
-   */
-  hasLeadingZeros: boolean;
-  /**
-   * If `true`, the value of this section is supposed to have leading zeroes when parsed by the date library.
-   * For example, the value `1` should be rendered as "01" instead of "1".
    */
   hasLeadingZerosInFormat: boolean;
   /**
@@ -70,24 +79,6 @@ export interface FieldSection {
    * To avoid losing that information, we transfer the values of the modified sections from the newly generated date to the original date.
    */
   modified: boolean;
-  /**
-   * Start index of the section in the format
-   */
-  start: number;
-  /**
-   * End index of the section in the format
-   */
-  end: number;
-  /**
-   * Start index of the section value in the input.
-   * Takes into account invisible unicode characters such as \u2069 but does not include them
-   */
-  startInInput: number;
-  /**
-   * End index of the section value in the input.
-   * Takes into account invisible unicode characters such as \u2069 but does not include them
-   */
-  endInInput: number;
   /**
    * Separator displayed before the value of the section in the input.
    * If it contains escaped characters, then it must not have the escaping characters.
@@ -119,24 +110,26 @@ export interface FieldRef<TSection extends FieldSection> {
    * @param {FieldSelectedSections} selectedSections The sections to select.
    */
   setSelectedSections: (selectedSections: FieldSelectedSections) => void;
+  /**
+   * Focuses the field.
+   * @param {FieldSelectedSections | FieldSectionType} newSelectedSection The section to select once focused.
+   */
+  focusField: (newSelectedSection?: number | FieldSectionType) => void;
+  /**
+   * Returns `true` if the focused is on the field input.
+   * @returns {boolean} `true` if the field is focused.
+   */
+  isFieldFocused: () => boolean;
 }
 
-export type FieldSelectedSections =
-  | number
-  | FieldSectionType
-  | null
-  | 'all'
-  | { startIndex: number; endIndex: number };
+export type FieldSelectedSections = number | FieldSectionType | null | 'all';
 
-/**
- * Props the single input field can receive when used inside a picker.
- * Only contains what the MUI component are passing to the field, not what users can pass using the `props.slotProps.field`.
- */
-export interface BaseSingleInputFieldProps<TValue, TDate, TSection extends FieldSection, TError>
-  extends BaseFieldProps<TValue, TDate, TSection, TError> {
+interface BaseForwardedCommonSingleInputFieldProps extends ExportedUseClearableFieldProps {
+  ref?: React.Ref<HTMLDivElement>;
+  sx?: SxProps<any>;
   label?: React.ReactNode;
   id?: string;
-  inputRef?: React.Ref<HTMLInputElement>;
+  name?: string;
   onKeyDown?: React.KeyboardEventHandler;
   onBlur?: React.FocusEventHandler;
   focused?: boolean;
@@ -148,8 +141,172 @@ export interface BaseSingleInputFieldProps<TValue, TDate, TSection extends Field
   inputProps?: {
     'aria-label'?: string;
   };
-  slots?: {};
-  slotProps?: {};
-  clearable?: boolean;
-  onClear?: React.MouseEventHandler;
+  slots?: UseClearableFieldSlots;
+  slotProps?: UseClearableFieldSlotProps & {
+    textField?: {};
+  };
 }
+
+interface BaseForwardedV6SingleInputFieldProps {
+  inputRef?: React.Ref<HTMLInputElement>;
+}
+
+interface BaseForwardedV7SingleInputFieldProps {
+  sectionListRef?: React.Ref<PickersSectionListRef>;
+}
+
+type BaseForwardedSingleInputFieldProps<TEnableAccessibleFieldDOMStructure extends boolean> =
+  BaseForwardedCommonSingleInputFieldProps &
+    (TEnableAccessibleFieldDOMStructure extends false
+      ? BaseForwardedV6SingleInputFieldProps
+      : BaseForwardedV7SingleInputFieldProps);
+
+/**
+ * Props the single input field can receive when used inside a picker.
+ * Only contains what the MUI components are passing to the field,
+ * not what users can pass using the `props.slotProps.field`.
+ */
+export type BaseSingleInputFieldProps<
+  TValue,
+  TDate extends PickerValidDate,
+  TSection extends FieldSection,
+  TEnableAccessibleFieldDOMStructure extends boolean,
+  TError,
+> = BaseFieldProps<TValue, TDate, TSection, TEnableAccessibleFieldDOMStructure, TError> &
+  BaseForwardedSingleInputFieldProps<TEnableAccessibleFieldDOMStructure>;
+
+/**
+ * Props the text field receives when used with a single input picker.
+ * Only contains what the MUI components are passing to the text field, not what users can pass using the `props.slotProps.field` and `props.slotProps.textField`.
+ */
+export type BaseSingleInputPickersTextFieldProps<
+  TEnableAccessibleFieldDOMStructure extends boolean,
+> = UseClearableFieldResponse<
+  UseFieldResponse<
+    TEnableAccessibleFieldDOMStructure,
+    BaseForwardedSingleInputFieldProps<TEnableAccessibleFieldDOMStructure>
+  >
+>;
+
+/**
+ * Props the built-in text field component can receive.
+ */
+export type BuiltInFieldTextFieldProps<TEnableAccessibleFieldDOMStructure extends boolean> =
+  TEnableAccessibleFieldDOMStructure extends false
+    ? Omit<
+        TextFieldProps,
+        | 'autoComplete'
+        | 'error'
+        | 'maxRows'
+        | 'minRows'
+        | 'multiline'
+        | 'placeholder'
+        | 'rows'
+        | 'select'
+        | 'SelectProps'
+        | 'type'
+      >
+    : Partial<Omit<PickersTextFieldProps, keyof ExportedPickersSectionListProps>>;
+
+
+
+export interface RangeFieldSection extends FieldSection {
+  dateName: 'start' | 'end';
+}
+
+export type FieldType = 'single-input' | 'multi-input';
+
+/**
+ * Props the `textField` slot of the multi input field can receive when used inside a picker.
+ */
+export interface MultiInputFieldSlotTextFieldProps {
+  label?: React.ReactNode;
+  id?: string;
+  disabled?: boolean;
+  readOnly?: boolean;
+  onKeyDown?: React.KeyboardEventHandler;
+  onClick?: React.MouseEventHandler;
+  onFocus?: React.FocusEventHandler;
+  focused?: boolean;
+  InputProps?: {
+    ref?: React.Ref<any>;
+    endAdornment?: React.ReactNode;
+    startAdornment?: React.ReactNode;
+  };
+}
+
+/**
+ * Props the `root` slot of the multi input field can receive when used inside a picker.
+ */
+export interface MultiInputFieldSlotRootProps {
+  onBlur?: React.FocusEventHandler;
+}
+
+export interface MultiInputFieldRefs {
+  unstableStartFieldRef?: React.Ref<FieldRef<RangeFieldSection>>;
+  unstableEndFieldRef?: React.Ref<FieldRef<RangeFieldSection>>;
+}
+
+export interface RangeFieldSeparatorProps {
+  /**
+   * String displayed between the start and the end dates.
+   * @default "–"
+   */
+  dateSeparator?: string;
+}
+
+/**
+ * Props the multi input field can receive when used inside a picker.
+ * Only contains what the MUI components are passing to the field,
+ * not what users can pass using the `props.slotProps.field`.
+ */
+export interface BaseMultiInputFieldProps<
+    TValue,
+    TDate extends PickerValidDate,
+    TSection extends FieldSection,
+    TEnableAccessibleFieldDOMStructure extends boolean,
+    TError,
+> extends Omit<
+    BaseFieldProps<TValue, TDate, TSection, TEnableAccessibleFieldDOMStructure, TError>,
+    'unstableFieldRef'
+>,
+    RangeFieldSeparatorProps {
+  sx?: SxProps<any>;
+  unstableStartFieldRef?: React.Ref<FieldRef<RangeFieldSection>>;
+  unstableEndFieldRef?: React.Ref<FieldRef<RangeFieldSection>>;
+  slots?: {
+    root?: React.ElementType;
+    separator?: React.ElementType;
+    textField?: React.ElementType;
+  };
+  slotProps?: {
+    root?: SlotComponentProps<
+        React.ElementType<MultiInputFieldSlotRootProps>,
+        {},
+        Record<string, any>
+    >;
+    textField?: SlotComponentProps<
+        React.ElementType<MultiInputFieldSlotTextFieldProps>,
+        {},
+        { position?: 'start' | 'end' } & Record<string, any>
+    >;
+  };
+}
+
+/**
+ * Props the text field receives when used with a multi input picker.
+ * Only contains what the MUI components are passing to the text field, not what users can pass using the `props.slotProps.textField`.
+ */
+export type BaseMultiInputPickersTextFieldProps<
+    TEnableAccessibleFieldDOMStructure extends boolean,
+> = UseClearableFieldResponse<
+    UseFieldResponse<TEnableAccessibleFieldDOMStructure, MultiInputFieldSlotTextFieldProps>
+>;
+
+/**
+ * Props the text field receives when used with a single or multi input picker.
+ * Only contains what the MUI components are passing to the text field, not what users can pass using the `props.slotProps.field` or `props.slotProps.textField`.
+ */
+export type BasePickersTextFieldProps<TEnableAccessibleFieldDOMStructure extends boolean> =
+    BaseSingleInputPickersTextFieldProps<TEnableAccessibleFieldDOMStructure> &
+    BaseMultiInputPickersTextFieldProps<TEnableAccessibleFieldDOMStructure>;

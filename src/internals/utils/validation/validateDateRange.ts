@@ -1,4 +1,4 @@
-import { TimezoneProps } from '../../../models';
+import { PickerValidDate, TimezoneProps } from '../../../models';
 import {
   Validator,
   validateDate,
@@ -6,10 +6,10 @@ import {
   DefaultizedProps,
 } from '../../../internals';
 import { isRangeValid } from '../date-utils';
-import { DateRange, DayRangeValidationProps } from '../../models';
-import { DateRangeValidationError } from '../../../models';
+import { DayRangeValidationProps } from '../../models';
+import { DateRangeValidationError, DateRange } from '../../../models';
 
-export interface DateRangeComponentValidationProps<TDate>
+export interface DateRangeComponentValidationProps<TDate extends PickerValidDate>
   extends DayRangeValidationProps<TDate>,
     Required<BaseDateValidationProps<TDate>>,
     DefaultizedProps<TimezoneProps, 'timezone'> {}

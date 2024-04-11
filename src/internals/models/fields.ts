@@ -1,79 +1,21 @@
 import * as React from 'react';
-import { SlotComponentProps } from '@mui/base/utils';
-import { TextFieldProps } from '@mui/material/TextField';
 import type { UseFieldInternalProps } from '../hooks/useField';
-import type { FieldSection } from '../../models';
+import { FieldSection, PickerValidDate } from '../../models';
+import type { ExportedUseClearableFieldProps } from '../../hooks/useClearableField';
 
-export interface BaseFieldProps<TValue, TDate, TSection extends FieldSection, TError>
-    extends Omit<UseFieldInternalProps<TValue, TDate, TSection, TError>, 'format'> {
+export interface BaseFieldProps<
+  TValue,
+  TDate extends PickerValidDate,
+  TSection extends FieldSection,
+  TEnableAccessibleFieldDOMStructure extends boolean,
+  TError,
+> extends Omit<
+      UseFieldInternalProps<TValue, TDate, TSection, TEnableAccessibleFieldDOMStructure, TError>,
+      'format'
+    >,
+    ExportedUseClearableFieldProps {
   className?: string;
   format?: string;
   disabled?: boolean;
   ref?: React.Ref<HTMLDivElement>;
-}
-
-export interface FieldsTextFieldProps
-    extends Omit<
-        TextFieldProps,
-        | 'autoComplete'
-        | 'error'
-        | 'maxRows'
-        | 'minRows'
-        | 'multiline'
-        | 'placeholder'
-        | 'rows'
-        | 'select'
-        | 'SelectProps'
-        | 'type'
-    > {}
-
-export interface RangeFieldSection extends FieldSection {
-  dateName: 'start' | 'end';
-}
-
-/**
- * Props the `textField` slot of the multi input field can receive when used inside a picker.
- */
-export interface MultiInputFieldSlotTextFieldProps {
-  inputRef?: React.Ref<HTMLInputElement>;
-  disabled?: boolean;
-  readOnly?: boolean;
-  id?: string;
-  label?: React.ReactNode;
-  onKeyDown?: React.KeyboardEventHandler;
-  onFocus?: React.FocusEventHandler;
-  focused?: boolean;
-  InputProps?: Partial<FieldsTextFieldProps['InputProps']>;
-}
-
-/**
- * Props the `root` slot of the multi input field can receive when used inside a picker.
- */
-export interface MultiInputFieldSlotRootProps {
-  onBlur?: React.FocusEventHandler;
-}
-
-/**
- * Props the multi input field can receive when used inside a picker.
- * Only contains what the MUI component are passing to the field, not what users can pass using the `props.slotProps.field`.
- */
-export interface BaseMultiInputFieldProps<TValue, TDate, TSection extends FieldSection, TError>
-  extends BaseFieldProps<TValue, TDate, TSection, TError> {
-  slots?: {
-    root?: React.ElementType;
-    separator?: React.ElementType;
-    textField?: React.ElementType;
-  };
-  slotProps?: {
-    root?: SlotComponentProps<
-      React.ElementType<MultiInputFieldSlotRootProps>,
-      {},
-      Record<string, any>
-    >;
-    textField?: SlotComponentProps<
-      React.ElementType<MultiInputFieldSlotTextFieldProps>,
-      {},
-      { position?: 'start' | 'end' } & Record<string, any>
-    >;
-  };
 }

@@ -1,10 +1,10 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { useThemeProps } from '@mui/material/styles';
-import { AdapterFormats, MuiPickersAdapter } from '../models';
+import { AdapterFormats, MuiPickersAdapter, PickerValidDate } from '../models';
 import { PickersInputLocaleText } from '../locales';
 
-export interface MuiPickersAdapterContextValue<TDate> {
+export interface MuiPickersAdapterContextValue<TDate extends PickerValidDate> {
   defaultDates: {
     minDate: TDate;
     maxDate: TDate;
@@ -14,7 +14,7 @@ export interface MuiPickersAdapterContextValue<TDate> {
   localeText: PickersInputLocaleText<TDate> | undefined;
 }
 
-export type MuiPickersAdapterContextNullableValue<TDate> = {
+export type MuiPickersAdapterContextNullableValue<TDate extends PickerValidDate> = {
   [K in keyof MuiPickersAdapterContextValue<TDate>]: MuiPickersAdapterContextValue<TDate>[K] | null;
 };
 
@@ -25,7 +25,7 @@ if (process.env.NODE_ENV !== 'production') {
   MuiPickersAdapterContext.displayName = 'MuiPickersAdapterContext';
 }
 
-export interface LocalizationProviderProps<TDate, TLocale> {
+export interface LocalizationProviderProps<TDate extends PickerValidDate, TLocale> {
   children?: React.ReactNode;
   /**
    * Date library adapter class function.
@@ -51,13 +51,26 @@ export interface LocalizationProviderProps<TDate, TLocale> {
   localeText?: PickersInputLocaleText<TDate>;
 }
 
-type LocalizationProviderComponent = (<TDate, TLocale>(
+type LocalizationProviderComponent = (<TDate extends PickerValidDate, TLocale>(
   props: LocalizationProviderProps<TDate, TLocale>,
 ) => React.JSX.Element) & { propTypes?: any };
 
-export const LocalizationProvider = function LocalizationProvider<TDate, TLocale>(
-  inProps: LocalizationProviderProps<TDate, TLocale>,
-) {
+/**
+ * Demos:
+ *
+ * - [Date format and localization](https://mui.com/x/react-date-pickers/adapters-locale/)
+ * - [Calendar systems](https://mui.com/x/react-date-pickers/calendar-systems/)
+ * - [Translated components](https://mui.com/x/react-date-pickers/localization/)
+ * - [UTC and timezones](https://mui.com/x/react-date-pickers/timezone/)
+ *
+ * API:
+ *
+ * - [LocalizationProvider API](https://mui.com/x/api/date-pickers/localization-provider/)
+ */
+export const LocalizationProvider = function LocalizationProvider<
+  TDate extends PickerValidDate,
+  TLocale,
+>(inProps: LocalizationProviderProps<TDate, TLocale>) {
   const { localeText: inLocaleText, ...otherInProps } = inProps;
 
   const { utils: parentUtils, localeText: parentLocaleText } = React.useContext(
@@ -103,9 +116,8 @@ export const LocalizationProvider = function LocalizationProvider<TDate, TLocale
     if (!adapter.isMUIAdapter) {
       throw new Error(
         [
-          'The date adapter should be imported from `date-pickers-modern`, not from `@date-io`',
-          "For example, `import { AdapterDayjs } from '../AdapterDayjs'` instead of `import AdapterDayjs from '@date-io/dayjs'`",
-          'More information on the installation documentation: https://mui.com/x/react-date-pickers/getting-started/#installation',
+          'MUI X: The date adapter should be imported from `date-picker-modern`, not from `@date-io`',
+          "For example, `import { AdapterDayjs } from 'date-picker-modern/AdapterDayjs'` instead of `import AdapterDayjs from '@date-io/dayjs'`",
         ].join(`\n`),
       );
     }
@@ -160,11 +172,8 @@ LocalizationProvider.propTypes = {
    */
   dateFormats: PropTypes.shape({
     dayOfMonth: PropTypes.string,
+    dayOfMonthFull: PropTypes.string,
     fullDate: PropTypes.string,
-    fullDateTime: PropTypes.string,
-    fullDateTime12h: PropTypes.string,
-    fullDateTime24h: PropTypes.string,
-    fullDateWithWeekday: PropTypes.string,
     fullTime: PropTypes.string,
     fullTime12h: PropTypes.string,
     fullTime24h: PropTypes.string,
@@ -177,8 +186,6 @@ LocalizationProvider.propTypes = {
     meridiem: PropTypes.string,
     minutes: PropTypes.string,
     month: PropTypes.string,
-    monthAndDate: PropTypes.string,
-    monthAndYear: PropTypes.string,
     monthShort: PropTypes.string,
     normalDate: PropTypes.string,
     normalDateWithWeekday: PropTypes.string,

@@ -1,28 +1,24 @@
 /* eslint-disable class-methods-use-this */
 import defaultDayjs, { Dayjs } from 'dayjs';
-import weekOfYear from 'dayjs/plugin/weekOfYear';
+import weekOfYearPlugin from 'dayjs/plugin/weekOfYear';
 import customParseFormatPlugin from 'dayjs/plugin/customParseFormat';
 import localizedFormatPlugin from 'dayjs/plugin/localizedFormat';
 import isBetweenPlugin from 'dayjs/plugin/isBetween';
-import utc from 'dayjs/plugin/utc';
-import timezone from 'dayjs/plugin/timezone';
-
+import advancedFormatPlugin from 'dayjs/plugin/advancedFormat';
 import {
   FieldFormatTokenMap,
   MuiPickersAdapter,
   AdapterFormats,
-  AdapterUnits,
   AdapterOptions,
   PickersTimezone,
   DateBuilderReturnType,
 } from '../models';
 import { buildWarning } from '../internals/utils/warning';
 
-defaultDayjs.extend(utc);
-defaultDayjs.extend(timezone);
-defaultDayjs.extend(customParseFormatPlugin);
 defaultDayjs.extend(localizedFormatPlugin);
+defaultDayjs.extend(weekOfYearPlugin);
 defaultDayjs.extend(isBetweenPlugin);
+defaultDayjs.extend(advancedFormatPlugin);
 
 type Constructor = (...args: Parameters<typeof defaultDayjs>) => Dayjs;
 
@@ -79,8 +75,9 @@ const defaultFormats: AdapterFormats = {
   month: 'MMMM',
   monthShort: 'MMM',
   dayOfMonth: 'D',
+  dayOfMonthFull: 'Do',
   weekday: 'dddd',
-  weekdayShort: 'ddd',
+  weekdayShort: 'dd',
   hours24h: 'HH',
   hours12h: 'hh',
   meridiem: 'A',
@@ -88,21 +85,15 @@ const defaultFormats: AdapterFormats = {
   seconds: 'ss',
 
   fullDate: 'll',
-  fullDateWithWeekday: 'dddd, LL',
   keyboardDate: 'L',
   shortDate: 'MMM D',
   normalDate: 'D MMMM',
   normalDateWithWeekday: 'ddd, MMM D',
-  monthAndYear: 'MMMM YYYY',
-  monthAndDate: 'MMMM D',
 
   fullTime: 'LT',
   fullTime12h: 'hh:mm A',
   fullTime24h: 'HH:mm',
 
-  fullDateTime: 'lll',
-  fullDateTime12h: 'll hh:mm A',
-  fullDateTime24h: 'll HH:mm',
   keyboardDateTime: 'L LT',
   keyboardDateTime12h: 'L hh:mm A',
   keyboardDateTime24h: 'L HH:mm',
@@ -155,8 +146,6 @@ export class AdapterDayjs implements MuiPickersAdapter<Dayjs, string> {
 
   public lib = 'dayjs';
 
-  public rawDayJsInstance?: typeof defaultDayjs;
-
   public dayjs: Constructor;
 
   public locale?: string;
@@ -167,13 +156,14 @@ export class AdapterDayjs implements MuiPickersAdapter<Dayjs, string> {
 
   public formatTokenMap = formatTokenMap;
 
-  constructor({ locale, formats, instance }: AdapterOptions<string, typeof defaultDayjs> = {}) {
-    this.rawDayJsInstance = instance;
-    this.dayjs = withLocale(this.rawDayJsInstance ?? defaultDayjs, locale);
+  constructor({ locale, formats }: AdapterOptions<string, never> = {}) {
+    this.dayjs = withLocale(defaultDayjs, locale);
     this.locale = locale;
     this.formats = { ...defaultFormats, ...formats };
 
-    defaultDayjs.extend(weekOfYear);
+    // Moved plugins to the constructor to allow for users to use options on the library
+    // for reference: https://github.com/mui/mui-x/pull/11151
+    defaultDayjs.extend(customParseFormatPlugin);
   }
 
   private setLocaleToValue = (value: Dayjs) => {
@@ -213,12 +203,6 @@ export class AdapterDayjs implements MuiPickersAdapter<Dayjs, string> {
   };
 
   private createSystemDate = (value: string | undefined): Dayjs => {
-    // TODO v7: Stop using `this.rawDayJsInstance` (drop the `instance` param on the adapters)
-    /* istanbul ignore next */
-    if (this.rawDayJsInstance) {
-      return this.rawDayJsInstance(value);
-    }
-
     if (this.hasUTCPlugin() && this.hasTimezonePlugin()) {
       const timezone = defaultDayjs.tz.guess();
 
@@ -297,17 +281,9 @@ export class AdapterDayjs implements MuiPickersAdapter<Dayjs, string> {
     return value;
   };
 
-  public date = (value?: any) => {
-    if (value === null) {
-      return null;
-    }
-
-    return this.dayjs(value);
-  };
-
-  public dateWithTimezone = <T extends string | null | undefined>(
-    value: T,
-    timezone: PickersTimezone,
+  public date = <T extends string | null | undefined>(
+    value?: T,
+    timezone: PickersTimezone = 'default',
   ): DateBuilderReturnType<T, Dayjs> => {
     type R = DateBuilderReturnType<T, Dayjs>;
     if (value === null) {
@@ -330,16 +306,20 @@ export class AdapterDayjs implements MuiPickersAdapter<Dayjs, string> {
     return <R>parsedValue.locale(this.locale);
   };
 
-  public getTimezone = (value: Dayjs): string => {
-    if (this.hasUTCPlugin() && value.isUTC()) {
-      return 'UTC';
-    }
+  public getInvalidDate = () => defaultDayjs(new Date('Invalid date'));
 
+  public getTimezone = (value: Dayjs): string => {
     if (this.hasTimezonePlugin()) {
       // @ts-ignore
       const zone = value.$x?.$timezone;
 
-      return zone ?? 'system';
+      if (zone) {
+        return zone;
+      }
+    }
+
+    if (this.hasUTCPlugin() && value.isUTC()) {
+      return 'UTC';
     }
 
     return 'system';
@@ -382,14 +362,6 @@ export class AdapterDayjs implements MuiPickersAdapter<Dayjs, string> {
     return value.toDate();
   };
 
-  public parseISO = (isoString: string) => {
-    return this.dayjs(isoString);
-  };
-
-  public toISO = (value: Dayjs) => {
-    return value.toISOString();
-  };
-
   public parse = (value: string, format: string) => {
     if (value === '') {
       return null;
@@ -430,16 +402,12 @@ export class AdapterDayjs implements MuiPickersAdapter<Dayjs, string> {
     );
   };
 
-  public getFormatHelperText = (format: string) => {
-    return this.expandFormat(format).replace(/a/gi, '(a|p)m').toLocaleLowerCase();
-  };
+  public isValid = (value: Dayjs | null) => {
+    if (value == null) {
+      return false;
+    }
 
-  public isNull = (value: Dayjs | null) => {
-    return value === null;
-  };
-
-  public isValid = (value: any) => {
-    return this.dayjs(value).isValid();
+    return value.isValid();
   };
 
   public format = (value: Dayjs, formatKey: keyof AdapterFormats) => {
@@ -454,16 +422,16 @@ export class AdapterDayjs implements MuiPickersAdapter<Dayjs, string> {
     return numberToFormat;
   };
 
-  public getDiff = (value: Dayjs, comparing: Dayjs | string, unit?: AdapterUnits) => {
-    return value.diff(comparing, unit as AdapterUnits);
-  };
-
-  public isEqual = (value: any, comparing: any) => {
+  public isEqual = (value: Dayjs | null, comparing: Dayjs | null) => {
     if (value === null && comparing === null) {
       return true;
     }
 
-    return this.dayjs(value).toDate().getTime() === this.dayjs(comparing).toDate().getTime();
+    if (value === null || comparing === null) {
+      return false;
+    }
+
+    return value.toDate().getTime() === comparing.toDate().getTime();
   };
 
   public isSameYear = (value: Dayjs, comparing: Dayjs) => {
@@ -660,41 +628,10 @@ export class AdapterDayjs implements MuiPickersAdapter<Dayjs, string> {
     return value.daysInMonth();
   };
 
-  public getNextMonth = (value: Dayjs) => {
-    return this.addMonths(value, 1);
-  };
-
-  public getPreviousMonth = (value: Dayjs) => {
-    return this.addMonths(value, -1);
-  };
-
-  public getMonthArray = (value: Dayjs) => {
-    const firstMonth = value.startOf('year');
-    const monthArray = [firstMonth];
-
-    while (monthArray.length < 12) {
-      const prevMonth = monthArray[monthArray.length - 1];
-      monthArray.push(this.addMonths(prevMonth, 1));
-    }
-
-    return monthArray;
-  };
-
-  public mergeDateAndTime = (dateParam: Dayjs, timeParam: Dayjs) => {
-    return dateParam.hour(timeParam.hour()).minute(timeParam.minute()).second(timeParam.second());
-  };
-
-  public getWeekdays = () => {
-    const start = this.dayjs().startOf('week');
-    return [0, 1, 2, 3, 4, 5, 6].map((diff) =>
-      this.formatByString(this.addDays(start, diff), 'dd'),
-    );
-  };
-
   public getWeekArray = (value: Dayjs) => {
     const cleanValue = this.setLocaleToValue(value);
-    const start = cleanValue.startOf('month').startOf('week');
-    const end = cleanValue.endOf('month').endOf('week');
+    const start = this.startOfWeek(this.startOfMonth(cleanValue));
+    const end = this.endOfWeek(this.endOfMonth(cleanValue));
 
     let count = 0;
     let current = start;
@@ -717,21 +654,21 @@ export class AdapterDayjs implements MuiPickersAdapter<Dayjs, string> {
     return value.week();
   };
 
-  public getYearRange = (start: Dayjs, end: Dayjs) => {
-    const startDate = start.startOf('year');
-    const endDate = end.endOf('year');
+  public getDayOfWeek(value: Dayjs): number {
+    return value.day() + 1;
+  }
+
+  public getYearRange = ([start, end]: [Dayjs, Dayjs]) => {
+    const startDate = this.startOfYear(start);
+    const endDate = this.endOfYear(end);
     const years: Dayjs[] = [];
 
     let current = startDate;
-    while (current < endDate) {
+    while (this.isBefore(current, endDate)) {
       years.push(current);
       current = this.addYears(current, 1);
     }
 
     return years;
-  };
-
-  public getMeridiemText = (ampm: 'am' | 'pm') => {
-    return ampm === 'am' ? 'AM' : 'PM';
   };
 }

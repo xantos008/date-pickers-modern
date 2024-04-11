@@ -18,6 +18,7 @@ import { singleItemValueManager } from '../internals/utils/valueManagers';
 import { SECTION_TYPE_GRANULARITY } from '../internals/utils/getDefaultReferenceDate';
 import { useControlledValueWithTimezone } from '../internals/hooks/useValueWithTimezone';
 import { DIALOG_WIDTH } from '../internals/constants/dimensions';
+import { PickerValidDate } from '../models';
 
 const useUtilityClasses = (ownerState: MonthCalendarProps<any>) => {
   const { classes } = ownerState;
@@ -29,7 +30,7 @@ const useUtilityClasses = (ownerState: MonthCalendarProps<any>) => {
   return composeClasses(slots, getMonthCalendarUtilityClass, classes);
 };
 
-export function useMonthCalendarDefaultizedProps<TDate>(
+export function useMonthCalendarDefaultizedProps<TDate extends PickerValidDate>(
   props: MonthCalendarProps<TDate>,
   name: string,
 ): DefaultizedProps<
@@ -66,11 +67,20 @@ const MonthCalendarRoot = styled('div', {
   boxSizing: 'border-box',
 });
 
-type MonthCalendarComponent = (<TDate>(
+type MonthCalendarComponent = (<TDate extends PickerValidDate>(
   props: MonthCalendarProps<TDate> & React.RefAttributes<HTMLDivElement>,
 ) => React.JSX.Element) & { propTypes?: any };
 
-export const MonthCalendar = React.forwardRef(function MonthCalendar<TDate>(
+/**
+ * Demos:
+ *
+ * - [DateCalendar](https://mui.com/x/react-date-pickers/date-calendar/)
+ *
+ * API:
+ *
+ * - [MonthCalendar API](https://mui.com/x/api/date-pickers/month-calendar/)
+ */
+export const MonthCalendar = React.forwardRef(function MonthCalendar<TDate extends PickerValidDate>(
   inProps: MonthCalendarProps<TDate>,
   ref: React.Ref<HTMLDivElement>,
 ) {
@@ -135,13 +145,11 @@ export const MonthCalendar = React.forwardRef(function MonthCalendar<TDate>(
       return utils.getMonth(value);
     }
 
-    if (disableHighlightToday) {
-      return null;
-    }
-
-    return utils.getMonth(referenceDate);
-  }, [value, utils, disableHighlightToday, referenceDate]);
-  const [focusedMonth, setFocusedMonth] = React.useState(() => selectedMonth || todayMonth);
+    return null;
+  }, [value, utils]);
+  const [focusedMonth, setFocusedMonth] = React.useState(
+    () => selectedMonth || utils.getMonth(referenceDate),
+  );
 
   const [internalHasFocus, setInternalHasFocus] = useControlled({
     name: 'MonthCalendar',
@@ -302,15 +310,12 @@ MonthCalendar.propTypes = {
    * Override or extend the styles applied to the component.
    */
   classes: PropTypes.object,
-  /**
-   * className applied to the root element.
-   */
   className: PropTypes.string,
   /**
    * The default selected value.
    * Used when the component is not controlled.
    */
-  defaultValue: PropTypes.any,
+  defaultValue: PropTypes.object,
   /**
    * If `true` picker is disabled
    */
@@ -335,11 +340,11 @@ MonthCalendar.propTypes = {
   /**
    * Maximal selectable date.
    */
-  maxDate: PropTypes.any,
+  maxDate: PropTypes.object,
   /**
    * Minimal selectable date.
    */
-  minDate: PropTypes.any,
+  minDate: PropTypes.object,
   /**
    * Months rendered per row.
    * @default 3
@@ -361,7 +366,7 @@ MonthCalendar.propTypes = {
    * The date used to generate the new value when both `value` and `defaultValue` are empty.
    * @default The closest valid month using the validation props, except callbacks such as `shouldDisableMonth`.
    */
-  referenceDate: PropTypes.any,
+  referenceDate: PropTypes.object,
   /**
    * Disable specific month.
    * @template TDate
@@ -381,7 +386,7 @@ MonthCalendar.propTypes = {
    * Choose which timezone to use for the value.
    * Example: "default", "system", "UTC", "America/New_York".
    * If you pass values from other timezones to some props, they will be converted to this timezone before being used.
-   * @see See the {@link https://mui.com/x/react-date-pickers/timezone/ timezones documention} for more details.
+   * @see See the {@link https://mui.com/x/react-date-pickers/timezone/ timezones documentation} for more details.
    * @default The timezone of the `value` or `defaultValue` prop is defined, 'default' otherwise.
    */
   timezone: PropTypes.string,
@@ -389,5 +394,5 @@ MonthCalendar.propTypes = {
    * The selected value.
    * Used when the component is controlled.
    */
-  value: PropTypes.any,
+  value: PropTypes.object,
 } as any;

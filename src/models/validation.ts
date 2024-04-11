@@ -4,31 +4,27 @@
 type CommonDateTimeValidationError = 'invalidDate' | 'disableFuture' | 'disablePast' | null;
 
 export type DateValidationError =
-    | CommonDateTimeValidationError
-    | 'shouldDisableDate'
-    | 'shouldDisableMonth'
-    | 'shouldDisableYear'
-    | 'minDate'
-    | 'maxDate';
+  | CommonDateTimeValidationError
+  | 'shouldDisableDate'
+  | 'shouldDisableMonth'
+  | 'shouldDisableYear'
+  | 'minDate'
+  | 'maxDate';
 
 export type TimeValidationError =
-    | CommonDateTimeValidationError
-    | 'minutesStep'
-    | 'minTime'
-    | 'maxTime'
-    | 'shouldDisableClock-hours'
-    | 'shouldDisableClock-minutes'
-    | 'shouldDisableClock-seconds'
-    | 'shouldDisableTime-hours'
-    | 'shouldDisableTime-minutes'
-    | 'shouldDisableTime-seconds';
+  | CommonDateTimeValidationError
+  | 'minutesStep'
+  | 'minTime'
+  | 'maxTime'
+  | 'shouldDisableTime-hours'
+  | 'shouldDisableTime-minutes'
+  | 'shouldDisableTime-seconds';
 
 export type DateTimeValidationError = DateValidationError | TimeValidationError;
 
-
 type RangeValidation<ItemError extends string | null> = [
-  ItemError | 'invalidRange',
-  ItemError | 'invalidRange',
+        ItemError | 'invalidRange',
+        ItemError | 'invalidRange',
 ];
 
 export type DateRangeValidationError = RangeValidation<DateValidationError>;

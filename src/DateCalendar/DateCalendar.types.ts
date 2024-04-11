@@ -5,14 +5,10 @@ import { SlotComponentProps } from '@mui/base/utils';
 import {
   PickersCalendarHeader,
   PickersCalendarHeaderProps,
-  PickersCalendarHeaderSlotsComponent,
-  PickersCalendarHeaderSlotsComponentsProps,
+  PickersCalendarHeaderSlots,
+  PickersCalendarHeaderSlotProps,
 } from '../PickersCalendarHeader';
-import {
-  DayCalendarSlotsComponent,
-  DayCalendarSlotsComponentsProps,
-  ExportedDayCalendarProps,
-} from './DayCalendar';
+import { DayCalendarSlots, DayCalendarSlotProps, ExportedDayCalendarProps } from './DayCalendar';
 import { DateCalendarClasses } from './dateCalendarClasses';
 import {
   BaseDateValidationProps,
@@ -20,32 +16,30 @@ import {
   MonthValidationProps,
   DayValidationProps,
 } from '../internals/models/validation';
-import { PickerSelectionState } from '../internals/hooks/usePicker/usePickerValue.types';
 import { ExportedUseViewsOptions } from '../internals/hooks/useViews';
-import { DateView, TimezoneProps } from '../models';
+import { DateView, PickerValidDate, TimezoneProps } from '../models';
 import { DefaultizedProps } from '../internals/models/helpers';
-import { SlotsAndSlotProps } from '../internals/utils/slots-migration';
 import { ExportedYearCalendarProps } from '../YearCalendar/YearCalendar.types';
 import { ExportedMonthCalendarProps } from '../MonthCalendar/MonthCalendar.types';
 
-export interface DateCalendarSlotsComponent<TDate>
-  extends PickersCalendarHeaderSlotsComponent,
-    DayCalendarSlotsComponent<TDate> {
+export interface DateCalendarSlots<TDate extends PickerValidDate>
+  extends PickersCalendarHeaderSlots,
+    DayCalendarSlots<TDate> {
   /**
    * Custom component for calendar header.
    * Check the [PickersCalendarHeader](https://mui.com/x/api/date-pickers/pickers-calendar-header/) component.
    * @default PickersCalendarHeader
    */
-  CalendarHeader?: React.ElementType<PickersCalendarHeaderProps<TDate>>;
+  calendarHeader?: React.ElementType<PickersCalendarHeaderProps<TDate>>;
 }
 
-export interface DateCalendarSlotsComponentsProps<TDate>
-  extends PickersCalendarHeaderSlotsComponentsProps<TDate>,
-    DayCalendarSlotsComponentsProps<TDate> {
+export interface DateCalendarSlotProps<TDate extends PickerValidDate>
+  extends PickersCalendarHeaderSlotProps<TDate>,
+    DayCalendarSlotProps<TDate> {
   calendarHeader?: SlotComponentProps<typeof PickersCalendarHeader, {}, DateCalendarProps<TDate>>;
 }
 
-export interface ExportedDateCalendarProps<TDate>
+export interface ExportedDateCalendarProps<TDate extends PickerValidDate>
   extends ExportedDayCalendarProps<TDate>,
     ExportedMonthCalendarProps,
     ExportedYearCalendarProps,
@@ -54,10 +48,6 @@ export interface ExportedDateCalendarProps<TDate>
     YearValidationProps<TDate>,
     MonthValidationProps<TDate>,
     TimezoneProps {
-  /**
-   * Default calendar month displayed when `value` and `defaultValue` are empty.
-   */
-  defaultCalendarMonth?: TDate;
   /**
    * If `true`, the picker and text field are disabled.
    * @default false
@@ -93,10 +83,9 @@ export interface ExportedDateCalendarProps<TDate>
   onMonthChange?: (month: TDate) => void;
 }
 
-export interface DateCalendarProps<TDate>
+export interface DateCalendarProps<TDate extends PickerValidDate>
   extends ExportedDateCalendarProps<TDate>,
-    ExportedUseViewsOptions<DateView>,
-    SlotsAndSlotProps<DateCalendarSlotsComponent<TDate>, DateCalendarSlotsComponentsProps<TDate>> {
+    ExportedUseViewsOptions<DateView> {
   /**
    * The selected value.
    * Used when the component is controlled.
@@ -112,22 +101,28 @@ export interface DateCalendarProps<TDate>
    * @default The closest valid date using the validation props, except callbacks such as `shouldDisableDate`.
    */
   referenceDate?: TDate;
-  /**
-   * Callback fired when the value changes.
-   * @template TDate
-   * @param {TDate | null} value The new value.
-   * @param {PickerSelectionState | undefined} selectionState Indicates if the date selection is complete.
-   */
-  onChange?: (value: TDate | null, selectionState?: PickerSelectionState) => void;
   className?: string;
+  /**
+   * Override or extend the styles applied to the component.
+   */
   classes?: Partial<DateCalendarClasses>;
   /**
    * The system prop that allows defining system overrides as well as additional CSS styles.
    */
   sx?: SxProps<Theme>;
+  /**
+   * Overridable component slots.
+   * @default {}
+   */
+  slots?: DateCalendarSlots<TDate>;
+  /**
+   * The props used for each component slot.
+   * @default {}
+   */
+  slotProps?: DateCalendarSlotProps<TDate>;
 }
 
-export type DateCalendarDefaultizedProps<TDate> = DefaultizedProps<
+export type DateCalendarDefaultizedProps<TDate extends PickerValidDate> = DefaultizedProps<
   DateCalendarProps<TDate>,
   | 'views'
   | 'openTo'

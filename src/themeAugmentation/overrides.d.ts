@@ -1,10 +1,10 @@
 import {
   DateCalendarClassKey,
   DayCalendarClassKey,
-  PickersCalendarHeaderClassKey,
   PickersFadeTransitionGroupClassKey,
   PickersSlideTransitionClassKey,
 } from '../DateCalendar';
+import { PickersCalendarHeaderClassKey } from '../PickersCalendarHeader';
 import { DayCalendarSkeletonClassKey } from '../DayCalendarSkeleton';
 import {
   ClockClassKey,
@@ -19,23 +19,32 @@ import { PickersLayoutClassKey } from '../PickersLayout';
 import { DatePickerToolbarClassKey } from '../DatePicker';
 import { TimePickerToolbarClassKey } from '../TimePicker';
 import { DateTimePickerToolbarClassKey, DateTimePickerTabsClassKey } from '../DateTimePicker';
-import {
-  PickersArrowSwitcherClassKey,
-  PickersPopperClassKey,
-  PickersToolbarButtonClassKey,
-  PickersToolbarClassKey,
-  PickersToolbarTextClassKey,
-} from '../internals';
+import { PickersArrowSwitcherClassKey } from '../internals/components/PickersArrowSwitcher';
+import { PickersToolbarClassKey } from '../internals/components/pickersToolbarClasses';
+import { PickersPopperClassKey } from '../internals/components/pickersPopperClasses';
+import { PickersToolbarButtonClassKey } from '../internals/components/pickersToolbarButtonClasses';
+import { PickersToolbarTextClassKey } from '../internals/components/pickersToolbarTextClasses';
 import { DigitalClockClassKey } from '../DigitalClock';
 import {
   MultiSectionDigitalClockClassKey,
   MultiSectionDigitalClockSectionClassKey,
 } from '../MultiSectionDigitalClock';
-
+import {
+  PickersTextFieldClassKey,
+  PickersInputClassKey,
+  PickersOutlinedInputClassKey,
+  PickersFilledInputClassKey,
+  PickersInputBaseClassKey,
+} from '../PickersTextField';
+import { PickersSectionListClassKey } from '../PickersSectionList';
 import { DateRangePickerDayClassKey } from '../DateRangePickerDay';
 import { DateRangeCalendarClassKey } from '../DateRangeCalendar';
 import { DateRangePickerToolbarClassKey } from '../DateRangePicker';
 import { MultiInputRangeFieldClassKey } from '../models';
+import {
+  DateTimeRangePickerTabsClassKey,
+  DateTimeRangePickerToolbarClassKey,
+} from '../DateTimeRangePicker';
 
 // prettier-ignore
 export interface PickersComponentNameToClassKey {
@@ -68,9 +77,22 @@ export interface PickersComponentNameToClassKey {
   MuiTimePickerToolbar: TimePickerToolbarClassKey;
   MuiYearCalendar: YearCalendarClassKey;
 
+  // V7 Picker's TextField
+  MuiPickersTextField: PickersTextFieldClassKey;
+  MuiPickersInputBase: PickersInputBaseClassKey
+  MuiPickersInput: PickersInputClassKey
+  MuiPickersFilledInput: PickersFilledInputClassKey
+  MuiPickersOutlinedInput: PickersOutlinedInputClassKey
+  MuiPickersSectionList: PickersSectionListClassKey
+}
+
+export interface PickersProComponentNameToClassKey {
   MuiDateRangeCalendar: DateRangeCalendarClassKey;
   MuiDateRangePickerDay: DateRangePickerDayClassKey;
   MuiDateRangePickerToolbar: DateRangePickerToolbarClassKey;
+
+  MuiDateTimeRangePickerTabs: DateTimeRangePickerTabsClassKey;
+  MuiDateTimeRangePickerToolbar: DateTimeRangePickerToolbarClassKey;
 
   // Multi input range fields
   MuiMultiInputDateRangeField: MultiInputRangeFieldClassKey;
@@ -79,7 +101,7 @@ export interface PickersComponentNameToClassKey {
 }
 
 declare module '@mui/material/styles' {
-  interface ComponentNameToClassKey extends PickersComponentNameToClassKey {}
+  interface ComponentNameToClassKey extends PickersComponentNameToClassKey, PickersProComponentNameToClassKey {}
 }
 
 // disable automatic export

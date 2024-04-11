@@ -1,9 +1,10 @@
 {
   "compilerOptions": {
+    "composite": true,
     "outDir": "build",
     "module": "esnext",
     "target": "ES6",
-    "lib": ["es5", "es6", "dom", "es2015", "es2016", "es2015.Promise", "es2017", "es2021"],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "sourceMap": false,
     "baseUrl": "./",
     "allowJs": true,
@@ -17,11 +18,16 @@
     "strictNullChecks": true,
     "noUnusedLocals": false,
     "noUnusedParameters": false,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "noEmit": false,
+    "emitDeclarationOnly": true
   },
   "include": [
     "src/**/*",
-    "./node_modules/@mui/material/themeCssVarsAugmentation"
+    "node_modules/@mui/material/themeCssVarsAugmentation",
+    "node_modules/dayjs/plugin/utc.d.ts",
+    "node_modules/dayjs/plugin/timezone.d.ts",
+    "node_modules/moment-timezone/index.d.ts"
   ],
-  "exclude": ["node_modules", "build", "dist", "example", "rollup.config.js"]
+  "exclude": ["build", "dist", "example", "rollup.config.js"]
 }
