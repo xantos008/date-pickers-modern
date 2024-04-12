@@ -12,6 +12,7 @@ function updatePackageJson() {
             // Modify package.json
             delete packageJson.files;
             delete packageJson['jsnext:main'];
+            delete packageJson['ts-standard'];
             packageJson.main = './node/index.js';
             packageJson.module = './index.js';
             packageJson.types = './index.d.ts';
@@ -27,6 +28,7 @@ function updatePackageJson() {
             // Modify package.json
             delete packageJson.files;
             delete packageJson['jsnext:main'];
+            delete packageJson['ts-standard'];
             packageJson.main = './node/index.js';
             packageJson.module = './index.js';
             packageJson.types = './index.d.ts';

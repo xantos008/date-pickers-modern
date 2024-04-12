@@ -1,5 +1,5 @@
 import json from '@rollup/plugin-json';
-import typescript from 'rollup-plugin-typescript2';
+import typescript from '@rollup/plugin-typescript';
 import babel from '@rollup/plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
 import external from 'rollup-plugin-peer-deps-external';
@@ -40,8 +40,9 @@ export default {
         }),
         resolve(),
         typescript({
-            rollupCommonJSResolveHack: false,
-            clean: true,
+            compilerOptions: {
+                outDir: 'dist'
+            }
         }),
         commonjs(commonjsOptions),
     ],

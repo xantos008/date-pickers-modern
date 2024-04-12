@@ -402,8 +402,8 @@ const DateRangeCalendar = React.forwardRef(function DateRangeCalendar<
         : newDate;
 
     if (closestEnabledDate) {
-      goToNextView();
-      // setValueAndGoToNextView(closestEnabledDate, 'finish');
+      // goToNextView();
+      setValueAndGoToNextView(closestEnabledDate, 'finish');
       onMonthChange?.(startOfMonth);
     } else {
       goToNextView();
@@ -431,12 +431,12 @@ const DateRangeCalendar = React.forwardRef(function DateRangeCalendar<
         : newDate;
 
     if (closestEnabledDate) {
-      goToNextView();
-      // setValueAndGoToNextView(closestEnabledDate, 'finish');
+      // goToNextView();
+      setValueAndGoToNextView(closestEnabledDate, 'finish');
       onYearChange?.(closestEnabledDate);
     } else {
       goToNextView();
-      changeMonth(startOfYear);
+      onYearChange?.(startOfYear);
     }
 
     changeFocusedDay(closestEnabledDate, true);

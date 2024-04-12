@@ -1,8 +1,11 @@
 {
   "name": "date-pickers-modern",
-  "version": "7.1.1",
+  "version": "7.1.11",
   "description": "A react date range picker implementation using @mui.",
   "author": "xantos008",
+  "files": [
+    "dist/*"
+  ],
   "main": "dist/index.js",
   "module": "dist/index.es.js",
   "jsnext:main": "dist/index.es.js",
@@ -28,7 +31,7 @@
     "build:simple": "npm run clean && rollup -c --bundleConfigAsCjs",
     "build": "npm run clean && rollup -c --bundleConfigAsCjs && npm run postbuild",
     "postbuild": "cp package.json dist && cp README.md dist && cp LICENSE dist && node ./scripts/runUpdatePackageJson.js",
-    "publish": "npm run compile && npm run build && npm run pack && npm publish data-grid-ultra-7.1.1.tgz",
+    "publish": "npm run compile && npm run build && npm run pack && npm publish date-pickers-modern-7.1.11.tgz",
     "pack": "npm pack ./build/"
   },
   "repository": {
@@ -41,7 +44,6 @@
     "@mui/base": "^5.0.0-beta.40",
     "@mui/utils": "^5.15.14",
     "@types/format-util": "^1.0.2",
-    "@types/react": "^18.2.21",
     "@types/react-transition-group": "^4.4.8",
     "clsx": "^2.1.0",
     "prop-types": "^15.8.1",
@@ -101,6 +103,7 @@
     "@rollup/plugin-commonjs": "^25.0.7",
     "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-typescript": "^11.1.6",
     "@rollup/plugin-url": "^8.0.2",
     "@types/luxon": "^3.4.2",
     "@types/moment-jalaali": "^0.7.9",
@@ -123,9 +126,7 @@
     "@babel/core": "^7.24.0",
     "@babel/traverse": "^7.24.0",
     "csstype": "3.0.10",
-    "semver": "^7.5.4",
-    "**/react-is": "^18.2.0",
-    "**/@types/node": "^18.19.23"
+    "semver": "^7.5.4"
   },
   "engines": {
     "node": ">=18.0.0"
