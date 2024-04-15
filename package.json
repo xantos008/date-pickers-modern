@@ -1,6 +1,6 @@
 {
   "name": "date-pickers-modern",
-  "version": "7.1.11",
+  "version": "7.2.26",
   "description": "A react date range picker implementation using @mui.",
   "author": "xantos008",
   "files": [
@@ -31,7 +31,7 @@
     "build:simple": "npm run clean && rollup -c --bundleConfigAsCjs",
     "build": "npm run clean && rollup -c --bundleConfigAsCjs && npm run postbuild",
     "postbuild": "cp package.json dist && cp README.md dist && cp LICENSE dist && node ./scripts/runUpdatePackageJson.js",
-    "publish": "npm run compile && npm run build && npm run pack && npm publish date-pickers-modern-7.1.11.tgz",
+    "publish": "npm run compile && npm run build && npm run pack && npm publish date-pickers-modern-7.2.26.tgz",
     "pack": "npm pack ./build/"
   },
   "repository": {

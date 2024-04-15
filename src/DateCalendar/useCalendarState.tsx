@@ -2,7 +2,7 @@ import * as React from 'react';
 import useEventCallback from '@mui/utils/useEventCallback';
 import { SlideDirection } from './PickersSlideTransition';
 import { useIsDateDisabled } from './useIsDateDisabled';
-import { useUtils } from '../internals/hooks/useUtils';
+import {useNow, useUtils} from '../internals/hooks/useUtils';
 import { MuiPickersAdapter, PickersTimezone, PickerValidDate } from '../models';
 import { DateCalendarDefaultizedProps } from './DateCalendar.types';
 import { singleItemValueManager } from '../internals/utils/valueManagers';
@@ -137,6 +137,8 @@ export const useCalendarState = <TDate extends PickerValidDate>(
     ),
   ).current;
 
+  // const now = useNow<TDate>(timezone);
+
   const referenceDate = React.useMemo(
     () => {
       return singleItemValueManager.getInitialReferenceValue({
@@ -148,7 +150,7 @@ export const useCalendarState = <TDate extends PickerValidDate>(
         granularity: SECTION_TYPE_GRANULARITY.day,
       });
     },
-    [], // eslint-disable-line react-hooks/exhaustive-deps
+    [value, utils, timezone, params, referenceDateProp], // eslint-disable-line react-hooks/exhaustive-deps
   );
 
   const [calendarState, dispatch] = React.useReducer(reducerFn, {

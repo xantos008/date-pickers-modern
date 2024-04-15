@@ -18,17 +18,17 @@ const svSEPickers: Partial<PickersLocaleText<any>> = {
   openPreviousView: 'Öppna föregående vy',
   openNextView: 'Öppna nästa vy',
   calendarViewSwitchingButtonAriaLabel: (view) =>
-    view === 'year'
-      ? 'årsvyn är öppen, byt till kalendervy'
-      : 'kalendervyn är öppen, byt till årsvy',
+      view === 'year'
+          ? 'årsvyn är öppen, byt till kalendervy'
+          : 'kalendervyn är öppen, byt till årsvy',
 
   // DateRange labels
   start: 'Start',
   end: 'Slut',
-  // startDate: 'Start date',
-  // startTime: 'Start time',
-  // endDate: 'End date',
-  // endTime: 'End time',
+  startDate: 'Startdatum',
+  startTime: 'Starttid',
+  endDate: 'Slutdatum',
+  endTime: 'Sluttid',
 
   // Action bar
   cancelButtonLabel: 'Avbryt',
@@ -44,7 +44,7 @@ const svSEPickers: Partial<PickersLocaleText<any>> = {
 
   // Clock labels
   clockLabelText: (view, time, adapter) =>
-    `Välj ${timeViews[view]}. ${time === null ? 'Ingen tid vald' : `Vald tid är ${adapter.format(time, 'fullTime')}`}`,
+      `Välj ${timeViews[view]}. ${time === null ? 'Ingen tid vald' : `Vald tid är ${adapter.format(time, 'fullTime')}`}`,
   hoursClockNumberText: (hours) => `${hours} timmar`,
   minutesClockNumberText: (minutes) => `${minutes} minuter`,
   secondsClockNumberText: (seconds) => `${seconds} sekunder`,
@@ -60,41 +60,41 @@ const svSEPickers: Partial<PickersLocaleText<any>> = {
 
   // Open picker labels
   openDatePickerDialogue: (value, utils) =>
-    value !== null && utils.isValid(value)
-      ? `Välj datum, valt datum är ${utils.format(value, 'fullDate')}`
-      : 'Välj datum',
+      value !== null && utils.isValid(value)
+          ? `Välj datum, valt datum är ${utils.format(value, 'fullDate')}`
+          : 'Välj datum',
   openTimePickerDialogue: (value, utils) =>
-    value !== null && utils.isValid(value)
-      ? `Välj tid, vald tid är ${utils.format(value, 'fullTime')}`
-      : 'Välj tid',
-  // fieldClearLabel: 'Clear value',
+      value !== null && utils.isValid(value)
+          ? `Välj tid, vald tid är ${utils.format(value, 'fullTime')}`
+          : 'Välj tid',
+  fieldClearLabel: 'Rensa värde',
 
   // Table labels
   timeTableLabel: 'välj tid',
   dateTableLabel: 'välj datum',
 
   // Field section placeholders
-  // fieldYearPlaceholder: params => 'Y'.repeat(params.digitAmount),
-  // fieldMonthPlaceholder: params => params.contentType === 'letter' ? 'MMMM' : 'MM',
-  // fieldDayPlaceholder: () => 'DD',
-  // fieldWeekDayPlaceholder: params => params.contentType === 'letter' ? 'EEEE' : 'EE',
-  // fieldHoursPlaceholder: () => 'hh',
-  // fieldMinutesPlaceholder: () => 'mm',
-  // fieldSecondsPlaceholder: () => 'ss',
-  // fieldMeridiemPlaceholder: () => 'aa',
+  fieldYearPlaceholder: (params) => 'Å'.repeat(params.digitAmount),
+  fieldMonthPlaceholder: (params) => (params.contentType === 'letter' ? 'MMMM' : 'MM'),
+  fieldDayPlaceholder: () => 'DD',
+  fieldWeekDayPlaceholder: (params) => (params.contentType === 'letter' ? 'EEEE' : 'EE'),
+  fieldHoursPlaceholder: () => 'tt',
+  fieldMinutesPlaceholder: () => 'mm',
+  fieldSecondsPlaceholder: () => 'ss',
+  fieldMeridiemPlaceholder: () => 'aa',
 
   // View names
-  // year: 'Year',
-  // month: 'Month',
-  // day: 'Day',
-  // weekDay: 'Week day',
-  // hours: 'Hours',
-  // minutes: 'Minutes',
-  // seconds: 'Seconds',
-  // meridiem: 'Meridiem',
+  year: 'År',
+  month: 'Månad',
+  day: 'Dag',
+  weekDay: 'Veckodag',
+  hours: 'Timmar',
+  minutes: 'Minuter',
+  seconds: 'Sekunder',
+  meridiem: 'Meridiem',
 
   // Common
-  // empty: 'Empty',
+  empty: 'Tom',
 };
 
 export const svSE = getPickersLocalization(svSEPickers);

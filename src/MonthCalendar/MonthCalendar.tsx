@@ -273,7 +273,7 @@ export const MonthCalendar = React.forwardRef(function MonthCalendar<TDate exten
         const monthNumber = utils.getMonth(month);
         const monthText = utils.format(month, 'monthShort');
         const monthLabel = utils.format(month, 'month');
-        const isSelected = monthNumber === selectedMonth;
+        const isSelected = disableHighlightToday ? false : monthNumber === selectedMonth;
         const isDisabled = disabled || isMonthDisabled(month);
 
         return (

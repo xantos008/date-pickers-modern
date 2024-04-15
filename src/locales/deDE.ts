@@ -19,17 +19,17 @@ const deDEPickers: Partial<PickersLocaleText<any>> = {
   openPreviousView: 'Letzte Ansicht öffnen',
   openNextView: 'Nächste Ansicht öffnen',
   calendarViewSwitchingButtonAriaLabel: (view) =>
-    view === 'year'
-      ? 'Jahresansicht ist geöffnet, zur Kalenderansicht wechseln'
-      : 'Kalenderansicht ist geöffnet, zur Jahresansicht wechseln',
+      view === 'year'
+          ? 'Jahresansicht ist geöffnet, zur Kalenderansicht wechseln'
+          : 'Kalenderansicht ist geöffnet, zur Jahresansicht wechseln',
 
   // DateRange labels
   start: 'Beginn',
   end: 'Ende',
-  // startDate: 'Start date',
-  // startTime: 'Start time',
-  // endDate: 'End date',
-  // endTime: 'End time',
+  startDate: 'Startdatum',
+  startTime: 'Startzeit',
+  endDate: 'Enddatum',
+  endTime: 'Endzeit',
 
   // Action bar
   cancelButtonLabel: 'Abbrechen',
@@ -45,7 +45,7 @@ const deDEPickers: Partial<PickersLocaleText<any>> = {
 
   // Clock labels
   clockLabelText: (view, time, adapter) =>
-    `${timeViews[view] ?? view} auswählen. ${time === null ? 'Keine Uhrzeit ausgewählt' : `Gewählte Uhrzeit ist ${adapter.format(time, 'fullTime')}`}`,
+      `${timeViews[view] ?? view} auswählen. ${time === null ? 'Keine Uhrzeit ausgewählt' : `Gewählte Uhrzeit ist ${adapter.format(time, 'fullTime')}`}`,
   hoursClockNumberText: (hours) => `${hours} ${timeViews.hours}`,
   minutesClockNumberText: (minutes) => `${minutes} ${timeViews.minutes}`,
   secondsClockNumberText: (seconds) => `${seconds}  ${timeViews.seconds}`,
@@ -61,13 +61,13 @@ const deDEPickers: Partial<PickersLocaleText<any>> = {
 
   // Open picker labels
   openDatePickerDialogue: (value, utils) =>
-    value !== null && utils.isValid(value)
-      ? `Datum auswählen, gewähltes Datum ist ${utils.format(value, 'fullDate')}`
-      : 'Datum auswählen',
+      value !== null && utils.isValid(value)
+          ? `Datum auswählen, gewähltes Datum ist ${utils.format(value, 'fullDate')}`
+          : 'Datum auswählen',
   openTimePickerDialogue: (value, utils) =>
-    value !== null && utils.isValid(value)
-      ? `Uhrzeit auswählen, gewählte Uhrzeit ist ${utils.format(value, 'fullTime')}`
-      : 'Uhrzeit auswählen',
+      value !== null && utils.isValid(value)
+          ? `Uhrzeit auswählen, gewählte Uhrzeit ist ${utils.format(value, 'fullTime')}`
+          : 'Uhrzeit auswählen',
   fieldClearLabel: 'Wert leeren',
 
   // Table labels
@@ -85,17 +85,17 @@ const deDEPickers: Partial<PickersLocaleText<any>> = {
   fieldMeridiemPlaceholder: () => 'aa',
 
   // View names
-  // year: 'Year',
-  // month: 'Month',
-  // day: 'Day',
-  // weekDay: 'Week day',
-  // hours: 'Hours',
-  // minutes: 'Minutes',
-  // seconds: 'Seconds',
-  // meridiem: 'Meridiem',
+  year: 'Jahr',
+  month: 'Monat',
+  day: 'Tag',
+  weekDay: 'Wochentag',
+  hours: 'Stunden',
+  minutes: 'Minuten',
+  seconds: 'Sekunden',
+  meridiem: 'Tageszeit',
 
   // Common
-  // empty: 'Empty',
+  empty: 'Leer',
 };
 
 export const deDE = getPickersLocalization(deDEPickers);

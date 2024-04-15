@@ -27,6 +27,7 @@ import { UseRangePositionProps } from '../internals/hooks/useRangePosition';
 import { PickersRangeCalendarHeaderProps } from '../PickersRangeCalendarHeader';
 import {ExportedMonthCalendarProps} from "../MonthCalendar/MonthCalendar.types";
 import {ExportedYearCalendarProps} from "../YearCalendar/YearCalendar.types";
+import PropTypes from "prop-types";
 
 export type DateRangePosition = 'start' | 'end';
 
@@ -115,6 +116,12 @@ export interface ExportedDateRangeCalendarProps<TDate extends PickerValidDate>
    * @default false
    */
   disableDragEditing?: boolean;
+  /**
+   * If `true`, you'll be able to track new date by onChange event.
+   * Used when the component is controlled.
+   * @default false
+   */
+  isShadowDate?: boolean;
 }
 
 export interface DateRangeCalendarProps<TDate extends PickerValidDate>
