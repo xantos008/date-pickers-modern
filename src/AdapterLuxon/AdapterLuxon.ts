@@ -86,12 +86,6 @@ const defaultFormats: AdapterFormats = {
   keyboardDateTime24h: 'D T',
 };
 
-declare module '../models' {
-  interface PickerValidDateLookup {
-    luxon: DateTime;
-  }
-}
-
 /**
  * Based on `@date-io/luxon`
  *

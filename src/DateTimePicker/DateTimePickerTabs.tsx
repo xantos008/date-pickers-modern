@@ -73,9 +73,9 @@ const DateTimePickerTabsRoot = styled(Tabs, {
   slot: 'Root',
   overridesResolver: (_, styles) => styles.root,
 })<{ ownerState: DateTimePickerTabsProps }>(({ theme }) => ({
-  boxShadow: `0 -1px 0 0 inset ${((theme as any).vars || theme).palette.divider}`,
+  boxShadow: `0 -1px 0 0 inset ${(theme.vars || theme).palette.divider}`,
   '&:last-child': {
-    boxShadow: `0 1px 0 0 inset ${((theme as any).vars || theme).palette.divider}`,
+    boxShadow: `0 1px 0 0 inset ${(theme.vars || theme).palette.divider}`,
     [`& .${tabsClasses.indicator}`]: {
       bottom: 'auto',
       top: 0,
@@ -142,7 +142,7 @@ const DateTimePickerTabs = function DateTimePickerTabs(inProps: DateTimePickerTa
 DateTimePickerTabs.propTypes = {
   // ----------------------------- Warning --------------------------------
   // | These PropTypes are generated from the TypeScript type definitions |
-  // | To update them edit the TypeScript types and run "yarn proptypes"  |
+  // | To update them edit the TypeScript types and run "pnpm proptypes"  |
   // ----------------------------------------------------------------------
   /**
    * Override or extend the styles applied to the component.

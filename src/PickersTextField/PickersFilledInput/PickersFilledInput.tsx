@@ -33,36 +33,36 @@ const PickersFilledInputRoot = styled(PickersInputBaseRoot, {
   const disabledBackground = light ? 'rgba(0, 0, 0, 0.12)' : 'rgba(255, 255, 255, 0.12)';
 
   return {
-    backgroundColor: (theme as any).vars ? (theme as any).vars.palette.FilledInput.bg : backgroundColor,
-    borderTopLeftRadius: ((theme as any).vars || theme).shape.borderRadius,
-    borderTopRightRadius: ((theme as any).vars || theme).shape.borderRadius,
+    backgroundColor: theme.vars ? theme.vars.palette.FilledInput.bg : backgroundColor,
+    borderTopLeftRadius: (theme.vars || theme).shape.borderRadius,
+    borderTopRightRadius: (theme.vars || theme).shape.borderRadius,
     transition: theme.transitions.create('background-color', {
       duration: theme.transitions.duration.shorter,
       easing: theme.transitions.easing.easeOut,
     }),
     '&:hover': {
-      backgroundColor: (theme as any).vars ? (theme as any).vars.palette.FilledInput.hoverBg : hoverBackground,
+      backgroundColor: theme.vars ? theme.vars.palette.FilledInput.hoverBg : hoverBackground,
       // Reset on touch devices, it doesn't add specificity
       '@media (hover: none)': {
-        backgroundColor: (theme as any).vars ? (theme as any).vars.palette.FilledInput.bg : backgroundColor,
+        backgroundColor: theme.vars ? theme.vars.palette.FilledInput.bg : backgroundColor,
       },
     },
     [`&.${pickersFilledInputClasses.focused}`]: {
-      backgroundColor: (theme as any).vars ? (theme as any).vars.palette.FilledInput.bg : backgroundColor,
+      backgroundColor: theme.vars ? theme.vars.palette.FilledInput.bg : backgroundColor,
     },
     [`&.${pickersFilledInputClasses.disabled}`]: {
-      backgroundColor: (theme as any).vars ? (theme as any).vars.palette.FilledInput.disabledBg : disabledBackground,
+      backgroundColor: theme.vars ? theme.vars.palette.FilledInput.disabledBg : disabledBackground,
     },
     variants: [
-      ...Object.keys(((theme as any).vars ?? theme).palette)
+      ...Object.keys((theme.vars ?? theme).palette)
         // @ts-ignore
-        .filter((key) => ((theme as any).vars ?? theme).palette[key].main)
+        .filter((key) => (theme.vars ?? theme).palette[key].main)
         .map((color) => ({
           props: { color, disableUnderline: false },
           style: {
             '&::after': {
               // @ts-ignore
-              borderBottom: `2px solid ${((theme as any).vars || theme).palette[color]?.main}`,
+              borderBottom: `2px solid ${(theme.vars || theme).palette[color]?.main}`,
             },
           },
         })),
@@ -90,13 +90,13 @@ const PickersFilledInputRoot = styled(PickersInputBaseRoot, {
           },
           [`&.${pickersFilledInputClasses.error}`]: {
             '&:before, &:after': {
-              borderBottomColor: ((theme as any).vars || theme).palette.error.main,
+              borderBottomColor: (theme.vars || theme).palette.error.main,
             },
           },
           '&::before': {
             borderBottom: `1px solid ${
-              (theme as any).vars
-                ? `rgba(${(theme as any).vars.palette.common.onBackgroundChannel} / ${(theme as any).vars.opacity.inputUnderline})`
+              theme.vars
+                ? `rgba(${theme.vars.palette.common.onBackgroundChannel} / ${theme.vars.opacity.inputUnderline})`
                 : bottomLineColor
             }`,
             left: 0,
@@ -112,7 +112,7 @@ const PickersFilledInputRoot = styled(PickersInputBaseRoot, {
           },
           [`&:hover:not(.${pickersFilledInputClasses.disabled}, .${pickersFilledInputClasses.error}):before`]:
             {
-              borderBottom: `1px solid ${((theme as any).vars || theme).palette.text.primary}`,
+              borderBottom: `1px solid ${(theme.vars || theme).palette.text.primary}`,
             },
           [`&.${pickersFilledInputClasses.disabled}:before`]: {
             borderBottomStyle: 'dotted',
@@ -246,7 +246,7 @@ const PickersFilledInput = React.forwardRef(function PickersFilledInput(
 PickersFilledInput.propTypes = {
   // ----------------------------- Warning --------------------------------
   // | These PropTypes are generated from the TypeScript type definitions |
-  // | To update them edit the TypeScript types and run "yarn proptypes"  |
+  // | To update them edit the TypeScript types and run "pnpm proptypes"  |
   // ----------------------------------------------------------------------
   /**
    * Is `true` if the current values equals the empty value.

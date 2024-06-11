@@ -1,7 +1,6 @@
-// Most used Adapters
+// Adapters
 export * from './AdapterDayjs'
 export * from './AdapterMoment'
-
 // Clocks
 export * from './TimeClock';
 export * from './DigitalClock';
@@ -9,8 +8,8 @@ export * from './MultiSectionDigitalClock';
 
 export * from './LocalizationProvider';
 export * from './PickersDay';
-export * from './locales/utils/pickersLocaleTextApi';
 export * from './DateRangePickerDay';
+export * from './locales/utils/pickersLocaleTextApi';
 
 // Fields
 export * from './DateField';
@@ -28,6 +27,7 @@ export * from './DateCalendar';
 export * from './MonthCalendar';
 export * from './YearCalendar';
 export * from './DayCalendarSkeleton';
+
 export * from './DateRangeCalendar';
 export * from './PickersRangeCalendarHeader';
 
@@ -74,7 +74,6 @@ export * from './PickersTextField';
 export * from './PickersSectionList';
 
 export { DEFAULT_DESKTOP_MODE_MEDIA_QUERY } from './internals/utils/utils';
-export type { UseDateRangeFieldProps } from './internals/models/dateRange';
 
 export * from './models';
 

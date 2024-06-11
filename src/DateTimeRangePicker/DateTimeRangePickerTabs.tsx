@@ -86,7 +86,7 @@ const DateTimeRangePickerTabsRoot = styled('div', {
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
-  borderBottom: `1px solid ${((theme as any).vars || theme).palette.divider}`,
+  borderBottom: `1px solid ${(theme.vars || theme).palette.divider}`,
   minHeight: 48,
 }));
 
@@ -209,7 +209,7 @@ const DateTimeRangePickerTabs = function DateTimeRangePickerTabs(
 DateTimeRangePickerTabs.propTypes = {
   // ----------------------------- Warning --------------------------------
   // | These PropTypes are generated from the TypeScript type definitions |
-  // | To update them edit the TypeScript types and run "yarn proptypes"  |
+  // | To update them edit the TypeScript types and run "pnpm proptypes"  |
   // ----------------------------------------------------------------------
   /**
    * Override or extend the styles applied to the component.

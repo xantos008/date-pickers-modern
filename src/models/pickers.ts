@@ -1,4 +1,8 @@
 import type { PickersShortcutsItemContext } from '../PickersShortcuts';
+import { Moment as MomentJalaali } from "moment-jalaali";
+import { Moment as MomentHijri } from 'moment-hijri';
+import { Moment } from "moment";
+import { DateTime } from "luxon";
 
 export interface PickerChangeHandlerContext<TError> {
   validationError: TError;
@@ -9,6 +13,15 @@ export interface PickerChangeHandlerContext<TError> {
   shortcut?: PickersShortcutsItemContext;
 }
 
-export interface PickerValidDateLookup {}
+export interface PickerValidDateLookup {
+  moment: Moment;
+  'moment-jalaali': MomentJalaali;
+  'moment-hijri': MomentHijri;
+  luxon: DateTime;
+  'date-fns': Date;
+  'date-fns-jalali': Date;
+  null: null;
+  undefined: undefined;
+}
 
 export type PickerValidDate = PickerValidDateLookup[keyof PickerValidDateLookup];

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { SlotComponentProps } from '@mui/base/utils';
-import { TextFieldProps } from '@mui/material/TextField';
+import { RangePosition } from './range';
+import TextField, { TextFieldProps } from '@mui/material/TextField';
 import { SxProps } from '@mui/material/styles';
 import type { BaseFieldProps } from '../internals/models/fields';
 import type {
@@ -29,6 +30,12 @@ export type FieldSectionType =
 export type FieldSectionContentType = 'digit' | 'digit-with-letter' | 'letter';
 
 export type FieldValueType = 'date' | 'time' | 'date-time';
+
+export interface RangeFieldSection extends FieldSection {
+  dateName: RangePosition;
+}
+
+export type FieldType = 'single-input' | 'multi-input';
 
 export interface FieldSection {
   /**
@@ -208,14 +215,6 @@ export type BuiltInFieldTextFieldProps<TEnableAccessibleFieldDOMStructure extend
       >
     : Partial<Omit<PickersTextFieldProps, keyof ExportedPickersSectionListProps>>;
 
-
-
-export interface RangeFieldSection extends FieldSection {
-  dateName: 'start' | 'end';
-}
-
-export type FieldType = 'single-input' | 'multi-input';
-
 /**
  * Props the `textField` slot of the multi input field can receive when used inside a picker.
  */
@@ -286,9 +285,9 @@ export interface BaseMultiInputFieldProps<
         Record<string, any>
     >;
     textField?: SlotComponentProps<
-        React.ElementType<MultiInputFieldSlotTextFieldProps>,
+        typeof TextField,
         {},
-        { position?: 'start' | 'end' } & Record<string, any>
+        { position?: RangePosition } & Record<string, any>
     >;
   };
 }

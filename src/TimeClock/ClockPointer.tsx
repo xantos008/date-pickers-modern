@@ -36,7 +36,7 @@ const ClockPointerRoot = styled('div', {
   ownerState: ClockPointerProps & ClockPointerState;
 }>(({ theme }) => ({
   width: 2,
-  backgroundColor: ((theme as any).vars || theme).palette.primary.main,
+  backgroundColor: (theme.vars || theme).palette.primary.main,
   position: 'absolute',
   left: 'calc(50% - 1px)',
   bottom: '50%',
@@ -60,18 +60,18 @@ const ClockPointerThumb = styled('div', {
 }>(({ theme }) => ({
   width: 4,
   height: 4,
-  backgroundColor: ((theme as any).vars || theme).palette.primary.contrastText,
+  backgroundColor: (theme.vars || theme).palette.primary.contrastText,
   borderRadius: '50%',
   position: 'absolute',
   top: -21,
   left: `calc(50% - ${CLOCK_HOUR_WIDTH / 2}px)`,
-  border: `${(CLOCK_HOUR_WIDTH - 4) / 2}px solid ${((theme as any).vars || theme).palette.primary.main}`,
+  border: `${(CLOCK_HOUR_WIDTH - 4) / 2}px solid ${(theme.vars || theme).palette.primary.main}`,
   boxSizing: 'content-box',
   variants: [
     {
       props: { hasSelected: true },
       style: {
-        backgroundColor: ((theme as any).vars || theme).palette.primary.main,
+        backgroundColor: (theme.vars || theme).palette.primary.main,
       },
     },
   ],

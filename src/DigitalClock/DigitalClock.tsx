@@ -73,20 +73,20 @@ const DigitalClockItem = styled(MenuItem, {
     marginTop: 4,
   },
   '&:hover': {
-    backgroundColor: (theme as any).vars
-      ? `rgba(${(theme as any).vars.palette.primary.mainChannel} / ${(theme as any).vars.palette.action.hoverOpacity})`
+    backgroundColor: theme.vars
+      ? `rgba(${theme.vars.palette.primary.mainChannel} / ${theme.vars.palette.action.hoverOpacity})`
       : alpha(theme.palette.primary.main, theme.palette.action.hoverOpacity),
   },
   '&.Mui-selected': {
-    backgroundColor: ((theme as any).vars || theme).palette.primary.main,
-    color: ((theme as any).vars || theme).palette.primary.contrastText,
+    backgroundColor: (theme.vars || theme).palette.primary.main,
+    color: (theme.vars || theme).palette.primary.contrastText,
     '&:focus-visible, &:hover': {
-      backgroundColor: ((theme as any).vars || theme).palette.primary.dark,
+      backgroundColor: (theme.vars || theme).palette.primary.dark,
     },
   },
   '&.Mui-focusVisible': {
-    backgroundColor: (theme as any).vars
-      ? `rgba(${(theme as any).vars.palette.primary.mainChannel} / ${(theme as any).vars.palette.action.focusOpacity})`
+    backgroundColor: theme.vars
+      ? `rgba(${theme.vars.palette.primary.mainChannel} / ${theme.vars.palette.action.focusOpacity})`
       : alpha(theme.palette.primary.main, theme.palette.action.focusOpacity),
   },
 }));
@@ -339,7 +339,7 @@ export const DigitalClock = React.forwardRef(function DigitalClock<TDate extends
 DigitalClock.propTypes = {
   // ----------------------------- Warning --------------------------------
   // | These PropTypes are generated from the TypeScript type definitions |
-  // | To update them edit the TypeScript types and run "yarn proptypes"  |
+  // | To update them edit the TypeScript types and run "pnpm proptypes"  |
   // ----------------------------------------------------------------------
   /**
    * 12h/24h view for hour selection clock.

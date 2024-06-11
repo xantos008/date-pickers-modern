@@ -34,8 +34,8 @@ const OutlineRoot = styled('fieldset', {
     borderWidth: 1,
     overflow: 'hidden',
     minWidth: '0%',
-    borderColor: (theme as any).vars
-      ? `rgba(${(theme as any).vars.palette.common.onBackgroundChannel} / 0.23)`
+    borderColor: theme.vars
+      ? `rgba(${theme.vars.palette.common.onBackgroundChannel} / 0.23)`
       : borderColor,
   };
 });

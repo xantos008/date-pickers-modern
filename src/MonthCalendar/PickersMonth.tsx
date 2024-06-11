@@ -77,13 +77,13 @@ const PickersMonthButton = styled('button', {
   borderRadius: 18,
   cursor: 'pointer',
   '&:focus': {
-    backgroundColor: (theme as any).vars
-      ? `rgba(${(theme as any).vars.palette.action.activeChannel} / ${(theme as any).vars.palette.action.hoverOpacity})`
+    backgroundColor: theme.vars
+      ? `rgba(${theme.vars.palette.action.activeChannel} / ${theme.vars.palette.action.hoverOpacity})`
       : alpha(theme.palette.action.active, theme.palette.action.hoverOpacity),
   },
   '&:hover': {
-    backgroundColor: (theme as any).vars
-      ? `rgba(${(theme as any).vars.palette.action.activeChannel} / ${(theme as any).vars.palette.action.hoverOpacity})`
+    backgroundColor: theme.vars
+      ? `rgba(${theme.vars.palette.action.activeChannel} / ${theme.vars.palette.action.hoverOpacity})`
       : alpha(theme.palette.action.active, theme.palette.action.hoverOpacity),
   },
   '&:disabled': {
@@ -91,13 +91,13 @@ const PickersMonthButton = styled('button', {
     pointerEvents: 'none',
   },
   [`&.${pickersMonthClasses.disabled}`]: {
-    color: ((theme as any).vars || theme).palette.text.secondary,
+    color: (theme.vars || theme).palette.text.secondary,
   },
   [`&.${pickersMonthClasses.selected}`]: {
-    color: ((theme as any).vars || theme).palette.primary.contrastText,
-    backgroundColor: ((theme as any).vars || theme).palette.primary.main,
+    color: (theme.vars || theme).palette.primary.contrastText,
+    backgroundColor: (theme.vars || theme).palette.primary.main,
     '&:focus, &:hover': {
-      backgroundColor: ((theme as any).vars || theme).palette.primary.dark,
+      backgroundColor: (theme.vars || theme).palette.primary.dark,
     },
   },
 }));

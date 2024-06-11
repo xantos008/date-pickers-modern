@@ -89,12 +89,6 @@ const NUMBER_SYMBOL_MAP = {
   '0': '٠',
 };
 
-declare module '../models' {
-  interface PickerValidDateLookup {
-    'moment-hijri': Moment;
-  }
-}
-
 /**
  * Based on `@date-io/hijri`
  *

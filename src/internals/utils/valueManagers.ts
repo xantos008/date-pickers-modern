@@ -128,7 +128,7 @@ export const rangeValueManager: RangePickerValueManager = {
         value[1] == null || !utils.isValid(value[1]) ? null : utils.getTimezone(value[1]);
 
     if (timezoneStart != null && timezoneEnd != null && timezoneStart !== timezoneEnd) {
-      throw new Error('MUI X: The timezone of the start and the end date should be the same.');
+      throw new Error('MUI Warn: The timezone of the start and the end date should be the same.');
     }
 
     return timezoneStart ?? timezoneEnd;
@@ -140,8 +140,8 @@ export const rangeValueManager: RangePickerValueManager = {
 };
 
 export const getRangeFieldValueManager = <TDate extends PickerValidDate>({
-  dateSeparator = '–',
-}: {
+                                                                           dateSeparator = '–',
+                                                                         }: {
   dateSeparator: string | undefined;
 }): FieldValueManager<DateRange<TDate>, TDate, RangeFieldSection> => ({
   updateReferenceValue: (utils, value, prevReferenceValue) => {
@@ -209,12 +209,12 @@ export const getRangeFieldValueManager = <TDate extends PickerValidDate>({
       ...dateRangeSections.endDate,
     ]);
   },
-  getV6InputValueFromSections: (sections, localizedDigits, isRTL) => {
+  getV6InputValueFromSections: (sections, localizedDigits, isRtl) => {
     const dateRangeSections = splitDateRangeSections(sections);
     return createDateStrForV6InputFromSections(
         [...dateRangeSections.startDate, ...dateRangeSections.endDate],
         localizedDigits,
-        isRTL,
+        isRtl,
     );
   },
   parseValueStr: (valueStr, referenceValue, parseDate) => {

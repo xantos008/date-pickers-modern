@@ -116,8 +116,8 @@ export const LocalizationProvider = function LocalizationProvider<
     if (!adapter.isMUIAdapter) {
       throw new Error(
         [
-          'MUI X: The date adapter should be imported from `date-picker-modern`, not from `@date-io`',
-          "For example, `import { AdapterDayjs } from 'date-picker-modern/AdapterDayjs'` instead of `import AdapterDayjs from '@date-io/dayjs'`",
+          'MUI Warn: The date adapter should be imported from `date-pickers-modern`, not from `@date-io`',
+          "For example, `import { AdapterDayjs } from 'date-pickers-modern/AdapterDayjs'` instead of `import AdapterDayjs from '@date-io/dayjs'`",
         ].join(`\n`),
       );
     }
@@ -155,7 +155,7 @@ export const LocalizationProvider = function LocalizationProvider<
 LocalizationProvider.propTypes = {
   // ----------------------------- Warning --------------------------------
   // | These PropTypes are generated from the TypeScript type definitions |
-  // | To update them edit the TypeScript types and run "yarn proptypes"  |
+  // | To update them edit the TypeScript types and run "pnpm proptypes"  |
   // ----------------------------------------------------------------------
   /**
    * Locale for the date library you are using

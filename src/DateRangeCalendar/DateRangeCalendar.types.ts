@@ -2,7 +2,7 @@ import * as React from 'react';
 import { SxProps } from '@mui/system';
 import { SlotComponentProps } from '@mui/base/utils';
 import { Theme } from '@mui/material/styles';
-import {DateView, PickerValidDate, TimezoneProps} from '../models';
+import { DateView, PickerValidDate, TimezoneProps } from '../models';
 import {
   PickersCalendarHeader,
   PickersCalendarHeaderSlots,
@@ -17,19 +17,18 @@ import {
   PickersArrowSwitcherSlots,
   PickersArrowSwitcherSlotProps,
   DayCalendarProps,
-  ExportedUseViewsOptions, YearValidationProps, MonthValidationProps,
+  ExportedUseViewsOptions,
+  YearValidationProps, MonthValidationProps
 } from '../internals';
-import { DayRangeValidationProps } from '../internals/models';
-import { DateRange } from '../models';
+import { DayRangeValidationProps } from '../internals/models/dateRange';
+import { DateRange, RangePosition } from '../models';
 import { DateRangeCalendarClasses } from './dateRangeCalendarClasses';
 import { DateRangePickerDay, DateRangePickerDayProps } from '../DateRangePickerDay';
 import { UseRangePositionProps } from '../internals/hooks/useRangePosition';
 import { PickersRangeCalendarHeaderProps } from '../PickersRangeCalendarHeader';
-import {ExportedMonthCalendarProps} from "../MonthCalendar/MonthCalendar.types";
-import {ExportedYearCalendarProps} from "../YearCalendar/YearCalendar.types";
+import { ExportedMonthCalendarProps } from "../MonthCalendar/MonthCalendar.types";
+import { ExportedYearCalendarProps } from "../YearCalendar/YearCalendar.types";
 import PropTypes from "prop-types";
-
-export type DateRangePosition = 'start' | 'end';
 
 export interface DateRangeCalendarSlots<TDate extends PickerValidDate>
   extends PickersArrowSwitcherSlots,
@@ -174,7 +173,7 @@ export interface DateRangeCalendarProps<TDate extends PickerValidDate>
    * Used on Date Time Range pickers with current `rangePosition` to force a `finish` selection after just one range position selection.
    * @default ['start', 'end']
    */
-  availableRangePositions?: DateRangePosition[];
+  availableRangePositions?: RangePosition[];
 }
 
 export interface DateRangeCalendarOwnerState<TDate extends PickerValidDate>

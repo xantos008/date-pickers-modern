@@ -162,11 +162,11 @@ const DateRangePickerDayRoot = styled('div', {
       style: {
         [`&:first-of-type .${dateRangePickerDayClasses.rangeIntervalDayPreview}`]: {
           ...startBorderStyle,
-          borderLeftColor: ((theme as any).vars || theme).palette.divider,
+          borderLeftColor: (theme.vars || theme).palette.divider,
         },
         [`&:last-of-type .${dateRangePickerDayClasses.rangeIntervalDayPreview}`]: {
           ...endBorderStyle,
-          borderRightColor: ((theme as any).vars || theme).palette.divider,
+          borderRightColor: (theme.vars || theme).palette.divider,
         },
       },
     },
@@ -174,9 +174,9 @@ const DateRangePickerDayRoot = styled('div', {
       props: { isHiddenDayFiller: false, isHighlighting: true },
       style: {
         borderRadius: 0,
-        color: ((theme as any).vars || theme).palette.primary.contrastText,
-        backgroundColor: (theme as any).vars
-          ? `rgba(${(theme as any).vars.palette.primary.mainChannel} / ${(theme as any).vars.palette.action.focusOpacity})`
+        color: (theme.vars || theme).palette.primary.contrastText,
+        backgroundColor: theme.vars
+          ? `rgba(${theme.vars.palette.primary.mainChannel} / ${theme.vars.palette.action.focusOpacity})`
           : alpha(theme.palette.primary.main, theme.palette.action.focusOpacity),
         '&:first-of-type': startBorderStyle,
         '&:last-of-type': endBorderStyle,
@@ -207,14 +207,6 @@ const DateRangePickerDayRoot = styled('div', {
   ],
 }));
 
-DateRangePickerDayRoot.propTypes = {
-  // ----------------------------- Warning --------------------------------
-  // | These PropTypes are generated from the TypeScript type definitions |
-  // | To update them edit the TypeScript types and run "yarn proptypes"  |
-  // ----------------------------------------------------------------------
-  ownerState: PropTypes.object.isRequired,
-} as any;
-
 const DateRangePickerDayRangeIntervalPreview = styled('div', {
   name: 'MuiDateRangePickerDay',
   slot: 'RangeIntervalPreview',
@@ -238,7 +230,7 @@ const DateRangePickerDayRangeIntervalPreview = styled('div', {
       props: { isPreviewing: true, isHiddenDayFiller: false },
       style: {
         borderRadius: 0,
-        border: `2px dashed ${((theme as any).vars || theme).palette.divider}`,
+        border: `2px dashed ${(theme.vars || theme).palette.divider}`,
         borderLeftColor: 'transparent',
         borderRightColor: 'transparent',
       },
@@ -250,7 +242,7 @@ const DateRangePickerDayRangeIntervalPreview = styled('div', {
         ownerState: OwnerState;
       }) => isPreviewing && !isHiddenDayFiller && (isStartOfPreviewing || isFirstVisibleCell),
       style: {
-        borderLeftColor: ((theme as any).vars || theme).palette.divider,
+        borderLeftColor: (theme.vars || theme).palette.divider,
         ...startBorderStyle,
       },
     },
@@ -261,20 +253,12 @@ const DateRangePickerDayRangeIntervalPreview = styled('div', {
         ownerState: OwnerState;
       }) => isPreviewing && !isHiddenDayFiller && (isEndOfPreviewing || isLastVisibleCell),
       style: {
-        borderRightColor: ((theme as any).vars || theme).palette.divider,
+        borderRightColor: (theme.vars || theme).palette.divider,
         ...endBorderStyle,
       },
     },
   ],
 }));
-
-DateRangePickerDayRangeIntervalPreview.propTypes = {
-  // ----------------------------- Warning --------------------------------
-  // | These PropTypes are generated from the TypeScript type definitions |
-  // | To update them edit the TypeScript types and run "yarn proptypes"  |
-  // ----------------------------------------------------------------------
-  ownerState: PropTypes.object.isRequired,
-} as any;
 
 const DateRangePickerDayDay = styled(PickersDay, {
   name: 'MuiDateRangePickerDay',
@@ -388,7 +372,7 @@ const DateRangePickerDayRaw = React.forwardRef(function DateRangePickerDay<
 DateRangePickerDayRaw.propTypes = {
   // ----------------------------- Warning --------------------------------
   // | These PropTypes are generated from the TypeScript type definitions |
-  // | To update them edit the TypeScript types and run "yarn proptypes"  |
+  // | To update them edit the TypeScript types and run "pnpm proptypes"  |
   // ----------------------------------------------------------------------
   /**
    * A ref for imperative actions.

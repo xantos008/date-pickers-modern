@@ -37,6 +37,7 @@ import {
   PickersInputBaseClassKey,
 } from '../PickersTextField';
 import { PickersSectionListClassKey } from '../PickersSectionList';
+
 import { DateRangePickerDayClassKey } from '../DateRangePickerDay';
 import { DateRangeCalendarClassKey } from '../DateRangeCalendar';
 import { DateRangePickerToolbarClassKey } from '../DateRangePicker';
@@ -86,6 +87,7 @@ export interface PickersComponentNameToClassKey {
   MuiPickersSectionList: PickersSectionListClassKey
 }
 
+// prettier-ignore
 export interface PickersProComponentNameToClassKey {
   MuiDateRangeCalendar: DateRangeCalendarClassKey;
   MuiDateRangePickerDay: DateRangePickerDayClassKey;

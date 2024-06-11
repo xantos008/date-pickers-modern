@@ -31,7 +31,6 @@ import {
 import {
   DateRangeCalendarProps,
   DateRangeCalendarDefaultizedProps,
-  DateRangePosition,
   DateRangeCalendarOwnerState,
 } from './DateRangeCalendar.types';
 import {
@@ -42,7 +41,7 @@ import {
   isWithinRange,
 } from '../internals/utils/date-utils';
 import { calculateRangeChange, calculateRangePreview } from '../internals/utils/date-range-manager';
-import { DateRange } from '../models';
+import { DateRange, RangePosition } from '../models';
 import { DateRangePickerDay, dateRangePickerDayClasses as dayClasses } from '../DateRangePickerDay';
 import { rangeValueManager } from '../internals/utils/valueManagers';
 import { useDragRange } from './useDragRange';
@@ -70,7 +69,7 @@ const DateRangeCalendarMonthContainer = styled('div', {
   overridesResolver: (_, styles) => styles.monthContainer,
 })(({ theme }) => ({
   '&:not(:last-of-type)': {
-    borderRight: `1px solid ${((theme as any).vars || theme).palette.divider}`,
+    borderRight: `1px solid ${(theme.vars || theme).palette.divider}`,
   },
 }));
 
@@ -97,7 +96,7 @@ const DayCalendarForRange = styled(DayCalendar)(({ theme }) => ({
   [`&:not(.${dateRangeCalendarClasses.dayDragging}) .${dayClasses.dayOutsideRangeInterval}`]: {
     '@media (pointer: fine)': {
       '&:hover': {
-        border: `1px solid ${((theme as any).vars || theme).palette.grey[500]}`,
+        border: `1px solid ${(theme.vars || theme).palette.grey[500]}`,
       },
     },
   },
@@ -259,7 +258,7 @@ const DateRangeCalendar = React.forwardRef(function DateRangeCalendar<
     onRangePositionChange: inOnRangePositionChange,
   });
 
-  const handleDatePositionChange = useEventCallback((position: DateRangePosition) => {
+  const handleDatePositionChange = useEventCallback((position: RangePosition) => {
     if (rangePosition !== position) {
       onRangePositionChange(position);
     }
@@ -346,7 +345,6 @@ const DateRangeCalendar = React.forwardRef(function DateRangeCalendar<
     return (dayToTest: TDate) =>
       shouldDisableDate(dayToTest, draggingDatePosition || rangePosition);
   }, [shouldDisableDate, rangePosition, draggingDatePosition]);
-
 
   const monthValue = React.useMemo(() => {
     const baseValue = rangePosition === 'start' ? value[0] : value[1]
@@ -472,8 +470,8 @@ const DateRangeCalendar = React.forwardRef(function DateRangeCalendar<
 
   const CalendarHeader = slots?.calendarHeader ?? PickersRangeCalendarHeader;
   const calendarHeaderProps: Omit<
-    PickersRangeCalendarHeaderProps<TDate>,
-    'month' | 'monthIndex'
+      PickersRangeCalendarHeaderProps<TDate>,
+      'month' | 'monthIndex'
   > = useSlotProps({
     elementType: CalendarHeader,
     externalSlotProps: slotProps?.calendarHeader,
@@ -586,7 +584,7 @@ const DateRangeCalendar = React.forwardRef(function DateRangeCalendar<
       const isSelectedEndDate = isEndOfRange(utils, day, valueDayRange);
       const shouldInitDragging = !shouldDisableDragEditing && valueDayRange[0] && valueDayRange[1];
       const isElementDraggable = shouldInitDragging && (isSelectedStartDate || isSelectedEndDate);
-      let datePosition: DateRangePosition | undefined;
+      let datePosition: RangePosition | undefined;
       if (isSelectedStartDate) {
         datePosition = 'start';
       } else if (isSelectedEndDate) {
@@ -636,8 +634,8 @@ const DateRangeCalendar = React.forwardRef(function DateRangeCalendar<
     }
 
     const firstMonth = utils.addMonths(
-        calendarState.currentMonth,
-        1 - currentMonthCalendarPosition,
+      calendarState.currentMonth,
+      1 - currentMonthCalendarPosition,
     );
 
     return Array.from({ length: calendars }).map((_, index) => utils.addMonths(firstMonth, index));
@@ -691,7 +689,6 @@ const DateRangeCalendar = React.forwardRef(function DateRangeCalendar<
         return (
           <DateRangeCalendarMonthContainer key={monthIndex} className={classes.monthContainer}>
             <CalendarHeader<TDate> {...calendarHeaderProps} month={month} monthIndex={monthIndex} />
-
             {view === 'year' && (
                 <YearCalendar<TDate>
                     {...baseDateValidationProps}
@@ -722,7 +719,7 @@ const DateRangeCalendar = React.forwardRef(function DateRangeCalendar<
                 />
             )}
 
-            {view === 'day' && (
+            {view !== 'day' && (
                 <DayCalendarForRange<TDate>
                     className={classes.dayCalendar}
                     {...calendarState}
@@ -758,7 +755,7 @@ const DateRangeCalendar = React.forwardRef(function DateRangeCalendar<
 DateRangeCalendar.propTypes = {
   // ----------------------------- Warning --------------------------------
   // | These PropTypes are generated from the TypeScript type definitions |
-  // | To update them edit the TypeScript types and run "yarn proptypes"  |
+  // | To update them edit the TypeScript types and run "pnpm proptypes"  |
   // ----------------------------------------------------------------------
   /**
    * If `true`, the main element is focused during the first mount.

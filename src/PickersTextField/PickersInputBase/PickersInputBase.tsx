@@ -8,6 +8,7 @@ import composeClasses from '@mui/utils/composeClasses';
 import capitalize from '@mui/utils/capitalize';
 import { useSlotProps } from '@mui/base/utils';
 import visuallyHidden from '@mui/utils/visuallyHidden';
+import { useRtl } from '@mui/system/RtlProvider';
 import {
   pickersInputBaseClasses,
   getPickersInputBaseUtilityClass,
@@ -29,7 +30,7 @@ export const PickersInputBaseRoot = styled('div', {
   overridesResolver: (props, styles) => styles.root,
 })<{ ownerState: OwnerStateType }>(({ theme }) => ({
   ...theme.typography.body1,
-  color: ((theme as any).vars || theme).palette.text.primary,
+  color: (theme.vars || theme).palette.text.primary,
   cursor: 'text',
   padding: 0,
   display: 'flex',
@@ -63,8 +64,13 @@ export const PickersInputBaseSectionsContainer = styled(PickersSectionListRoot, 
   letterSpacing: 'inherit',
   // Baseline behavior
   width: '182px',
-  ...(theme.direction === 'rtl' && { textAlign: 'right /*! @noflip */' as any }),
   variants: [
+    {
+      props: { isRtl: true },
+      style: {
+        textAlign: 'right /*! @noflip */' as any,
+      },
+    },
     {
       props: { size: 'small' },
       style: {
@@ -82,9 +88,9 @@ export const PickersInputBaseSectionsContainer = styled(PickersSectionListRoot, 
       // Can't use the object notation because label can be null or undefined
       props: ({ adornedStart, focused, filled, label }: OwnerStateType) =>
         !adornedStart && !focused && !filled && label == null,
-      style: (theme as any).vars
+      style: theme.vars
         ? {
-            opacity: (theme as any).vars.opacity.inputPlaceholder,
+            opacity: theme.vars.opacity.inputPlaceholder,
           }
         : {
             opacity: theme.palette.mode === 'light' ? 0.42 : 0.5,
@@ -174,7 +180,9 @@ const useUtilityClasses = (ownerState: OwnerStateType) => {
 
 interface OwnerStateType
   extends FormControlState,
-    Omit<PickersInputBaseProps, keyof FormControlState> {}
+    Omit<PickersInputBaseProps, keyof FormControlState> {
+  isRtl: boolean;
+}
 
 /**
  * @ignore - internal component.
@@ -219,11 +227,11 @@ const PickersInputBase = React.forwardRef(function PickersInputBase(
   const rootRef = React.useRef<HTMLDivElement>(null);
   const handleRootRef = useForkRef(ref, rootRef);
   const handleInputRef = useForkRef(inputProps?.ref, inputRef);
-
+  const isRtl = useRtl();
   const muiFormControl = useFormControl();
   if (!muiFormControl) {
     throw new Error(
-      'MUI X: PickersInputBase should always be used inside a PickersTextField component',
+      'MUI Warn: PickersInputBase should always be used inside a PickersTextField component',
     );
   }
 
@@ -259,6 +267,7 @@ const PickersInputBase = React.forwardRef(function PickersInputBase(
   const ownerState: OwnerStateType = {
     ...(props as Omit<PickersInputBaseProps, keyof FormControlState>),
     ...muiFormControl,
+    isRtl,
   };
 
   const classes = useUtilityClasses(ownerState);
@@ -338,7 +347,7 @@ const PickersInputBase = React.forwardRef(function PickersInputBase(
 PickersInputBase.propTypes = {
   // ----------------------------- Warning --------------------------------
   // | These PropTypes are generated from the TypeScript type definitions |
-  // | To update them edit the TypeScript types and run "yarn proptypes"  |
+  // | To update them edit the TypeScript types and run "pnpm proptypes"  |
   // ----------------------------------------------------------------------
   /**
    * Is `true` if the current values equals the empty value.

@@ -18,9 +18,9 @@ const svSEPickers: Partial<PickersLocaleText<any>> = {
   openPreviousView: 'Öppna föregående vy',
   openNextView: 'Öppna nästa vy',
   calendarViewSwitchingButtonAriaLabel: (view) =>
-      view === 'year'
-          ? 'årsvyn är öppen, byt till kalendervy'
-          : 'kalendervyn är öppen, byt till årsvy',
+    view === 'year'
+      ? 'årsvyn är öppen, byt till kalendervy'
+      : 'kalendervyn är öppen, byt till årsvy',
 
   // DateRange labels
   start: 'Start',
@@ -44,7 +44,7 @@ const svSEPickers: Partial<PickersLocaleText<any>> = {
 
   // Clock labels
   clockLabelText: (view, time, adapter) =>
-      `Välj ${timeViews[view]}. ${time === null ? 'Ingen tid vald' : `Vald tid är ${adapter.format(time, 'fullTime')}`}`,
+    `Välj ${timeViews[view]}. ${time === null ? 'Ingen tid vald' : `Vald tid är ${adapter.format(time, 'fullTime')}`}`,
   hoursClockNumberText: (hours) => `${hours} timmar`,
   minutesClockNumberText: (minutes) => `${minutes} minuter`,
   secondsClockNumberText: (seconds) => `${seconds} sekunder`,
@@ -60,13 +60,13 @@ const svSEPickers: Partial<PickersLocaleText<any>> = {
 
   // Open picker labels
   openDatePickerDialogue: (value, utils) =>
-      value !== null && utils.isValid(value)
-          ? `Välj datum, valt datum är ${utils.format(value, 'fullDate')}`
-          : 'Välj datum',
+    value !== null && utils.isValid(value)
+      ? `Välj datum, valt datum är ${utils.format(value, 'fullDate')}`
+      : 'Välj datum',
   openTimePickerDialogue: (value, utils) =>
-      value !== null && utils.isValid(value)
-          ? `Välj tid, vald tid är ${utils.format(value, 'fullTime')}`
-          : 'Välj tid',
+    value !== null && utils.isValid(value)
+      ? `Välj tid, vald tid är ${utils.format(value, 'fullTime')}`
+      : 'Välj tid',
   fieldClearLabel: 'Rensa värde',
 
   // Table labels

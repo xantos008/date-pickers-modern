@@ -19,23 +19,23 @@ const PickersInputRoot = styled(PickersInputBaseRoot, {
 })<{ ownerState: OwnerStateType }>(({ theme }) => {
   const light = theme.palette.mode === 'light';
   let bottomLineColor = light ? 'rgba(0, 0, 0, 0.42)' : 'rgba(255, 255, 255, 0.7)';
-  if ((theme as any).vars) {
-    bottomLineColor = `rgba(${(theme as any).vars.palette.common.onBackgroundChannel} / ${(theme as any).vars.opacity.inputUnderline})`;
+  if (theme.vars) {
+    bottomLineColor = `rgba(${theme.vars.palette.common.onBackgroundChannel} / ${theme.vars.opacity.inputUnderline})`;
   }
   return {
     'label + &': {
       marginTop: 16,
     },
     variants: [
-      ...Object.keys(((theme as any).vars ?? theme).palette)
+      ...Object.keys((theme.vars ?? theme).palette)
         // @ts-ignore
-        .filter((key) => ((theme as any).vars ?? theme).palette[key].main)
+        .filter((key) => (theme.vars ?? theme).palette[key].main)
         .map((color) => ({
           props: { color },
           style: {
             '&::after': {
               // @ts-ignore
-              borderBottom: `2px solid ${((theme as any).vars || theme).palette[color].main}`,
+              borderBottom: `2px solid ${(theme.vars || theme).palette[color].main}`,
             },
           },
         })),
@@ -64,7 +64,7 @@ const PickersInputRoot = styled(PickersInputBaseRoot, {
           },
           [`&.${pickersInputClasses.error}`]: {
             '&:before, &:after': {
-              borderBottomColor: ((theme as any).vars || theme).palette.error.main,
+              borderBottomColor: (theme.vars || theme).palette.error.main,
             },
           },
           '&::before': {
@@ -81,7 +81,7 @@ const PickersInputRoot = styled(PickersInputBaseRoot, {
             pointerEvents: 'none', // Transparent to the hover style.
           },
           [`&:hover:not(.${pickersInputClasses.disabled}, .${pickersInputClasses.error}):before`]: {
-            borderBottom: `2px solid ${((theme as any).vars || theme).palette.text.primary}`,
+            borderBottom: `2px solid ${(theme.vars || theme).palette.text.primary}`,
             // Reset on touch devices, it doesn't add specificity
             '@media (hover: none)': {
               borderBottom: `1px solid ${bottomLineColor}`,
@@ -161,7 +161,7 @@ const PickersInput = React.forwardRef(function PickersInput(
 PickersInput.propTypes = {
   // ----------------------------- Warning --------------------------------
   // | These PropTypes are generated from the TypeScript type definitions |
-  // | To update them edit the TypeScript types and run "yarn proptypes"  |
+  // | To update them edit the TypeScript types and run "pnpm proptypes"  |
   // ----------------------------------------------------------------------
   /**
    * Is `true` if the current values equals the empty value.

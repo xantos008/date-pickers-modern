@@ -19,9 +19,9 @@ const deDEPickers: Partial<PickersLocaleText<any>> = {
   openPreviousView: 'Letzte Ansicht öffnen',
   openNextView: 'Nächste Ansicht öffnen',
   calendarViewSwitchingButtonAriaLabel: (view) =>
-      view === 'year'
-          ? 'Jahresansicht ist geöffnet, zur Kalenderansicht wechseln'
-          : 'Kalenderansicht ist geöffnet, zur Jahresansicht wechseln',
+    view === 'year'
+      ? 'Jahresansicht ist geöffnet, zur Kalenderansicht wechseln'
+      : 'Kalenderansicht ist geöffnet, zur Jahresansicht wechseln',
 
   // DateRange labels
   start: 'Beginn',
@@ -45,7 +45,7 @@ const deDEPickers: Partial<PickersLocaleText<any>> = {
 
   // Clock labels
   clockLabelText: (view, time, adapter) =>
-      `${timeViews[view] ?? view} auswählen. ${time === null ? 'Keine Uhrzeit ausgewählt' : `Gewählte Uhrzeit ist ${adapter.format(time, 'fullTime')}`}`,
+    `${timeViews[view] ?? view} auswählen. ${time === null ? 'Keine Uhrzeit ausgewählt' : `Gewählte Uhrzeit ist ${adapter.format(time, 'fullTime')}`}`,
   hoursClockNumberText: (hours) => `${hours} ${timeViews.hours}`,
   minutesClockNumberText: (minutes) => `${minutes} ${timeViews.minutes}`,
   secondsClockNumberText: (seconds) => `${seconds}  ${timeViews.seconds}`,
@@ -61,13 +61,13 @@ const deDEPickers: Partial<PickersLocaleText<any>> = {
 
   // Open picker labels
   openDatePickerDialogue: (value, utils) =>
-      value !== null && utils.isValid(value)
-          ? `Datum auswählen, gewähltes Datum ist ${utils.format(value, 'fullDate')}`
-          : 'Datum auswählen',
+    value !== null && utils.isValid(value)
+      ? `Datum auswählen, gewähltes Datum ist ${utils.format(value, 'fullDate')}`
+      : 'Datum auswählen',
   openTimePickerDialogue: (value, utils) =>
-      value !== null && utils.isValid(value)
-          ? `Uhrzeit auswählen, gewählte Uhrzeit ist ${utils.format(value, 'fullTime')}`
-          : 'Uhrzeit auswählen',
+    value !== null && utils.isValid(value)
+      ? `Uhrzeit auswählen, gewählte Uhrzeit ist ${utils.format(value, 'fullTime')}`
+      : 'Uhrzeit auswählen',
   fieldClearLabel: 'Wert leeren',
 
   // Table labels

@@ -28,15 +28,15 @@ const PickersOutlinedInputRoot = styled(PickersInputBaseRoot, {
     theme.palette.mode === 'light' ? 'rgba(0, 0, 0, 0.23)' : 'rgba(255, 255, 255, 0.23)';
   return {
     padding: '0 14px',
-    borderRadius: ((theme as any).vars || theme).shape.borderRadius,
+    borderRadius: (theme.vars || theme).shape.borderRadius,
     [`&:hover .${pickersOutlinedInputClasses.notchedOutline}`]: {
-      borderColor: ((theme as any).vars || theme).palette.text.primary,
+      borderColor: (theme.vars || theme).palette.text.primary,
     },
     // Reset on touch devices, it doesn't add specificity
     '@media (hover: none)': {
       [`&:hover .${pickersOutlinedInputClasses.notchedOutline}`]: {
-        borderColor: (theme as any).vars
-          ? `rgba(${(theme as any).vars.palette.common.onBackgroundChannel} / 0.23)`
+        borderColor: theme.vars
+          ? `rgba(${theme.vars.palette.common.onBackgroundChannel} / 0.23)`
           : borderColor,
       },
     },
@@ -46,25 +46,25 @@ const PickersOutlinedInputRoot = styled(PickersInputBaseRoot, {
     },
     [`&.${pickersOutlinedInputClasses.disabled}`]: {
       [`& .${pickersOutlinedInputClasses.notchedOutline}`]: {
-        borderColor: ((theme as any).vars || theme).palette.action.disabled,
+        borderColor: (theme.vars || theme).palette.action.disabled,
       },
       '*': {
-        color: ((theme as any).vars || theme).palette.action.disabled,
+        color: (theme.vars || theme).palette.action.disabled,
       },
     },
     [`&.${pickersOutlinedInputClasses.error} .${pickersOutlinedInputClasses.notchedOutline}`]: {
-      borderColor: ((theme as any).vars || theme).palette.error.main,
+      borderColor: (theme.vars || theme).palette.error.main,
     },
-    variants: Object.keys(((theme as any).vars ?? theme).palette)
+    variants: Object.keys((theme.vars ?? theme).palette)
       // @ts-ignore
-      .filter((key) => ((theme as any).vars ?? theme).palette[key].main)
+      .filter((key) => (theme.vars ?? theme).palette[key]?.main ?? false)
       .map((color) => ({
         props: { color },
         style: {
           [`&.${pickersOutlinedInputClasses.focused}:not(.${pickersOutlinedInputClasses.error}) .${pickersOutlinedInputClasses.notchedOutline}`]:
             {
               // @ts-ignore
-              borderColor: ((theme as any).vars || theme).palette[color].main,
+              borderColor: (theme.vars || theme).palette[color].main,
             },
         },
       })),
@@ -164,7 +164,7 @@ const PickersOutlinedInput = React.forwardRef(function PickersOutlinedInput(
 PickersOutlinedInput.propTypes = {
   // ----------------------------- Warning --------------------------------
   // | These PropTypes are generated from the TypeScript type definitions |
-  // | To update them edit the TypeScript types and run "yarn proptypes"  |
+  // | To update them edit the TypeScript types and run "pnpm proptypes"  |
   // ----------------------------------------------------------------------
   /**
    * Is `true` if the current values equals the empty value.

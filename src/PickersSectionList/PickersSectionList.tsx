@@ -138,7 +138,7 @@ const PickersSectionList = React.forwardRef(function PickersSectionList(
   const getRoot = (methodName: string) => {
     if (!rootRef.current) {
       throw new Error(
-        `MUI X: Cannot call sectionListRef.${methodName} before the mount of the component.`,
+        `MUI Warn: Cannot call sectionListRef.${methodName} before the mount of the component.`,
       );
     }
 
@@ -225,7 +225,7 @@ const PickersSectionList = React.forwardRef(function PickersSectionList(
 PickersSectionList.propTypes = {
   // ----------------------------- Warning --------------------------------
   // | These PropTypes are generated from the TypeScript type definitions |
-  // | To update them edit the TypeScript types and run "yarn proptypes"  |
+  // | To update them edit the TypeScript types and run "pnpm proptypes"  |
   // ----------------------------------------------------------------------
   /**
    * Override or extend the styles applied to the component.

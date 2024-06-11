@@ -12,7 +12,7 @@ export const useLocalizationContext = <TDate extends PickerValidDate>() => {
   if (localization === null) {
     throw new Error(
       [
-        'MUI X: Can not find the date and time pickers localization context.',
+        'MUI Warn: Can not find the date and time pickers localization context.',
         'It looks like you forgot to wrap your component in LocalizationProvider.',
         'This can also happen if you are bundling multiple versions of the `date-pickers-modern` package',
       ].join('\n'),
@@ -22,7 +22,7 @@ export const useLocalizationContext = <TDate extends PickerValidDate>() => {
   if (localization.utils === null) {
     throw new Error(
       [
-        'MUI X: Can not find the date and time pickers adapter from its localization context.',
+        'MUI Warn: Can not find the date and time pickers adapter from its localization context.',
         'It looks like you forgot to pass a `dateAdapter` to your LocalizationProvider.',
       ].join('\n'),
     );

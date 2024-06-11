@@ -155,11 +155,11 @@ export type AdapterOptions<TLocale, TInstance> = {
   locale?: TLocale;
 } & PropertyIfNotNever<'instance', TInstance>;
 
-export type DateBuilderReturnType<T extends string | null | undefined, TDate> = T extends null
+export type DateBuilderReturnType<T extends string | null | undefined, TDate> = [T] extends [null]
   ? null
   : TDate;
 
-export interface MuiPickersAdapter<TDate extends PickerValidDate | any, TLocale = any> {
+export interface MuiPickersAdapter<TDate extends PickerValidDate, TLocale = any> {
   /**
    * A boolean confirming that the adapter used is an MUI adapter.
    */

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { DateOrTimeViewWithMeridiem } from '../internals';
-import {DateView, PickerValidDate} from '../models';
+import { DateView, PickerValidDate } from '../models';
 import { DateRangeCalendar, DateRangeCalendarProps } from '../DateRangeCalendar';
 
 export interface DateRangeViewRendererProps<

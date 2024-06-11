@@ -12,7 +12,7 @@ interface BuildSectionsFromFormatParams<TDate extends PickerValidDate> {
   utils: MuiPickersAdapter<TDate>;
   format: string;
   formatDensity: 'dense' | 'spacious';
-  isRTL: boolean;
+  isRtl: boolean;
   timezone: PickersTimezone;
   shouldRespectLeadingZeros: boolean;
   localeText: PickersLocaleText<TDate>;
@@ -37,7 +37,7 @@ const expandFormat = <TDate extends PickerValidDate>({
     formatExpansionOverflow -= 1;
     if (formatExpansionOverflow < 0) {
       throw new Error(
-        'MUI X: The format expansion seems to be in an infinite loop. Please open an issue with the format passed to the picker component.',
+        'MUI Warn: The format expansion seems to be in an infinite loop. Please open an issue with the format passed to the picker component.',
       );
     }
   }
@@ -133,7 +133,7 @@ const createSection = <TDate extends PickerValidDate>({
   startSeparator: string;
 }): FieldSection => {
   if (token === '') {
-    throw new Error('MUI X: Should not call `commitToken` with an empty token');
+    throw new Error('MUI Warn: Should not call `commitToken` with an empty token');
   }
 
   const sectionConfig = getDateSectionConfigFromFormatToken(utils, token);
@@ -161,7 +161,7 @@ const createSection = <TDate extends PickerValidDate>({
     } else {
       if (sectionConfig.maxLength == null) {
         throw new Error(
-          `MUI X: The token ${token} should have a 'maxDigitNumber' property on it's adapter`,
+          `MUI Warn: The token ${token} should have a 'maxDigitNumber' property on it's adapter`,
         );
       }
 
@@ -278,7 +278,7 @@ const buildSections = <TDate extends PickerValidDate>(
 };
 
 const postProcessSections = <TDate extends PickerValidDate>({
-  isRTL,
+  isRtl,
   formatDensity,
   sections,
 }: BuildSectionsFromFormatParams<TDate> & {
@@ -287,7 +287,7 @@ const postProcessSections = <TDate extends PickerValidDate>({
   return sections.map((section) => {
     const cleanSeparator = (separator: string) => {
       let cleanedSeparator = separator;
-      if (isRTL && cleanedSeparator !== null && cleanedSeparator.includes(' ')) {
+      if (isRtl && cleanedSeparator !== null && cleanedSeparator.includes(' ')) {
         cleanedSeparator = `\u2069${cleanedSeparator}\u2066`;
       }
 
@@ -309,7 +309,7 @@ export const buildSectionsFromFormat = <TDate extends PickerValidDate>(
   params: BuildSectionsFromFormatParams<TDate>,
 ) => {
   let expandedFormat = expandFormat(params);
-  if (params.isRTL && params.enableAccessibleFieldDOMStructure) {
+  if (params.isRtl && params.enableAccessibleFieldDOMStructure) {
     expandedFormat = expandedFormat.split(' ').reverse().join(' ');
   }
 

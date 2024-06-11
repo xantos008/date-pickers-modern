@@ -114,6 +114,12 @@ const MISSING_TIMEZONE_PLUGIN = [
 const withLocale = (dayjs: any, locale?: string): Constructor =>
   !locale ? dayjs : (...args) => dayjs(...args).locale(locale);
 
+declare module '../models' {
+  interface PickerValidDateLookup {
+    dayjs: Dayjs;
+  }
+}
+
 /**
  * Based on `@date-io/dayjs`
  *
@@ -274,8 +280,11 @@ export class AdapterDayjs implements MuiPickersAdapter<Dayjs, string> {
       if ((fixedValue.$offset ?? 0) === (value.$offset ?? 0)) {
         return value;
       }
-
-      return fixedValue;
+      // Change only what is needed to avoid creating a new object with unwanted data
+      // Especially important when used in an environment where utc or timezone dates are used only in some places
+      // Reference: https://github.com/mui/mui-x/issues/13290
+      // @ts-ignore
+      value.$offset = fixedValue.$offset;
     }
 
     return value;

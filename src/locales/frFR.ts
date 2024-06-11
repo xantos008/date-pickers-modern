@@ -18,9 +18,9 @@ const frFRPickers: Partial<PickersLocaleText<any>> = {
   openPreviousView: 'Ouvrir la vue précédente',
   openNextView: 'Ouvrir la vue suivante',
   calendarViewSwitchingButtonAriaLabel: (view) =>
-      view === 'year'
-          ? 'La vue année est ouverte, ouvrir la vue calendrier'
-          : 'La vue calendrier est ouverte, ouvrir la vue année',
+    view === 'year'
+      ? 'La vue année est ouverte, ouvrir la vue calendrier'
+      : 'La vue calendrier est ouverte, ouvrir la vue année',
 
   // DateRange labels
   start: 'Début',
@@ -44,7 +44,7 @@ const frFRPickers: Partial<PickersLocaleText<any>> = {
 
   // Clock labels
   clockLabelText: (view, time, adapter) =>
-      `Choix des ${views[view]}. ${time === null ? 'Aucune heure choisie' : `L'heure choisie est ${adapter.format(time, 'fullTime')}`}`,
+    `Choix des ${views[view]}. ${time === null ? 'Aucune heure choisie' : `L'heure choisie est ${adapter.format(time, 'fullTime')}`}`,
   hoursClockNumberText: (hours) => `${hours} heures`,
   minutesClockNumberText: (minutes) => `${minutes} minutes`,
   secondsClockNumberText: (seconds) => `${seconds} secondes`,
@@ -60,13 +60,13 @@ const frFRPickers: Partial<PickersLocaleText<any>> = {
 
   // Open picker labels
   openDatePickerDialogue: (value, utils) =>
-      value !== null && utils.isValid(value)
-          ? `Choisir la date, la date sélectionnée est ${utils.format(value, 'fullDate')}`
-          : 'Choisir la date',
+    value !== null && utils.isValid(value)
+      ? `Choisir la date, la date sélectionnée est ${utils.format(value, 'fullDate')}`
+      : 'Choisir la date',
   openTimePickerDialogue: (value, utils) =>
-      value !== null && utils.isValid(value)
-          ? `Choisir l'heure, l'heure sélectionnée est ${utils.format(value, 'fullTime')}`
-          : "Choisir l'heure",
+    value !== null && utils.isValid(value)
+      ? `Choisir l'heure, l'heure sélectionnée est ${utils.format(value, 'fullTime')}`
+      : "Choisir l'heure",
   fieldClearLabel: 'Effacer la valeur',
 
   // Table labels

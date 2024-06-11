@@ -58,7 +58,6 @@ export interface PickersDayProps<TDate extends PickerValidDate>
    * @default false
    */
   disabled?: boolean;
-
   /**
    * If `true`, days are rendering without margin. Useful for displaying linked range of days.
    * @default false
@@ -138,34 +137,34 @@ const styleArg = ({ theme }: { theme: Theme }) => ({
   transition: theme.transitions.create('background-color', {
     duration: theme.transitions.duration.short,
   }),
-  color: ((theme as any).vars || theme).palette.text.primary,
+  color: (theme.vars || theme).palette.text.primary,
   '@media (pointer: fine)': {
     '&:hover': {
-      backgroundColor: (theme as any).vars
-        ? `rgba(${(theme as any).vars.palette.primary.mainChannel} / ${(theme as any).vars.palette.action.hoverOpacity})`
+      backgroundColor: theme.vars
+        ? `rgba(${theme.vars.palette.primary.mainChannel} / ${theme.vars.palette.action.hoverOpacity})`
         : alpha(theme.palette.primary.main, theme.palette.action.hoverOpacity),
     },
   },
   '&:focus': {
-    backgroundColor: (theme as any).vars
-      ? `rgba(${(theme as any).vars.palette.primary.mainChannel} / ${(theme as any).vars.palette.action.focusOpacity})`
+    backgroundColor: theme.vars
+      ? `rgba(${theme.vars.palette.primary.mainChannel} / ${theme.vars.palette.action.focusOpacity})`
       : alpha(theme.palette.primary.main, theme.palette.action.focusOpacity),
     [`&.${pickersDayClasses.selected}`]: {
       willChange: 'background-color',
-      backgroundColor: ((theme as any).vars || theme).palette.primary.dark,
+      backgroundColor: (theme.vars || theme).palette.primary.dark,
     },
   },
   [`&.${pickersDayClasses.selected}`]: {
-    color: ((theme as any).vars || theme).palette.primary.contrastText,
-    backgroundColor: ((theme as any).vars || theme).palette.primary.main,
+    color: (theme.vars || theme).palette.primary.contrastText,
+    backgroundColor: (theme.vars || theme).palette.primary.main,
     fontWeight: theme.typography.fontWeightMedium,
     '&:hover': {
       willChange: 'background-color',
-      backgroundColor: ((theme as any).vars || theme).palette.primary.dark,
+      backgroundColor: (theme.vars || theme).palette.primary.dark,
     },
   },
   [`&.${pickersDayClasses.disabled}:not(.${pickersDayClasses.selected})`]: {
-    color: ((theme as any).vars || theme).palette.text.disabled,
+    color: (theme.vars || theme).palette.text.disabled,
   },
   [`&.${pickersDayClasses.disabled}&.${pickersDayClasses.selected}`]: {
     opacity: 0.6,
@@ -180,14 +179,14 @@ const styleArg = ({ theme }: { theme: Theme }) => ({
     {
       props: { outsideCurrentMonth: true, showDaysOutsideCurrentMonth: true },
       style: {
-        color: ((theme as any).vars || theme).palette.text.secondary,
+        color: (theme.vars || theme).palette.text.secondary,
       },
     },
     {
       props: { disableHighlightToday: false, today: true },
       style: {
         [`&:not(.${pickersDayClasses.selected})`]: {
-          border: `1px solid ${((theme as any).vars || theme).palette.text.secondary}`,
+          border: `1px solid ${(theme.vars || theme).palette.text.secondary}`,
         },
       },
     },
@@ -239,7 +238,7 @@ const PickersDayRaw = React.forwardRef(function PickersDay<TDate extends PickerV
   inProps: PickersDayProps<TDate>,
   forwardedRef: React.Ref<HTMLButtonElement>,
 ) {
-  const props = useThemeProps<Theme, PickersDayProps<TDate>, 'MuiPickersDay'>({
+  const props = useThemeProps({
     props: inProps,
     name: 'MuiPickersDay',
   });
@@ -354,7 +353,7 @@ const PickersDayRaw = React.forwardRef(function PickersDay<TDate extends PickerV
 PickersDayRaw.propTypes = {
   // ----------------------------- Warning --------------------------------
   // | These PropTypes are generated from the TypeScript type definitions |
-  // | To update them edit the TypeScript types and run "yarn proptypes"  |
+  // | To update them edit the TypeScript types and run "pnpm proptypes"  |
   // ----------------------------------------------------------------------
   /**
    * A ref for imperative actions.

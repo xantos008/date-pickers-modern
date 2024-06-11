@@ -1,6 +1,6 @@
 {
   "name": "date-pickers-modern",
-  "version": "7.2.26",
+  "version": "7.6.2-alpha.0",
   "description": "A react date range picker implementation using @mui.",
   "author": "xantos008",
   "files": [
@@ -31,7 +31,7 @@
     "build:simple": "npm run clean && rollup -c --bundleConfigAsCjs",
     "build": "npm run clean && rollup -c --bundleConfigAsCjs && npm run postbuild",
     "postbuild": "cp package.json dist && cp README.md dist && cp LICENSE dist && node ./scripts/runUpdatePackageJson.js",
-    "publish": "npm run compile && npm run build && npm run pack && npm publish date-pickers-modern-7.2.26.tgz",
+    "publish": "npm run compile && npm run build && npm run pack && npm publish date-pickers-modern-7.6.2.tgz",
     "pack": "npm pack ./build/"
   },
   "repository": {
@@ -39,13 +39,14 @@
     "url": "https://github.com/xantos008/date-pickers-modern.git"
   },
   "dependencies": {
-    "@babel/runtime": "^7.24.0",
+    "@babel/runtime": "^7.24.6",
     "@emotion/styled": "^11.8.1",
     "@mui/base": "^5.0.0-beta.40",
+    "@mui/system": "^5.15.15",
     "@mui/utils": "^5.15.14",
     "@types/format-util": "^1.0.2",
     "@types/react-transition-group": "^4.4.8",
-    "clsx": "^2.1.0",
+    "clsx": "^2.1.1",
     "prop-types": "^15.8.1",
     "react": "^17.0.0 || ^18.0.0",
     "react-transition-group": "^4.4.5",
@@ -55,9 +56,8 @@
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
     "@mui/material": "^5.15.14",
-    "@mui/system": "^5.15.14",
     "date-fns": "^2.25.0 || ^3.2.0",
-    "date-fns-jalali": "^2.13.0-0",
+    "date-fns-jalali": "^2.13.0-0 || ^3.2.0-0",
     "dayjs": "^1.10.7",
     "luxon": "^3.0.2",
     "moment": "^2.29.4",
@@ -96,9 +96,9 @@
     }
   },
   "devDependencies": {
-    "@babel/core": "^7.24.0",
-    "@babel/plugin-transform-runtime": "^7.24.0",
-    "@babel/traverse": "^7.24.0",
+    "@babel/core": "^7.24.6",
+    "@babel/plugin-transform-runtime": "^7.24.6",
+    "@babel/traverse": "^7.24.6",
     "@rollup/plugin-babel": "^6.0.4",
     "@rollup/plugin-commonjs": "^25.0.7",
     "@rollup/plugin-json": "^6.1.0",
@@ -106,8 +106,10 @@
     "@rollup/plugin-typescript": "^11.1.6",
     "@rollup/plugin-url": "^8.0.2",
     "@types/luxon": "^3.4.2",
+    "@types/moment-hijri": "^2.1.4",
     "@types/moment-jalaali": "^0.7.9",
-    "@types/node": "^18.19.23",
+    "@types/node": "^18.19.34",
+    "@types/prop-types": "^15.7.12",
     "date-fns": "^2.30.0",
     "date-fns-jalali": "^2.30.0-0",
     "dayjs": "^1.11.10",
@@ -119,12 +121,12 @@
     "moment-timezone": "^0.5.45",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-typescript2": "^0.36.0",
-    "tslib": "^2.6.2",
+    "tslib": "^2.6.3",
     "typescript": "^5.3.3"
   },
   "resolutions": {
-    "@babel/core": "^7.24.0",
-    "@babel/traverse": "^7.24.0",
+    "@babel/core": "^7.24.6",
+    "@babel/traverse": "^7.24.6",
     "csstype": "3.0.10",
     "semver": "^7.5.4"
   },

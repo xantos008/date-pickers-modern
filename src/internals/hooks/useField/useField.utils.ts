@@ -27,7 +27,7 @@ export const getDateSectionConfigFromFormatToken = <TDate extends PickerValidDat
   if (config == null) {
     throw new Error(
       [
-        `MUI X: The token "${formatToken}" is not supported by the Date and Time Pickers.`,
+        `MUI Warn: The token "${formatToken}" is not supported by the Date and Time Pickers.`,
         'Please try using another token or open an issue on https://github.com/mui/mui-x/issues/new/choose if you think it should be supported.',
       ].join('\n'),
     );
@@ -210,7 +210,7 @@ export const cleanDigitSectionValue = <TDate extends PickerValidDate>(
     if (section.type !== 'day' && section.contentType === 'digit-with-letter') {
       throw new Error(
         [
-          `MUI X: The token "${section.format}" is a digit format with letter in it.'
+          `MUI Warn: The token "${section.format}" is a digit format with letter in it.'
              This type of format is only supported for 'day' sections`,
         ].join('\n'),
       );
@@ -322,9 +322,10 @@ export const adjustSectionValue = <TDate extends PickerValidDate, TSection exten
     }
 
     const currentOptionIndex = options.indexOf(section.value);
-    const newOptionIndex = (currentOptionIndex + options.length + delta) % options.length;
+    const newOptionIndex = (currentOptionIndex + delta) % options.length;
+    const clampedIndex = (newOptionIndex + options.length) % options.length;
 
-    return options[newOptionIndex];
+    return options[clampedIndex];
   };
 
   if (section.contentType === 'digit' || section.contentType === 'digit-with-letter') {
@@ -494,12 +495,12 @@ export const createDateStrForV7HiddenInputFromSections = (sections: FieldSection
 export const createDateStrForV6InputFromSections = (
   sections: FieldSection[],
   localizedDigits: string[],
-  isRTL: boolean,
+  isRtl: boolean,
 ) => {
   const formattedSections = sections.map((section) => {
     const dateValue = getSectionVisibleValue(
       section,
-      isRTL ? 'input-rtl' : 'input-ltr',
+      isRtl ? 'input-rtl' : 'input-ltr',
       localizedDigits,
     );
 
@@ -508,7 +509,7 @@ export const createDateStrForV6InputFromSections = (
 
   const dateStr = formattedSections.join('');
 
-  if (!isRTL) {
+  if (!isRtl) {
     return dateStr;
   }
 
@@ -640,7 +641,7 @@ export const validateSections = <TSection extends FieldSection>(
 
       if (invalidSection) {
         console.warn(
-          `MUI X: The field component you are using is not compatible with the "${invalidSection.type}" date section.`,
+          `MUI Warn: The field component you are using is not compatible with the "${invalidSection.type}" date section.`,
           `The supported date sections are ["${supportedSections.join('", "')}"]\`.`,
         );
         warnedOnceInvalidSection = true;

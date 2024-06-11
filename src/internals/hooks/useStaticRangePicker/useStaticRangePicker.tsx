@@ -20,7 +20,7 @@ import { useRangePosition } from '../useRangePosition';
 const PickerStaticLayout = styled(PickersLayout)(({ theme }) => ({
   overflow: 'hidden',
   minWidth: DIALOG_WIDTH,
-  backgroundColor: ((theme as any).vars || theme).palette.background.paper,
+  backgroundColor: (theme.vars || theme).palette.background.paper,
 })) as unknown as typeof PickersLayout;
 
 /**
