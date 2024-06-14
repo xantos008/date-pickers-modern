@@ -1,6 +1,6 @@
 {
   "name": "date-pickers-modern",
-  "version": "7.6.2-alpha.0",
+  "version": "7.7.0",
   "description": "A react date range picker implementation using @mui.",
   "author": "xantos008",
   "files": [
@@ -31,7 +31,7 @@
     "build:simple": "npm run clean && rollup -c --bundleConfigAsCjs",
     "build": "npm run clean && rollup -c --bundleConfigAsCjs && npm run postbuild",
     "postbuild": "cp package.json dist && cp README.md dist && cp LICENSE dist && node ./scripts/runUpdatePackageJson.js",
-    "publish": "npm run compile && npm run build && npm run pack && npm publish date-pickers-modern-7.6.2.tgz",
+    "publish": "npm run compile && npm run build && npm run pack && npm publish date-pickers-modern-7.7.0.tgz",
     "pack": "npm pack ./build/"
   },
   "repository": {
@@ -39,13 +39,13 @@
     "url": "https://github.com/xantos008/date-pickers-modern.git"
   },
   "dependencies": {
-    "@babel/runtime": "^7.24.6",
+    "@babel/runtime": "^7.24.7",
     "@emotion/styled": "^11.8.1",
     "@mui/base": "^5.0.0-beta.40",
     "@mui/system": "^5.15.15",
     "@mui/utils": "^5.15.14",
     "@types/format-util": "^1.0.2",
-    "@types/react-transition-group": "^4.4.8",
+    "@types/react-transition-group": "^4.4.10",
     "clsx": "^2.1.1",
     "prop-types": "^15.8.1",
     "react": "^17.0.0 || ^18.0.0",
@@ -96,9 +96,9 @@
     }
   },
   "devDependencies": {
-    "@babel/core": "^7.24.6",
-    "@babel/plugin-transform-runtime": "^7.24.6",
-    "@babel/traverse": "^7.24.6",
+    "@babel/core": "^7.24.7",
+    "@babel/plugin-transform-runtime": "^7.24.7",
+    "@babel/traverse": "^7.24.7",
     "@rollup/plugin-babel": "^6.0.4",
     "@rollup/plugin-commonjs": "^25.0.7",
     "@rollup/plugin-json": "^6.1.0",
@@ -125,8 +125,8 @@
     "typescript": "^5.3.3"
   },
   "resolutions": {
-    "@babel/core": "^7.24.6",
-    "@babel/traverse": "^7.24.6",
+    "@babel/core": "^7.24.7",
+    "@babel/traverse": "^7.24.7",
     "csstype": "3.0.10",
     "semver": "^7.5.4"
   },

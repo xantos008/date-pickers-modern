@@ -6,7 +6,7 @@ const views: Record<TimeViewWithMeridiem, string> = {
   hours: '시간을',
   minutes: '분을',
   seconds: '초를',
-  meridiem: '메리디엠',
+  meridiem: '오전/오후를',
 };
 
 const koKRPickers: Partial<PickersLocaleText<any>> = {
@@ -18,9 +18,9 @@ const koKRPickers: Partial<PickersLocaleText<any>> = {
   openPreviousView: '이전 화면 보기',
   openNextView: '다음 화면 보기',
   calendarViewSwitchingButtonAriaLabel: (view) =>
-    view === 'year'
-      ? '연도 선택 화면에서 달력 화면으로 전환하기'
-      : '달력 화면에서 연도 선택 화면으로 전환하기',
+      view === 'year'
+          ? '연도 선택 화면에서 달력 화면으로 전환하기'
+          : '달력 화면에서 연도 선택 화면으로 전환하기',
 
   // DateRange labels
   start: '시작',
@@ -44,8 +44,8 @@ const koKRPickers: Partial<PickersLocaleText<any>> = {
 
   // Clock labels
   clockLabelText: (view, time, adapter) =>
-    `${views[view]} 선택하세요. ${time === null ? '시간을 선택하지 않았습니다.' : `현재 선택된 시간은 ${adapter.format(time, 'fullTime')}입니다.`}`,
-  hoursClockNumberText: (hours) => `${hours}시간`,
+      `${views[view]} 선택하세요. ${time === null ? '시간을 선택하지 않았습니다.' : `현재 선택된 시간은 ${adapter.format(time, 'fullTime')}입니다.`}`,
+  hoursClockNumberText: (hours) => `${hours}시`,
   minutesClockNumberText: (minutes) => `${minutes}분`,
   secondsClockNumberText: (seconds) => `${seconds}초`,
 
@@ -60,13 +60,13 @@ const koKRPickers: Partial<PickersLocaleText<any>> = {
 
   // Open picker labels
   openDatePickerDialogue: (value, utils) =>
-    value !== null && utils.isValid(value)
-      ? `날짜를 선택하세요. 현재 선택된 날짜는 ${utils.format(value, 'fullDate')}입니다.`
-      : '날짜를 선택하세요',
+      value !== null && utils.isValid(value)
+          ? `날짜를 선택하세요. 현재 선택된 날짜는 ${utils.format(value, 'fullDate')}입니다.`
+          : '날짜를 선택하세요',
   openTimePickerDialogue: (value, utils) =>
-    value !== null && utils.isValid(value)
-      ? `시간을 선택하세요. 현재 선택된 시간은 ${utils.format(value, 'fullTime')}입니다.`
-      : '시간을 선택하세요',
+      value !== null && utils.isValid(value)
+          ? `시간을 선택하세요. 현재 선택된 시간은 ${utils.format(value, 'fullTime')}입니다.`
+          : '시간을 선택하세요',
   fieldClearLabel: '지우기',
 
   // Table labels

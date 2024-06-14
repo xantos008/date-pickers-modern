@@ -214,6 +214,8 @@ export const DateCalendar = React.forwardRef(function DateCalendar<TDate extends
       reduceAnimations,
       timezone,
       labelId: gridLabelId,
+      slots,
+      slotProps,
     },
     ownerState: props,
   });
@@ -390,8 +392,6 @@ export const DateCalendar = React.forwardRef(function DateCalendar<TDate extends
               fixedWeekNumber={fixedWeekNumber}
               dayOfWeekFormatter={dayOfWeekFormatter}
               displayWeekNumber={displayWeekNumber}
-              slots={slots}
-              slotProps={slotProps}
               loading={loading}
               renderLoading={renderLoading}
             />
