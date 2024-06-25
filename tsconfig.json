@@ -3,7 +3,7 @@
     "outDir": "build",
     "module": "esnext",
     "target": "ES6",
-    "lib": ["es5", "es6", "dom", "es2015", "es2016", "es2015.Promise", "es2017", "es2021"],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "sourceMap": false,
     "allowJs": false,
     "jsx": "react",

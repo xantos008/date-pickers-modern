@@ -19,17 +19,17 @@ const daDKPickers: Partial<PickersLocaleText<any>> = {
   openPreviousView: 'Åben forrige visning',
   openNextView: 'Åben næste visning',
   calendarViewSwitchingButtonAriaLabel: (view) =>
-    view === 'year'
-      ? 'årsvisning er åben, skift til kalendervisning'
-      : 'kalendervisning er åben, skift til årsvisning',
+      view === 'year'
+          ? 'årsvisning er åben, skift til kalendervisning'
+          : 'kalendervisning er åben, skift til årsvisning',
 
   // DateRange labels
   start: 'Start',
   end: 'Slut',
-  // startDate: 'Start date',
-  // startTime: 'Start time',
-  // endDate: 'End date',
-  // endTime: 'End time',
+  startDate: 'Start dato',
+  startTime: 'Start tid',
+  endDate: 'Slut date',
+  endTime: 'Slut tid',
 
   // Action bar
   cancelButtonLabel: 'Annuller',
@@ -45,7 +45,7 @@ const daDKPickers: Partial<PickersLocaleText<any>> = {
 
   // Clock labels
   clockLabelText: (view, time, adapter) =>
-    `Vælg ${timeViews[view] ?? view}. ${time === null ? 'Intet tidspunkt valgt' : `Valgte tidspunkt er ${adapter.format(time, 'fullTime')}`}`,
+      `Vælg ${timeViews[view] ?? view}. ${time === null ? 'Intet tidspunkt valgt' : `Valgte tidspunkt er ${adapter.format(time, 'fullTime')}`}`,
   hoursClockNumberText: (hours) => `${hours} timer`,
   minutesClockNumberText: (minutes) => `${minutes} minutter`,
   secondsClockNumberText: (seconds) => `${seconds} sekunder`,
@@ -61,14 +61,14 @@ const daDKPickers: Partial<PickersLocaleText<any>> = {
 
   // Open picker labels
   openDatePickerDialogue: (value, utils) =>
-    value !== null && utils.isValid(value)
-      ? `Vælg dato, valgte dato er ${utils.format(value, 'fullDate')}`
-      : 'Vælg dato',
+      value !== null && utils.isValid(value)
+          ? `Vælg dato, valgte dato er ${utils.format(value, 'fullDate')}`
+          : 'Vælg dato',
   openTimePickerDialogue: (value, utils) =>
-    value !== null && utils.isValid(value)
-      ? `Vælg tidspunkt, valgte tidspunkt er ${utils.format(value, 'fullTime')}`
-      : 'Vælg tidspunkt',
-  // fieldClearLabel: 'Clear value',
+      value !== null && utils.isValid(value)
+          ? `Vælg tidspunkt, valgte tidspunkt er ${utils.format(value, 'fullTime')}`
+          : 'Vælg tidspunkt',
+  fieldClearLabel: 'ryd felt',
 
   // Table labels
   timeTableLabel: 'vælg tidspunkt',
@@ -85,17 +85,17 @@ const daDKPickers: Partial<PickersLocaleText<any>> = {
   fieldMeridiemPlaceholder: () => 'aa',
 
   // View names
-  // year: 'Year',
-  // month: 'Month',
-  // day: 'Day',
-  // weekDay: 'Week day',
-  // hours: 'Hours',
-  // minutes: 'Minutes',
-  // seconds: 'Seconds',
-  // meridiem: 'Meridiem',
+  year: 'år',
+  month: 'måned',
+  day: 'dag',
+  weekDay: 'ugedag',
+  hours: 'timer',
+  minutes: 'minutter',
+  seconds: 'sekunder',
+  meridiem: 'middag',
 
   // Common
-  // empty: 'Empty',
+  empty: 'tom',
 };
 
 export const daDK = getPickersLocalization(daDKPickers);
