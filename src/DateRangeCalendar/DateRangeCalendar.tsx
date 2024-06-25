@@ -5,7 +5,8 @@ import useEventCallback from '@mui/utils/useEventCallback';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { resolveComponentProps, useSlotProps } from '@mui/base/utils';
 import { styled, useThemeProps } from '@mui/material/styles';
-import { unstable_composeClasses as composeClasses } from '@mui/utils';
+import composeClasses from '@mui/utils/composeClasses';
+import useId from '@mui/utils/useId';
 import {
   applyDefaultDate,
   BaseDateValidationProps,
@@ -250,6 +251,7 @@ const DateRangeCalendar = React.forwardRef(function DateRangeCalendar<
 
   const utils = useUtils<TDate>();
   const now = useNow<TDate>(timezone);
+  const id = useId();
   const hasFocus = focusedView !== null;
 
   const { rangePosition, onRangePositionChange } = useRangePosition({
@@ -685,10 +687,11 @@ const DateRangeCalendar = React.forwardRef(function DateRangeCalendar<
     >
       {calendarMonths.map((monthIndex) => {
         const month = visibleMonths[monthIndex];
+        const labelId = `${id}-grid-${monthIndex}-label`;
 
         return (
           <DateRangeCalendarMonthContainer key={monthIndex} className={classes.monthContainer}>
-            <CalendarHeader<TDate> {...calendarHeaderProps} month={month} monthIndex={monthIndex} />
+            <CalendarHeader<TDate> {...calendarHeaderProps} month={month} monthIndex={monthIndex} labelId={labelId} />
             {view === 'year' && (
                 <YearCalendar<TDate>
                     {...baseDateValidationProps}
@@ -700,6 +703,7 @@ const DateRangeCalendar = React.forwardRef(function DateRangeCalendar<
                     onFocusedViewChange={(isViewFocused) => setFocusedView('year', isViewFocused)}
                     yearsPerRow={yearsPerRow}
                     referenceDate={referenceDate}
+                    gridLabelId={labelId}
                 />
             )}
 
@@ -716,6 +720,7 @@ const DateRangeCalendar = React.forwardRef(function DateRangeCalendar<
                     onFocusedViewChange={(isViewFocused) => setFocusedView('month', isViewFocused)}
                     monthsPerRow={monthsPerRow}
                     referenceDate={referenceDate}
+                    gridLabelId={labelId}
                 />
             )}
 
@@ -743,6 +748,7 @@ const DateRangeCalendar = React.forwardRef(function DateRangeCalendar<
                     fixedWeekNumber={fixedWeekNumber}
                     displayWeekNumber={displayWeekNumber}
                     timezone={timezone}
+                    gridLabelId={labelId}
                 />
             )}
           </DateRangeCalendarMonthContainer>
